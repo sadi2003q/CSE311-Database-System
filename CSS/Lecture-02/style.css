@@ -1,0 +1,18 @@
+p{
+    /*text-align: center; */
+    /*text-align: justify;*/
+    text-align: right;
+    /*text-decoration: underline;*/
+    /*text-decoration: line-through;*/
+    text-decoration: overline;
+}
+
+div a{
+    text-decoration: none;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 50px;
+    /*font: [font-style] [font-variant] [font-weight] [font-size]/[line-height] [font-family];*/
+}
