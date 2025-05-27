@@ -1,0 +1,38 @@
+* {
+    color: white;
+    background-color: black;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#container-2 {
+    height: 50vh;
+    width: 50vw;
+    border: 1px solid white;
+    background-color: pink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    #inner-container {
+        height: 20vh;
+        width: 20vw;
+        background-color: aqua;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

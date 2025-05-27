@@ -1,10 +1,58 @@
+<!--
+  CSS Units - Frequently Used
+
+  1. px (Pixels) - Absolute unit. Commonly used for borders, font sizes, spacing.
+     Example: width: 200px;
+
+  2. % (Percentage) - Relative to the parent element.
+     Example: width: 50%;
+
+  3. em - Relative to the font-size of the element.
+     Example: padding: 2em; (If font-size is 16px, then padding = 32px)
+
+  4. rem (Root em) - Relative to the font-size of the root element (usually <html>).
+     Example: margin: 1rem;
+
+  5. vw / vh (Viewport Width / Height) - Relative to the size of the viewport.
+     1vw = 1% of the viewport width, 1vh = 1% of the viewport height.
+     Example: width: 100vw;
+
+  6. fr (Fraction) - Used in CSS Grid to divide space into fractions.
+     Example: grid-template-columns: 1fr 2fr;
+
+  7. auto - Allows the browser to calculate the size automatically.
+     Example: margin: auto;
+
+  These are the most common and practical units to use in modern web design.
+-->
+
+<!--
+    1. Static: Top, left, right, bottom is fixed, no change will work
+    2. Relative: Relative to itself
+    3. absolute: Relative to ancestor
+    4. fixed: relative to the document(Browser), and position is fixed
+    5. sticky: Position will be fixed when the content is correct position
+    6. z-index: which one will be on top will be fixed by this parameter
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-$END$
+    <h1>
+        This is a Heading
+    </h1>
+
+<div id="outer">
+    <div id="b1">Box1</div>
+    <div id="b2">Box2</div>
+    <div id="b3">Box3</div>
+    <div id="b4">Box4</div>
+</div>
+
+
 </body>
 </html>

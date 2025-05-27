@@ -1,0 +1,19 @@
+* {
+    background-color: black;
+    color: white;
+}
+
+div {
+    height: 50px;
+    width: 50px;
+    border: 2px solid white;
+}
+
+
+@media (min-width:600px) {
+    div {
+        background-color: lightblue;
+    }
+}
+
+@media (min-width: 200px) and (max-width: 1000px){}

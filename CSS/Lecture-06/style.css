@@ -1,0 +1,53 @@
+* {
+    color: white;
+    background-color: black;
+}
+
+
+body {
+    text-align: center;
+}
+
+#container {
+
+/*
+  Flex Container Properties Used:
+
+  display: flex;              // Defines a flex container and enables flex context for its children
+  flex-direction: row;        // Sets the main axis to horizontal (default); items are placed in a row
+  justify-content: center;   // Aligns items along the main axis (horizontally) to the center
+  flex-wrap: wrap;            // Allows flex items to wrap onto multiple lines from top to bottom
+  align-items: center;        // Aligns items along the cross axis (vertically) to the center of each line
+  align-content: flex-start;  // Aligns the wrapped lines (as a group) along the cross axis to the start
+*/
+
+/*
+  align-self: individual alignment of the item
+  flex-grow:
+  flex-shrink:
+*/
+
+    width: 70%;
+    height: 200px;
+    border: 1px solid white;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    /*align-content: flex-start;*/
+
+    div {
+        height: 50px;
+        width: 150px;
+        display: inline-block;
+        border: 3px solid white;
+    }
+
+    #box1 { background-color: aqua;}
+    #box2 { background-color: pink;}
+    #box3 { background-color: red; height: 100px; align-self: flex-end;}
+    #box4 { background-color: gold;}
+    #box5 { background-color: mediumpurple;}
+}

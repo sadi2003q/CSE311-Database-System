@@ -1,0 +1,29 @@
+#b1 {
+    height: 40px;
+    background-color: lightblue;
+    text-align: center;
+
+}
+
+
+#b2 {
+    margin: 20px;
+    padding: 30px;
+    height: 40px;
+    background-color: lightblue;
+    display: inline;
+}
+
+div {
+    height: 100px;
+    width: 100px;
+    background-color: lightblue;
+    margin: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+#b4 {
+    /*visibility: hidden;*/
+    display: none;
+}
