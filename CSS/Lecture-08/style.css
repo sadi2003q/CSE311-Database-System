@@ -1,0 +1,70 @@
+* {
+    color: white;
+    background-color: black;
+}
+
+
+/*
+transform:
+    transition-property --> which property should inherit the transition
+    transition-duration --> how long it should take to complete the transition
+    transition-timing-function --> all types of transitions
+    transition-delay--> how much i need to wait for the transition to start
+
+    short hand
+    transition: background-color 0.2s, border-color 0.2s, font-size 0.2s;
+
+
+    transform:
+        rotate(degree count) how much should it rotate on x axis
+        rotateX, rotateY, rotateZ
+
+
+    scale:
+        scale(number) how much i want to grow or shrink
+        scaleX, scaleY, scale(length, width)
+
+    translate:
+        translate(pixel) changing position of an element(negative value is allowed)
+        translateX, translateY, translate(X, Y)
+
+    skew:
+
+
+Animation:(better way to animate instead of transition)
+    animation: |name |duration |timing-function delay ||iteration-count|| direction fill-mode;
+
+ */
+
+
+div {
+    height: 200px;
+    width: 200px;
+    border: 3px solid gold;
+    background-color: lightskyblue;
+    color: black;
+    text-align: center;
+    font-size: 20px;
+    transition-property: background-color, border-color, font-size, left;
+    transition-duration: 0.2s;
+    position: relative;
+    left: 0;
+
+    &:hover {
+        background-color: gold;
+        border: 3px solid lightskyblue;
+        font-size: 25px;
+        left: 50px;
+        /*animation: myAnimation 2s 1;*/
+    }
+}
+
+@keyframes myAnimation {
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0.5;
+    }
+    
+}
