@@ -1,4 +1,4 @@
-se practise_problem2_1;
+use practise_problem2_1;
 -- Write SQL expression to find Sid, F-NID, M-NID, mobile, email and age of all students whose tot-cred is greater than or equal to 130.
 select student.Sid, parents_s.f_nid, parents_s.m_nid, student.mobile, student.email, student.age
 from student join parents_s on parents_s.Sid=student.Sid
@@ -48,3 +48,13 @@ where parents_s.city in ('Dhaka', 'Rajshahi')
 group by parents_s.city, parents_s.street
 having AVG(income) > 500000;
 
+-- Q. 5: Write SQL expression to find Sid, name, course-id and title of all students who have taken any course (course-id) taken by Abid in Fall 2018.
+
+select s.sid, s.name, t.course_id, c.title
+from student s join takes t on s.sid=t.sid
+join course c on t.course_id=c.course_id
+where t.course_id in (
+    select t.course_id
+    from takes t join student s on s.sid = t.sid
+    where s.name='Abid' and t.semester='Fall' and t.year=2018
+);
