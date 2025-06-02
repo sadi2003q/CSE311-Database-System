@@ -1,6 +1,6 @@
 <?php
 
-//When User submits --> Post Method
+// When User submits --> Post Method
 // when showing something to the user --> Get method
 
 // referencing tag by 'name'
