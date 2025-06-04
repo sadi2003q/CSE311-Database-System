@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login / Update User</title>
+    <link rel="stylesheet" href="lecture-12-style.css" />
+</head>
+<body>
+<div class="container">
+    <form class="login-form" action="lecture-12-formHandler.php" method="POST">
+        <h2>User Login / Update</h2>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="_inputUsername" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="_inputEmail" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="_inputPassword" required />
+
+        <!-- Hidden field for updates -->
+        <input type="hidden" name="user_id" id="user_id" />
+
+        <button type="submit" name="action" value="login">Login</button>
+        <button type="submit" name="action" value="update">Update Info</button>
+    </form>
+</div>
+</body>
+</html>
