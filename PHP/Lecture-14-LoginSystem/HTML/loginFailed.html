@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Failed - SecureAuth</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .error-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+            }
+        }
+
+        .error-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        .error-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .error-details {
+            background: #fff3f3;
+            border: 1px solid #ffebee;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .error-details h3 {
+            color: #d32f2f;
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .error-details ul {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            padding-left: 20px;
+        }
+
+        .error-details li {
+            margin-bottom: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e5e9;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5e9;
+            color: #999;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 40px 25px;
+            }
+
+            .error-title {
+                font-size: 28px;
+            }
+
+            .error-message {
+                font-size: 16px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <div class="error-icon">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+    </div>
+
+    <h1 class="error-title">Login Failed</h1>
+    <p class="error-message">
+        We couldn't verify your credentials. Please check your username and password and try again.
+    </p>
+
+    <div class="error-details">
+        <h3>Possible reasons:</h3>
+        <ul>
+            <li>Incorrect username or password</li>
+            <li>Account may be temporarily locked</li>
+            <li>Username may not exist in our system</li>
+            <li>Password may have expired</li>
+        </ul>
+    </div>
+
+    <div class="action-buttons">
+        <a href="login_signup.php" class="btn btn-primary">Try Again</a>
+    </div>
+
+    <div class="footer-info">
+        <p>If you continue to experience issues, please contact our support team.</p>
+        <p>Error Code: AUTH_FAILED_001</p>
+    </div>
+</div>
+</body>
+</html>
