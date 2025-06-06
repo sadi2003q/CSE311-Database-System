@@ -118,42 +118,45 @@ require_once "../includes/config_session.inc.php";
     </div>
 
     <form action="../includes/signup.inc.php" method="POST">
-        <div class="form-group">
-            <label for="email" class="form-label">Email Address</label>
-            <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    class="form-input"
-                    placeholder="Enter your email"
+<!--        <div class="form-group">-->
+<!--            <label for="email" class="form-label">Email Address</label>-->
+<!--            <input-->
+<!--                    type="email"-->
+<!--                    id="email"-->
+<!--                    name="email"-->
+<!--                    class="form-input"-->
+<!--                    placeholder="Enter your email"-->
+<!---->
+<!--            >-->
+<!--        </div>-->
+<!---->
+<!--        <div class="form-group">-->
+<!--            <label for="username" class="form-label">Username</label>-->
+<!--            <input-->
+<!--                    type="text"-->
+<!--                    id="username"-->
+<!--                    name="username"-->
+<!--                    class="form-input"-->
+<!--                    placeholder="Choose a username"-->
+<!---->
+<!--            >-->
+<!--        </div>-->
+<!---->
+<!--        <div class="form-group">-->
+<!--            <label for="password" class="form-label">Password</label>-->
+<!--            <input-->
+<!--                    type="password"-->
+<!--                    id="password"-->
+<!--                    name="password"-->
+<!--                    class="form-input"-->
+<!--                    placeholder="Create a password"-->
+<!---->
+<!--            >-->
+<!--        </div>-->
+        <?php
+        signup_input();
 
-            >
-        </div>
-
-        <div class="form-group">
-            <label for="username" class="form-label">Username</label>
-            <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    class="form-input"
-                    placeholder="Choose a username"
-
-            >
-        </div>
-
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    class="form-input"
-                    placeholder="Create a password"
-
-            >
-        </div>
-
+        ?>
         <button type="submit" class="form-button">Sign Up</button>
     </form>
 

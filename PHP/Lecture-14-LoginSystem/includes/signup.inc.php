@@ -30,10 +30,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!empty($errors)) {
             $_SESSION['error_signup'] = $errors;
-            $_SESSION['signup_data'] = [
+
+            $signup_data = [
                 'username' => $username,
                 'email' => $email
             ];
+            $_SESSION['signup_data'] = $signup_data;
+
             header("Location: ../HTML/login_signup.php?signup=failed");
             die('Error Found');
         }
