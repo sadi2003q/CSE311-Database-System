@@ -145,74 +145,74 @@ require_once "../includes/config_session.inc.php";
     </div>
 
     <form action="../includes/signup.inc.php" method="POST">
-        
-        <!-- EMAIL FIELD -->
-        <div class="form-group">
-            <label for="email" class="form-label">Email Address</label>
-            <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    class="form-input"
-                    placeholder="Enter your email"
 
-            >
-        </div>
-        
-        
-        <!--USERNAME FIELD-->
-        <div class="form-group">
-            <label for="username" class="form-label">Username</label>
-            <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    class="form-input"
-                    placeholder="Choose a username"
-
-            >
-        </div>
-        
-        <!--PASSWORD-->
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    class="form-input"
-                    placeholder="Create a password"
-
-            >
-        </div>
-
-        <!-- Gender Field -->
-        <div class="form-group">
-            <label for="gender" class="form-label">Gender</label>
-            <select id="gender" name="gender" class="form-input">
-                <option value="">Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-
-        <!-- Date of Birth Field -->
-        <div class="form-group">
-            <label for="dob" class="form-label">Date of Birth</label>
-            <input
-                    type="date"
-                    id="dob"
-                    name="dob"
-                    class="form-input"
-            >
-        </div>
+<!--        <!-- EMAIL FIELD -->-->
+<!--        <div class="form-group">-->
+<!--            <label for="email" class="form-label">Email Address</label>-->
+<!--            <input-->
+<!--                    type="email"-->
+<!--                    id="email"-->
+<!--                    name="email"-->
+<!--                    class="form-input"-->
+<!--                    placeholder="Enter your email"-->
+<!---->
+<!--            >-->
+<!--        </div>-->
+<!--        -->
+<!--        -->
+<!--        <!--USERNAME FIELD-->-->
+<!--        <div class="form-group">-->
+<!--            <label for="username" class="form-label">Username</label>-->
+<!--            <input-->
+<!--                    type="text"-->
+<!--                    id="username"-->
+<!--                    name="username"-->
+<!--                    class="form-input"-->
+<!--                    placeholder="Choose a username"-->
+<!---->
+<!--            >-->
+<!--        </div>-->
+<!--        -->
+<!--        <!--PASSWORD-->-->
+<!--        <div class="form-group">-->
+<!--            <label for="password" class="form-label">Password</label>-->
+<!--            <input-->
+<!--                    type="password"-->
+<!--                    id="password"-->
+<!--                    name="password"-->
+<!--                    class="form-input"-->
+<!--                    placeholder="Create a password"-->
+<!---->
+<!--            >-->
+<!--        </div>-->
+<!---->
+<!--        <!-- Gender Field -->-->
+<!--        <div class="form-group">-->
+<!--            <label for="gender" class="form-label">Gender</label>-->
+<!--            <select id="gender" name="gender" class="form-input">-->
+<!--                <option value="">Select gender</option>-->
+<!--                <option value="male">Male</option>-->
+<!--                <option value="female">Female</option>-->
+<!--                <option value="other">Other</option>-->
+<!--            </select>-->
+<!--        </div>-->
+<!---->
+<!--        <!-- Date of Birth Field -->-->
+<!--        <div class="form-group">-->
+<!--            <label for="dob" class="form-label">Date of Birth</label>-->
+<!--            <input-->
+<!--                    type="date"-->
+<!--                    id="dob"-->
+<!--                    name="dob"-->
+<!--                    class="form-input"-->
+<!--            >-->
+<!--        </div>-->
 
 
 
 
         <?php
-//        signup_input();
+        signup_input();
 
         ?>
         <button type="submit" class="form-button">Sign Up</button>
