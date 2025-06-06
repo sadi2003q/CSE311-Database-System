@@ -5,6 +5,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'] ;
     $email = $_POST['email'] ;
     $password = $_POST['password'] ;
+    $dob = $_POST['dob'] ;
+    $gender = $_POST['gender'] ;
 
     try {
         $pdo = require_once "dbh.inc.php";
@@ -15,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors = [];
 
         // Check empty fields first
-        if (is_input_empty($username, $password, $email)) {
+        if (is_input_empty($username, $password, $email, $gender, $dob)){
             $errors['empty_input'] = "Please fill in all the fields";
         }
         if (is_email_valid($email)) {
@@ -27,8 +29,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (is_email_taken($pdo, $email)) {
             $errors['email_taken'] = "Email is taken";
         }
+        if (!is_age_valid($dob)) {
+            $errors['age_invalid'] = "You must be at least 10 years old";
+        }
 
-        if (!empty($errors)) {
+        if ($errors) {
             $_SESSION['error_signup'] = $errors;
 
             $signup_data = [
@@ -44,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         // If we get here, proceed with signup
         // You'll need to implement this part
 
-        create_user($pdo, $username, $password, $email);
+        create_user($pdo, $username, $password, $email, $gender, $dob);
         header("Location: ../HTML/login_signup.php?signup=success");
 
         $pdo = null;
@@ -53,6 +58,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     } catch (PDOException $e) {
         header("Location: ../HTML/loginFailed.html");
+        error_log("Errors found: " . print_r($e, true));
         die("Database error: " . $e->getMessage());
     }
 } else {
