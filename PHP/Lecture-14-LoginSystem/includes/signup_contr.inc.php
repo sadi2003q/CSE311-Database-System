@@ -14,11 +14,11 @@ function is_email_valid(string $email): bool {
 
 
 function is_username_taken(object $pdo, string $username): bool {
-    return get_username($pdo, $username);
+    return (bool) get_username($pdo, $username);
 }
 
 function is_email_taken(object $pdo, string $email): bool {
-    return get_email($pdo, $email);
+    return (bool) get_email($pdo, $email);
 }
 
 function create_user(object $pdo, string $username, string $password, string $email): void {

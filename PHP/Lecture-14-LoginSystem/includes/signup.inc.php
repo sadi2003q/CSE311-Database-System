@@ -1,21 +1,20 @@
 <?php
-
-
 require_once "config_session.inc.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $username = $_POST['username'] ;
+    $email = $_POST['email'] ;
+    $password = $_POST['password'] ;
 
     try {
         $pdo = require_once "dbh.inc.php";
         require_once "signup_model.inc.php";
         require_once "signup_contr.inc.php";
 
-        //ERROR HANDLING WHILE SIGNING UP
+        // ERROR HANDLING
         $errors = [];
 
+        // Check empty fields first
         if (is_input_empty($username, $password, $email)) {
             $errors['empty_input'] = "Please fill in all the fields";
         }
@@ -31,24 +30,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!empty($errors)) {
             $_SESSION['error_signup'] = $errors;
-            header("Location: ../HTML/login_signup.php");
-            die();
+            $_SESSION['signup_data'] = [
+                'username' => $username,
+                'email' => $email
+            ];
+            header("Location: ../HTML/login_signup.php?signup=failed");
+            die('Error Found');
         }
 
+        // If we get here, proceed with signup
+        // You'll need to implement this part
 
-        create_user($pdo, $username, $email, $password);
+        create_user($pdo, $username, $password, $email);
         header("Location: ../HTML/login_signup.php?signup=success");
 
         $pdo = null;
-        $stmt = null;
 
-        die();
+        die("Login successful");
 
-
-
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         header("Location: ../HTML/loginFailed.html");
-        die('Connection failed: ' . $e->getMessage());
+        die("Database error: " . $e->getMessage());
     }
 } else {
     header("Location: ../HTML/login_signup.php");
