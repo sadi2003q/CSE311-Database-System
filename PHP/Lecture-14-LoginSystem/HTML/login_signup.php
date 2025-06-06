@@ -108,6 +108,33 @@ require_once "../includes/config_session.inc.php";
             margin-top: 10px;
             text-align: center;
         }
+        
+        .link_signup {
+            padding: 0.75rem;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            background-color: gray;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            margin-top: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: "Times New Roman", Times, serif;
+            
+        }
+        
+        .link_signup:hover {
+            background-color: #555;
+        }
+         
+        
+        
+        
     </style>
 </head>
 <body>
@@ -158,6 +185,8 @@ require_once "../includes/config_session.inc.php";
 
         ?>
         <button type="submit" class="form-button">Sign Up</button>
+        
+        <a href="login.php" class="link_signup">Login</a>
     </form>
 
     <!-- This div will display any error messages -->

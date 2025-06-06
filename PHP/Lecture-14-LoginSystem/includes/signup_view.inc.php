@@ -8,7 +8,7 @@ function check_signup_errors(): void {
 
         if (isset($_GET['signup']) and $_GET['signup'] === 'failed') {
             echo "<br>";
-            echo "<p style='color: orangered; font-weight: bolder; text-decoration: underline;'>Login Failed!!!</p><br>";
+            echo "<p style='color: orangered; font-weight: bolder; text-decoration: underline;'>SignIn Failed!!!</p><br>";
         }
 
 
@@ -17,8 +17,7 @@ function check_signup_errors(): void {
         }
 
         unset($_SESSION['error_signup']);
-    }
-    else if (isset($_GET['signup']) and $_GET['signup'] === 'success') {
+    } else if (isset($_GET['signup']) and $_GET['signup'] === 'success') {
         echo "<br>";
         echo "<p style='color: darkolivegreen; font-weight: bold;'>You have successfully signed up!</p>";
     }
