@@ -1,6 +1,6 @@
 <?php
     require_once "../includes/config_session.inc.php";
-    require_once "../includes/login_view.inc.php";
+    require_once "../includes/LOGIN_PAGE/login_view.inc.php";
 ?>
 
 
@@ -89,7 +89,7 @@
 <body>
 <div class="login-container">
     <h2>Login</h2>
-    <form action="../includes/login.inc.php" method="POST">
+    <form action="../includes/LOGIN_PAGE/login.inc.php" method="POST">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" />
 

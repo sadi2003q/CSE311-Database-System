@@ -7,8 +7,8 @@
     <file url="file://$PROJECT_DIR$/Database Creation/DB_Practise_Problem_04.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Database Creation/DB_Practise_Problem_05.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/PHP Media/Database/database_creation.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/login_model.inc.php" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/signup_model.inc.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/LOGIN_PAGE/login_model.inc.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/SIGNUP_PAGE/signup_model.inc.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-01.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-02.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-03.sql" dialect="MySQL" />

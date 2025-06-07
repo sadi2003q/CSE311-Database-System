@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     try {
-        $pdo = require_once "dbh.inc.php";
+        $pdo = require_once "../dbh.inc.php";
         require_once "login_model.inc.php";
         require_once "login_contr.inc.php";
         // ERROR HANDLING
@@ -26,12 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
 
-        require_once 'config_session.inc.php';
+        require_once '../config_session.inc.php';
 
         if (!empty($errors)) {
             $_SESSION['error_login'] = $errors;
 
-            header("Location: ../HTML/login.php?login=failed");
+            header("Location: ../../HTML/login.php?login=failed");
             die('Error Found');
         }
 
@@ -45,19 +45,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $_SESSION['last_generation'] = time();
 
-        header("Location: ../HTML/login.php?login=success");
+        header("Location: ../../HTML/login.php?login=success");
         $pdo = null;
         $stmt = null;
 
         die('Login successful');
 
     } catch (Exception $e) {
-        header("Location: ../HTML/ServerFailed.html");
+        header("Location: ../../HTML/ServerFailed.html");
         die("Error: " . $e->getMessage());
     }
 
 } else {
-    header("Location: ../HTML/login.php");
+    header("Location: ../../HTML/login.php");
 }
 
 

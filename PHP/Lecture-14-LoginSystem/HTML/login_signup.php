@@ -1,6 +1,6 @@
 <?php
 
-require_once "../includes/signup_view.inc.php";
+require_once "../includes/SIGNUP_PAGE/signup_view.inc.php";
 require_once "../includes/config_session.inc.php";
 
 ?>
@@ -144,7 +144,7 @@ require_once "../includes/config_session.inc.php";
         <p class="signup-subtitle">Join us today</p>
     </div>
 
-    <form action="../includes/signup.inc.php" method="POST">
+    <form action="../includes/SIGNUP_PAGE/signup.inc.php" method="POST">
 
 <!--        <!-- EMAIL FIELD -->-->
 <!--        <div class="form-group">-->

@@ -1,5 +1,5 @@
 <?php
-require_once "config_session.inc.php";
+require_once "../config_session.inc.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'] ;
@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gender = $_POST['gender'] ;
 
     try {
-        $pdo = require_once "dbh.inc.php";
+        $pdo = require_once "../dbh.inc.php";
         require_once "signup_model.inc.php";
         require_once "signup_contr.inc.php";
 
@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             ];
             $_SESSION['signup_data'] = $signup_data;
 
-            header("Location: ../HTML/login_signup.php?signup=failed");
+            header("Location: ../../HTML/login_signup.php?signup=failed");
             die('Error Found');
         }
 
@@ -52,18 +52,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         // You'll need to implement this part
 
         create_user($pdo, $username, $password, $email, $gender, $dob);
-        header("Location: ../HTML/login_signup.php?signup=success");
+        header("Location: ../../HTML/login_signup.php?signup=success");
 
         $pdo = null;
 
         die("Login successful");
 
     } catch (PDOException $e) {
-        header("Location: ../HTML/loginFailed.html");
+        header("Location: ../../HTML/loginFailed.html");
         error_log("Errors found: " . print_r($e, true));
         die("Database error: " . $e->getMessage());
     }
 } else {
-    header("Location: ../HTML/login_signup.php");
+    header("Location: ../../HTML/login_signup.php");
     die();
 }
