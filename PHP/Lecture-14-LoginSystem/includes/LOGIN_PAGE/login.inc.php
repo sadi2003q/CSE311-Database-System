@@ -36,16 +36,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $newSessionId = session_create_id();
-        $sessionId = $newSessionId . "_" . $result['ID'];
+        $sessionId = $newSessionId . "_" . $result['user_id'];
         session_id($sessionId);
 
 
-        $_SESSION['user_id'] = $result['ID'];
+        $_SESSION['user_id'] = $result['user_id'];
         $_SESSION['username'] = htmlspecialchars($result['USERNAME']);
 
         $_SESSION['last_generation'] = time();
 
-        header("Location: ../../HTML/login.php?login=success");
+//        header("Location: ../../HTML/login.php?login=success");
+
+        header("Location: index.php?user_id=" . $result['user_id']);
+
         $pdo = null;
         $stmt = null;
 

@@ -91,10 +91,10 @@
     <h2>Login</h2>
     <form action="../includes/LOGIN_PAGE/login.inc.php" method="POST">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" />
+        <input type="text" id="username" name="username" value="sadi"/>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" />
+        <input type="password" id="password" name="password" value="1234" />
 
         <button type="submit">Login</button>
         <a href="login_signup.php" style="background-color: gray;">GO to Sign in</a>
@@ -102,7 +102,7 @@
     <div style="margin-top: 1rem;">
         <?php
 
-        check_login_status()
+            check_login_status()
         
         ?>
     </div>
