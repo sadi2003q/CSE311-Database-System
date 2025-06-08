@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 //        header("Location: ../../HTML/login.php?login=success");
 
-        header("Location: index.php?user_id=" . $result['user_id']);
+        header("Location: ../../HTML/newsfeed.php?user_id=" . $result['user_id']);
 
         $pdo = null;
         $stmt = null;
