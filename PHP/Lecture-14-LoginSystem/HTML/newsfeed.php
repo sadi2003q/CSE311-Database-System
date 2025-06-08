@@ -242,7 +242,7 @@
     <div class="main-content">
         <!-- Create a Post -->
         <div class="post-form">
-            <form action="../includes/NEWSFEED_PAGE/post.inc.php" method='POST'>
+            <form action="../includes/NEWSFEED_PAGE/post.inc.php" method='POST' enctype="multipart/form-data">
 
                 <!-- Status area -->
                 <label for="Status">

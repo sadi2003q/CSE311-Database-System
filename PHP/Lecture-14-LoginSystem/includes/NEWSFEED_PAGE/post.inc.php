@@ -15,7 +15,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Grabbing all variables from the form and storing them in variables
         $post_text = $_POST['post_text'];
-        $post_image = $_FILES['post_image'];
+        $post_image = $_FILES['post_image']['name'] ?? '';
+        $tmp = explode('.', $post_image);
+        $newFileName = round(microtime(true)) . '.' . end($tmp);
+        $upload_dir = '../../uploads/'.$newFileName;
+
+
+        move_uploaded_file($_FILES['post_image']['tmp_name'], $upload_dir);
 
         // Checking for any potential error
         $error_post = [];
@@ -30,11 +36,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             die('Error Occurred');
         }
 
-        $post_image_name = $post_image['name']['name'];
-        $post_image_tempName = $post_image['type']['tmp_name'];
-        $post_image_folder = "../../uploads/".$post_image_name;
+//        $post_image_name = $post_image['name']['name'];
+//        $post_image_tempName = $post_image['type']['tmp_name'];
+//        $post_image_folder = "../../uploads/".$post_image_name;
 
-        post_now($pdo, $post_text, $post_image_folder, $user_id );
+        post_now($pdo, $post_text, $upload_dir, $user_id );
         header("Location: ../../HTML/newsfeed.php?post=success?user_id=$user_id");
         $pdo = null;
         die('Post successful');
