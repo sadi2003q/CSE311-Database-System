@@ -182,6 +182,25 @@
             margin-right: 1rem;
         }
 
+        .success-message {
+            width: 85%;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #d0f0c0; /* soft light green background */
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .success-message h3 {
+            color: #2e7d32; /* dark green text */
+            margin: 0;
+        }
+
+        .success-message p {
+            margin-top: 5px;
+            color: #1b5e20; /* even darker for better contrast */
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -258,10 +277,10 @@
                     <button type="submit">Post</button>
                 </div>
                 <?php
-
                     upload_error_occurred()
-
                 ?>
+
+
 
 
 
@@ -297,8 +316,7 @@
 
         <!-- User Information-->
         <div class="user-info">
-<!--            <p style="padding-top: 1rem;"><strong>Username:</strong> JohnDoe</p>-->
-<!--            <p style="padding-top: 1rem;"><strong>Email:</strong> john@example.com</p>-->
+
         <?php
         
             show_user_information( $pdo );

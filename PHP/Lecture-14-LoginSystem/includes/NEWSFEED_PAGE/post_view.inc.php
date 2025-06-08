@@ -5,6 +5,17 @@ declare(strict_types=1);
 
 
 function upload_error_occurred(): void {
+
+    if($_GET['post']==='success') {
+        echo '
+        <div class="success-message">
+                    <h3>Post Uploaded Successfully</h3>
+                    <p>Refresh the page for new feeds</p>
+        </div>
+        ';
+        return;
+    }
+
     if (!isset($_SESSION['error_post']) || empty($_SESSION['error_post'])) {
         return;
     }
