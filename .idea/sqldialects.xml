@@ -10,6 +10,7 @@
     <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/LOGIN_PAGE/login_model.inc.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/NEWSFEED_PAGE/newsfeed_model.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/NEWSFEED_PAGE/newsfeed_view.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/PROFILE_PAGE/profile_model.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/PHP/Lecture-14-LoginSystem/includes/SIGNUP_PAGE/signup_model.inc.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-01.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-02.sql" dialect="MySQL" />

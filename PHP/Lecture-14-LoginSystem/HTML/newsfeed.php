@@ -285,8 +285,8 @@
 <!-- Navbar -->
 <nav class="navbar">
     <div class="navbar-links">
-        <a href="#">Home</a>
-        <a href="#">Profile</a>
+        <a href="newsfeed.php">Home</a>
+        <a href="profile.php">Profile</a>
         <a href="#">Notifications</a>
         <a href="#">Logout</a>
     </div>
@@ -325,8 +325,8 @@
     <aside class="sidebar" id="sidebar">
         <!-- Mobile-only nav links -->
         <div class="nav-links-mobile">
-            <a href="#">Home</a>
-            <a href="#">Profile</a>
+            <a href="newsfeed.php">Home</a>
+            <a href="profile.php">Profile</a>
             <a href="#">Notifications</a>
             <a href="#">Logout</a>
         </div>

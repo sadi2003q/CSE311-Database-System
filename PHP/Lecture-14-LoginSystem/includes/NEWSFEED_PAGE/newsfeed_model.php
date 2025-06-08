@@ -22,7 +22,18 @@ function find_user_information(object $pdo) {
         $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Adding important information to the session
+
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['email'] = $result['email'];
+        $_SESSION['gender'] = $result['GENDER'];
+
+
+
+        return $result;
+
 
 
     } catch (PDOException $e) {
