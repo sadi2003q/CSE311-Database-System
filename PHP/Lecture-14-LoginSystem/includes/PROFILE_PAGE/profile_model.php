@@ -13,3 +13,18 @@ function update_user_database(object $pdo, string $username, string $email, stri
 
 
 
+function email_exists(object $pdo, string $email): bool {
+    $query = "SELECT 1 FROM USERS WHERE email = :email LIMIT 1";
+    $statement = $pdo->prepare($query);
+    $statement->execute([':email' => $email]);
+    return (bool) $statement->fetchColumn();
+}
+
+
+function username_exists(object $pdo, string $username): bool {
+    $query = "SELECT 1 FROM USERS WHERE username = :username LIMIT 1";
+    $statement = $pdo->prepare($query);
+    $statement->execute([':username' => $username]);
+    return (bool) $statement->fetchColumn();
+}
+

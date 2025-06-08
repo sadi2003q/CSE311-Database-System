@@ -19,6 +19,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(is_it_similar_to_current_information($username, $email, $gender)) {
         $error_UpdateProfile['same_inputField'] = "All fields are the same as current information";
     }
+    if(is_this_email_already_taken($pdo, $email)) {
+        $error_UpdateProfile['email_taken'] = "Email is already taken";
+    }
+    if(is_this_username_already_taken($pdo, $username)) {
+        $error_UpdateProfile['username_taken'] = "Username is already taken";
+    }
+
 
     if(!empty($error_UpdateProfile)) {
         $_SESSION['error_UpdateProfile'] = $error_UpdateProfile;

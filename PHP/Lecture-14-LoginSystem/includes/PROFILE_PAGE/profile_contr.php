@@ -14,6 +14,16 @@ function is_it_similar_to_current_information(string $username, string $email, s
     return ($username === $_SESSION['username']) && ($email === $_SESSION['email']) && ($gender === $_SESSION['gender']);
 }
 
+function is_this_email_already_taken(object $pdo, string $email): bool {
+    return email_exists($pdo, $email);
+}
+
+function is_this_username_already_taken(object $pdo, string $username): bool {
+    return username_exists($pdo, $username);
+}
+
+
+
 
 function update_user(object $pdo, string $username, string $email, string $gender): void {
 
