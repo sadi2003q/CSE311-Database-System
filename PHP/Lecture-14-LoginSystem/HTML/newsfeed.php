@@ -2,66 +2,10 @@
     require_once "../includes/config_session.inc.php";
     $pdo = require_once "../includes/dbh.inc.php";;
     require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
+    require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 ?>
 
 
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!---->
-<!--    <style>-->
-<!---->
-<!--        .container {-->
-<!--            width: 100%;-->
-<!--            height: 500px;-->
-<!--            border: 1px solid black;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!---->
-<!--            .content {-->
-<!--                margin: 10px;-->
-<!---->
-<!---->
-<!--                h2{-->
-<!--                    text-decoration: underline;-->
-<!--                }-->
-<!--            }-->
-<!---->
-<!--        }-->
-<!---->
-<!---->
-<!--    </style>-->
-<!---->
-<!--</head>-->
-<!--<body>-->
-<!---->
-<!---->
-<!--<div class="container">-->
-<!--    <div class="content">-->
-<!--        <h2>User Information</h2>-->
-<!---->
-<!--        <div>-->
-<!--            <p>   Name: </p>-->
-<!--            <p>  Email: </p>-->
-<!--            <p>  Phone: </p>-->
-<!--            <p>Address: </p>-->
-<!--        </div>-->
-<!---->
-<!--        --><?php
-//
-//        show_user_information( $pdo );;
-//
-//        ?>
-<!---->
-<!---->
-<!--    </div>-->
-<!--</div>-->
-<!---->
-<!---->
-<!--</body>-->
-<!--</html>-->
 
 
 
@@ -296,17 +240,35 @@
 <!-- Main Container -->
 <div class="container">
     <div class="main-content">
-        <!-- Post Form -->
+        <!-- Create a Post -->
         <div class="post-form">
-            <form>
-                <label>
-                    <textarea rows="4" placeholder="What's on your mind?"></textarea>
+            <form action="../includes/NEWSFEED_PAGE/post.inc.php" method='POST'>
+
+                <!-- Status area -->
+                <label for="Status">
+                    <textarea rows="4" placeholder="What's on your mind?" name="post_text" >This is a sample Post</textarea>
                 </label>
-                <button type="submit">Post</button>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <!-- Image upload button -->
+                    <label for="Uploading Image">
+                        <input type="file" accept="image/*" name="post_image">
+                    </label>
+
+                    <button type="submit">Post</button>
+                </div>
+                <?php
+
+                    upload_error_occurred()
+
+                ?>
+
+
+
             </form>
         </div>
 
-        <!-- A Post -->
+        <!-- News Feed -->
         <div class="post">
             <div class="post-header">
                 <img src="avatar-placeholder.jpg" alt="Avatar" />
@@ -331,6 +293,9 @@
             <a href="#">Logout</a>
         </div>
 
+
+
+        <!-- User Information-->
         <div class="user-info">
 <!--            <p style="padding-top: 1rem;"><strong>Username:</strong> JohnDoe</p>-->
 <!--            <p style="padding-top: 1rem;"><strong>Email:</strong> john@example.com</p>-->

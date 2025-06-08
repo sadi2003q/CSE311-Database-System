@@ -13,7 +13,7 @@ function find_user_information(object $pdo) {
     }
 
 
-    $userId = $_SESSION['user_id'];
+    $userId = $_SESSION['user_id'] ;
 
     try {
         // Prepare SQL query to fetch user information
