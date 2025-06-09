@@ -14,7 +14,7 @@ use JetBrains\PhpStorm\NoReturn;
         $email = $_SESSION['email'];
         $gender = $_SESSION['gender'];
 
-        echo '<h1>Name : ' . $username . '</h1> <br>';
+        echo '<h1>Welcome, ' . $username . '</h1> <br>';
 
         echo '<p>Email : '. $email . '|'. 'Gender: ' .$gender .'</p> <br>';
 
