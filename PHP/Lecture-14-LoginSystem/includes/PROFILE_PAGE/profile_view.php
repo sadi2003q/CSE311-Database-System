@@ -4,9 +4,8 @@
 declare(strict_types=1);
 
 
-use JetBrains\PhpStorm\NoReturn;
 
-#[NoReturn] function show_user_information_profile_view(): void {
+function show_user_information_profile_view(): void {
 
     if(isset($_SESSION['user_id']) and isset($_SESSION['username']) and isset($_SESSION['email']) and isset($_SESSION['gender'])) {
 
@@ -27,7 +26,7 @@ use JetBrains\PhpStorm\NoReturn;
 
 
 function error_found_while_updating_profile(): void {
-    if (!isset($_SESSION['error_UpdateProfile']) || empty($_SESSION['error_UpdateProfile'])) {
+    if (empty($_SESSION['error_UpdateProfile'])) {
         return; // No error to display
     }
 
@@ -65,8 +64,6 @@ function show_all_post_from_user(object $pdo): void {
         echo '<p>No Post Found</p>';
         header("Location: ../../HTML/login.php?server=failed?function=newsfeed_model/fetch_all_post_from_user");;
     }
-
-    echo '<P>Posts is not empty</P>';
 
 
     foreach ($posts as $post) {

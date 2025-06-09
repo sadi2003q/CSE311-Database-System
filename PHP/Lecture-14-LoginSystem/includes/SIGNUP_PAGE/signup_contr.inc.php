@@ -33,3 +33,4 @@ function create_user(object $pdo, string $username, string $password, string $em
     set_user($pdo, $username, $password, $email, $gender, $dob);
 }
 
+

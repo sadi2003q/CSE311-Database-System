@@ -128,7 +128,7 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
     <!--  Current Profile Information  -->
     <div class="profile-header">
-
+<!--        <img id="profile-img" src="../uploads/1749446063.png" alt="Profile Picture" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">-->
 <!--        <p>Email: user@example.com | Age: 25 | Sex: Male</p>-->
         <?php
 
@@ -136,6 +136,13 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
         ?>
     </div>
+
+    <!-- Image upload section -->
+<!--    <div style="margin-top: 15px; margin-bottom: 15px;">-->
+<!--        <input type="file" id="img-input" accept="image/*" style="display: none;">-->
+<!--        <button onclick="document.getElementById('img-input').click()">Upload New Image</button>-->
+<!--    </div>-->
+
 
 
 
@@ -156,8 +163,8 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
                 <label for="email">Email</label>
 
                 <?php
-                $email = $_SESSION['email'];
-                echo '<input type="email" id="email" name="email" value="'. $email .  '" >';
+                    $email = $_SESSION['email'];
+                    echo '<input type="email" id="email" name="email" value="'. $email .  '" >';
                 ?>
 
 <!--                <input type="email" id="email" name="email" value="user@example.com">-->
@@ -173,12 +180,12 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
                 <select id="sex" name="sex">
                     <?php
-                    $gender = isset($_SESSION['gender']) ? $_SESSION['sex'] : '';
-                    $options = ['Male', 'Female', 'Other'];
-                    foreach ($options as $option) {
-                        $selected = ($option === $gender) ? 'selected' : '';
-                        echo "<option value=\"$option\" $selected>$option</option>";
-                    }
+                        $gender = isset($_SESSION['gender']) ? $_SESSION['sex'] : '';
+                        $options = ['Male', 'Female', 'Other'];
+                        foreach ($options as $option) {
+                            $selected = ($option === $gender) ? 'selected' : '';
+                            echo "<option value=\"$option\" $selected>$option</option>";
+                        }
                     ?>
                 </select>
             </div>
@@ -194,7 +201,7 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
     </div>
 
 
-    <!--  Users Posts  -->
+<!--      Users Posts-->
 <!--    <div class="post">-->
 <!--        <h4>@alex_dev</h4>-->
 <!--        <p>Just finished working on a new portfolio site. Loving how it turned out!</p>-->
@@ -218,5 +225,16 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
 
 </div>
+
+<!--    <script>-->
+<!--        // JavaScript to preview new image-->
+<!--        document.getElementById('img-input').addEventListener('change', function(event) {-->
+<!--            const file = event.target.files[0];-->
+<!--            if (file) {-->
+<!--                const imgURL = URL.createObjectURL(file);-->
+<!--                document.getElementById('profile-img').src = imgURL;-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
 </body>
 </html>

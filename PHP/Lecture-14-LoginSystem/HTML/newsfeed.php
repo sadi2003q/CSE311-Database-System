@@ -328,6 +328,9 @@
             
         </div>
 
+
+        <!-- Suggested Friends -->
+
         <div class="friend-suggestions">
             <h3>Suggested Friends</h3>
             <div class="suggestion">
@@ -345,6 +348,11 @@
                 </div>
             </div>
         </div>
+
+
+
+
+        
     </aside>
 </div>
 
