@@ -26,17 +26,6 @@ use JetBrains\PhpStorm\NoReturn;
 }
 
 
-function show_username_field_profile_view(): void {
-    $username = $_SESSION['username'] ?? 'No Username Found';
-    echo '<input type="text" name="username" placeholder="Username" value="' . htmlspecialchars($username) . '">';
-}
-
-
-function show_email_field_profile_view(): void {
-    $email = $_SESSION['email'] ?? 'No Email Found';
-    echo '<input type="text" name="email" placeholder="Email" value="' . htmlspecialchars($email) . '">';
-}
-
 function error_found_while_updating_profile(): void {
     if (!isset($_SESSION['error_UpdateProfile']) || empty($_SESSION['error_UpdateProfile'])) {
         return; // No error to display
@@ -92,7 +81,7 @@ function show_all_post_from_user(object $pdo): void {
                 <h4>@'.$username.'</h4>
                 <p>'.$post_text_content.'</p>
                 <p> ' . $post_image_url . '</p>
-                <img src="../uploads/'.$post_image_url.'" alt="Post image" style="display: block; max-width: 80%; height: auto; border-radius: 6px; margin: 1rem auto 10px; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);">
+                <img src="../uploads/'.$post_image_url.'" alt="Post image" style="display: block; max-width: 80%; max-height: 400px; background-image:cover;  border-radius: 6px; margin: 1rem auto 10px; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);">
                 <div class="meta">Posted on '.$created_at.'</div>
               </div>';
         } else {
