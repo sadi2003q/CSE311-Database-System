@@ -121,7 +121,7 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
     <a href="newsfeed.php">Home</a>
     <a href="profile.php">Profile</a>
     <a href="#">Notifications</a>
-    <a href="#">Logout</a>
+    <a href="logout.php">Logout</a>
 </nav>
 <div class="container">
 

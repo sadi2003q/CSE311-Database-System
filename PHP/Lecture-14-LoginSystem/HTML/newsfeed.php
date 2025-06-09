@@ -251,7 +251,7 @@
         <a href="newsfeed.php">Home</a>
         <a href="profile.php">Profile</a>
         <a href="#">Notifications</a>
-        <a href="#">Logout</a>
+        <a href="logout.php">Logout</a>
     </div>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
 </nav>
@@ -288,7 +288,7 @@
         </div>
 
         <!-- News Feed -->
-        <div class="post">
+        <div class="post" >
             <div class="post-header">
                 <img src="avatar-placeholder.jpg" alt="Avatar" />
                 <h3>Username</h3>
