@@ -331,28 +331,36 @@
 
         <!-- Suggested Friends -->
 
-        <div class="friend-suggestions">
-            <h3>Suggested Friends</h3>
-            <div class="suggestion">
-                <img src="friend-avatar.jpg" alt="Friend" />
-                <div>
-                    <p>Jane</p>
-                    <button>Add</button>
-                </div>
-            </div>
-            <div class="suggestion">
-                <img src="friend-avatar2.jpg" alt="Friend" />
-                <div>
-                    <p>Mike</p>
-                    <button>Add</button>
-                </div>
-            </div>
-        </div>
+<!--        <div class="friend-suggestions">-->
+<!--            <h3>Suggested Friends</h3>-->
+<!--            <div class="suggestion">-->
+<!--                <img src="friend-avatar.jpg" alt="Friend" />-->
+<!--                <div>-->
+<!--                    <p>Jane</p>-->
+<!--                    <button>Add</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="suggestion">-->
+<!--                <img src="friend-avatar2.jpg" alt="Friend" />-->
+<!--                <div>-->
+<!--                    <p>Mike</p>-->
+<!--                    <button>Add</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
 
 
-        
+
+        <?php
+            show_new_suggession_form_database($pdo);
+        ?>
+
+
+
+
+
     </aside>
 </div>
 

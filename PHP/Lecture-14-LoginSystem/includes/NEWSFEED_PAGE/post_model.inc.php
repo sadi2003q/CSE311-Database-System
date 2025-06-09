@@ -15,3 +15,10 @@ function upload_post_to_database(object $pdo, string $post_text, string $post_im
     ]);
 }
 
+function fetch_new_profile_for_suggession(object $pdo): array {
+    $query = "SELECT * FROM USERS ORDER BY user_id DESC LIMIT 10";
+    $statement = $pdo->prepare($query);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
