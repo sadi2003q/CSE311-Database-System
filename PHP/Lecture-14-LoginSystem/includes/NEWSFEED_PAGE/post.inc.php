@@ -43,7 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(empty($post_image)) {
             post_now($pdo, $post_text, '', $user_id );
         } else {
-            post_now($pdo, $post_text, $upload_dir, $user_id );
+            post_now($pdo, $post_text, $newFileName, $user_id );
         }
 
 

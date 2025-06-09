@@ -1,9 +1,9 @@
 <?php
-//require_once "../includes/config_session.inc.php";
-//$pdo = require_once "../includes/dbh.inc.php";
-//require_once "../includes/PROFILE_PAGE/profile_view.php";
-//
-//?>
+require_once "../includes/config_session.inc.php";
+$pdo = require_once "../includes/dbh.inc.php";
+require_once "../includes/PROFILE_PAGE/profile_view.php";
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,12 +129,12 @@
     <!--  Current Profile Information  -->
     <div class="profile-header">
 
-        <p>Email: user@example.com | Age: 25 | Sex: Male</p>
-<!--        --><?php
-//
-//            show_user_information_profile_view();
-//
-//        ?>
+<!--        <p>Email: user@example.com | Age: 25 | Sex: Male</p>-->
+        <?php
+
+            show_user_information_profile_view();
+
+        ?>
     </div>
 
 
@@ -145,49 +145,49 @@
 
             <div class="form-group">
                 <label for="username">Username</label>
-<!--                --><?php
-//                    $username = $_SESSION['username'];
-//                    echo '<input type="text" id="username" name="username" value="'. $username .  '" >';
-//                ?>
-                <input type="text" id="username" name="username" value="Username">
+                <?php
+                    $username = $_SESSION['username'];
+                    echo '<input type="text" id="username" name="username" value="'. $username .  '" >';
+                ?>
+<!--                <input type="text" id="username" name="username" value="Username">-->
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
 
-<!--                --><?php
-//                $email = $_SESSION['email'];
-//                echo '<input type="email" id="email" name="email" value="'. $email .  '" >';
-//                ?>
+                <?php
+                $email = $_SESSION['email'];
+                echo '<input type="email" id="email" name="email" value="'. $email .  '" >';
+                ?>
 
-                <input type="email" id="email" name="email" value="user@example.com">
+<!--                <input type="email" id="email" name="email" value="user@example.com">-->
             </div>
 
             <div class="form-group">
                 <label for="sex">Sex</label>
-                <select id="sex" name="sex">
-                    <option value="Male" selected>Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
+<!--                <select id="sex" name="sex">-->
+<!--                    <option value="Male" selected>Male</option>-->
+<!--                    <option value="Female">Female</option>-->
+<!--                    <option value="Other">Other</option>-->
+<!--                </select>-->
 
                 <select id="sex" name="sex">
-<!--                    --><?php
-//                    $gender = isset($_SESSION['gender']) ? $_SESSION['sex'] : '';
-//                    $options = ['Male', 'Female', 'Other'];
-//                    foreach ($options as $option) {
-//                        $selected = ($option === $gender) ? 'selected' : '';
-//                        echo "<option value=\"$option\" $selected>$option</option>";
-//                    }
-//                    ?>
+                    <?php
+                    $gender = isset($_SESSION['gender']) ? $_SESSION['sex'] : '';
+                    $options = ['Male', 'Female', 'Other'];
+                    foreach ($options as $option) {
+                        $selected = ($option === $gender) ? 'selected' : '';
+                        echo "<option value=\"$option\" $selected>$option</option>";
+                    }
+                    ?>
                 </select>
             </div>
 
             <button type="submit">Update Profile</button>
             
-<!--            --><?php
-//                error_found_while_updating_profile()
-//            ?>
+            <?php
+                error_found_while_updating_profile()
+            ?>
 
 
         </form>
@@ -195,18 +195,28 @@
 
 
     <!--  Users Posts  -->
-    <div class="post">
-        <h4>@alex_dev</h4>
-        <p>Just finished working on a new portfolio site. Loving how it turned out!</p>
-        <img src="https://picsum.photos/200/300" alt="Post image" style="display: block; max-width: 80%; height: auto; border-radius: 6px; margin: 1rem auto 10px; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);">
-        <div class="meta">Posted on June 6, 2025</div>
-    </div>
+<!--    <div class="post">-->
+<!--        <h4>@alex_dev</h4>-->
+<!--        <p>Just finished working on a new portfolio site. Loving how it turned out!</p>-->
+<!--        <img src="https://picsum.photos/200/300" alt="Post image" style="display: block; max-width: 80%; height: auto; border-radius: 6px; margin: 1rem auto 10px; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);">-->
+<!--        <div class="meta">Posted on June 6, 2025</div>-->
+<!--    </div>-->
+<!---->
+<!--    <div class="post">-->
+<!--        <h4>@emma.codes</h4>-->
+<!--        <p style="margin-top: 15px; margin-bottom: 20px; font-size: 25px; font-weight: 550;">Working late tonight on a new feature. Sometimes you just get into the zone.</p>-->
+<!--        <div class="meta">Posted on June 5, 2025</div>-->
+<!--    </div>-->
+    <?php
 
-    <div class="post">
-        <h4>@emma.codes</h4>
-        <p style="margin-top: 15px; margin-bottom: 20px; font-size: 25px; font-weight: 550;">Working late tonight on a new feature. Sometimes you just get into the zone.</p>
-        <div class="meta">Posted on June 5, 2025</div>
-    </div>
+        global $pdo;
+        show_all_post_from_user($pdo);
+
+
+
+    ?>
+
+
 </div>
 </body>
 </html>

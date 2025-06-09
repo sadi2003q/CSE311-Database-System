@@ -101,9 +101,7 @@
     </form>
     <div style="margin-top: 1rem;">
         <?php
-
-            check_login_status()
-        
+            check_login_status();
         ?>
     </div>
     
