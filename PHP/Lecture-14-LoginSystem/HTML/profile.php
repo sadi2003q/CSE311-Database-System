@@ -38,6 +38,31 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             max-width: 800px;
             margin: 2rem auto;
         }
+
+        .profile-picture-box {
+            background-color: #FFFFFF;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .profile-picture-box h1 {
+            color: #111827;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #D1D5DB;
+            margin: 0 auto 1.5rem;
+            object-fit: cover;
+            border: 2px solid #3B82F6;
+        }
+
         .profile-header {
             background-color: #FFFFFF;
             padding: 1.5rem;
@@ -183,7 +208,11 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             </div>
 
             <button type="submit">Update Profile</button>
-            
+            <br>
+
+            <a href="profile_image.php">Upload IMage</a>
+
+
             <?php
                 error_found_while_updating_profile()
             ?>

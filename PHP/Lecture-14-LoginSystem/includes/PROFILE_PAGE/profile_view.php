@@ -3,12 +3,27 @@
 
 declare(strict_types=1);
 
+function show_user_profile_picture() : void {
 
+    $image_path = '../uploads/male_profile_icon_image.png';
+    if($_SESSION['gender']==='female'){
+        $image_path = '../uploads/female_profile_icon_image.jpg';
+    }
+
+    if(isset($_SESSION['image_url'])) {
+        $image_path = '../uploads/'.$_SESSION['image_url'];
+    }
+
+    echo '<img src="'.$image_path.'" alt="Profile Picture" class="profile-picture" id="profileImage">';
+
+}
 
 
 function show_user_information_profile_view(): void {
 
     if(isset($_SESSION['user_id']) and isset($_SESSION['username']) and isset($_SESSION['email']) and isset($_SESSION['gender'])) {
+
+        show_user_profile_picture();
 
         $username = $_SESSION['username'];
         $email = $_SESSION['email'];

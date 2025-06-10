@@ -30,6 +30,10 @@ function find_user_information(object $pdo) {
         $_SESSION['email'] = $result['email'];
         $_SESSION['gender'] = $result['GENDER'];
 
+        if($result['image_url'] !== null) {
+            $_SESSION['image_url'] = $result['image_url'];
+        }
+
 
 
         return $result;
