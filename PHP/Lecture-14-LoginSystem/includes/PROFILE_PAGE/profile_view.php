@@ -14,7 +14,6 @@ function show_user_information_profile_view(): void {
         $email = $_SESSION['email'];
         $gender = $_SESSION['gender'];
 
-        show_profile_picture($gender);
 
 
         echo '<h1>Welcome, ' . $username . '</h1> <br>';
@@ -26,34 +25,6 @@ function show_user_information_profile_view(): void {
         die('Something went wrong');
     }
 
-}
-
-
-function show_profile_picture(string $gender): void {
-    $image_url = $_SESSION['profile_image'] ?? '';
-
-    // Default images based on gender
-    if (empty($image_url)) {
-        if (strtolower($gender) === 'male') {
-            $image_url = '../uploads/male_profile_icon_image.png';
-        } else {
-            $image_url = '../uploads/female_profile_icon_image.jpg';
-        }
-    }
-
-    echo '
-    <div style="text-align: center; margin-bottom: 20px;">
-    <div>
-         <img id="profile-img" src="' . htmlspecialchars($image_url) . '" alt="Profile Picture"
-                 style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #3B82F6;">
-         <input type="file" id="img-input" accept="image/*" style="display: none;">
-    </div>
-       
-        <button type="button" onclick="document.getElementById(\'img-input\').click()"
-                style="margin-top: 8px; padding: 0.25rem 0.5rem; font-size: 0.75rem; background-color: #3B82F6; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
-            Change Image
-        </button>
-    </div>';
 }
 
 function error_found_while_updating_profile(): void {

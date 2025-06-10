@@ -208,7 +208,6 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 <!--    </div>-->
     <?php
 
-        global $pdo;
         show_all_post_from_user($pdo);
 
 
@@ -217,15 +216,5 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
 
 </div>
-
-    <script>
-        document.getElementById('img-input').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const imgURL = URL.createObjectURL(file);
-                document.getElementById('profile-img').src = imgURL;
-            }
-        });
-    </script>
 </body>
 </html>
