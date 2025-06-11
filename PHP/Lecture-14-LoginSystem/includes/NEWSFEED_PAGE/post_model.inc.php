@@ -16,9 +16,18 @@ function upload_post_to_database(object $pdo, string $post_text, string $post_im
 }
 
 function fetch_new_profile_for_suggession(object $pdo): array {
-    $query = "SELECT * FROM USERS ORDER BY user_id DESC LIMIT 10";
+    if (!isset($_SESSION['user_id'])) {
+        return []; // Prevent errors if session is not set
+    }
+
+    $user_id = $_SESSION['user_id'];
+
+    $query = "SELECT * FROM USERS WHERE user_id != :user_id ORDER BY user_id DESC LIMIT 20";
+    
     $statement = $pdo->prepare($query);
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->execute();
+
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 

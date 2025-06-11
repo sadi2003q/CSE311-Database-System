@@ -43,24 +43,35 @@ function show_new_suggession_form_database(object $pdo): void
 {
     require_once 'post_model.inc.php';
     $all_profile = fetch_new_profile_for_suggession($pdo);
-    if(empty($all_profile)) {
+
+    if (empty($all_profile)) {
         return;
     }
+
     echo '<div class="friend-suggestions">';
+    echo '<h3 class="friend-suggestions">Suggested Profiles</h3>';
 
+    foreach ($all_profile as $profile) {
+        // Determine image source
+        $imageSrc = '';
+        if($profile['image_url']) {
+            $imageSrc = '../uploads/'.$profile['image_url']; // Assuming images are stored in an 'uploads' 
+        } else {
+            if($profile['GENDER'] == 'male') {
+                $imageSrc = '../uploads/male_profile_icon_image.png';
+            } else if($profile['GENDER'] == 'female') {
+                $imageSrc = '../uploads/female_profile_icon_image.jpg';
+            }
+        }
 
-    echo '<h3 class="friend-suggestions"> Suggested Profiles </h3>';
-    foreach($all_profile as $profile) {
-        echo '<div class="suggestion">'.
-                //'<img src="friend-avatar.jpg" alt="Friend" />'.
-                '<div>'.
-                    '<p>'.$profile['username'].'</p>'.
-                    '<button>Add</button>'.
-                '</div>'.
-            '</div>';
+        echo '<div class="suggestion" style="display: flex; align-items: center; margin-bottom: 10px;">' .
+                '<img src="' . $imageSrc . '" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;" />' .
+                '<div>' .
+                    '<p style="margin: 0; font-weight: bold;">' . htmlspecialchars($profile['username']) . '</p>' .
+                    '<button>Add</button>' .
+                '</div>' .
+             '</div>';
     }
 
     echo '</div>';
-
-
 }

@@ -17,7 +17,7 @@ function show_user_information(object $pdo): void {
         unset($user);
     } else {
         header("Location: ../../HTML/login.php?server=failed?function=newsfeed_model/find_user_information");
-        die("Error Occurred");       ;
+        die("Error Occurred");       
     }
 
 }
