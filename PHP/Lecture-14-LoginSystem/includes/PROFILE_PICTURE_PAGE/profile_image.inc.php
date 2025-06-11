@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $upload_dir = '../../uploads/'.$newFileName;
 
         move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_dir);
-
+        
 
         upload_image_to_database($pdo, $newFileName);
 

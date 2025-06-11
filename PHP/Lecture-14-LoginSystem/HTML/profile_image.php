@@ -80,36 +80,44 @@ $pdo = require_once '../includes/dbh.inc.php';
             border: 2px solid #3B82F6;
         }
         .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        .button-group button, .button-group label {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .button-group label {
-            display: inline-block;
-            background-color: #3B82F6;
-            color: #FFFFFF;
-            text-align: center;
-        }
-        .button-group label:hover {
-            background-color: #1E3A8A;
-            transform: scale(1.05);
-        }
-        .button-group button[type="submit"] {
-            background-color: #3B82F6;
-            color: #FFFFFF;
-        }
-        .button-group button[type="submit"]:hover {
-            background-color: #1E3A8A;
-            transform: scale(1.05);
-        }
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.button-group button,
+.button-group label {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Upload Image (label) - Green */
+.button-group label {
+    display: inline-block;
+    background-color: #10B981; /* Green 500 */
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.button-group label:hover {
+    background-color: #059669; /* Green 600 */
+    transform: scale(1.05);
+}
+
+/* Database Upload (button) - Blue */
+.button-group button[type="submit"] {
+    background-color: #3B82F6; /* Blue 500 */
+    color: #FFFFFF;
+}
+
+.button-group button[type="submit"]:hover {
+    background-color: #1D4ED8; /* Blue 700 */
+    transform: scale(1.05);
+}
         input[type="file"] {
             display: none;
         }
@@ -130,13 +138,18 @@ $pdo = require_once '../includes/dbh.inc.php';
 <div class="container">
     <div class="profile-picture-box">
 
+        <?php 
 
-        <img src="avatar-placeholder.jpg" alt="Profile Picture" class="profile-picture" id="profileImage">
+            $image_url = '../uploads/'.$_SESSION['image_url'] ?? '../uploads/male_profile_icon_image.png';
+
+           echo '<img src="' . htmlspecialchars($image_url) . '" alt="Profile Picture" class="profile-picture" id="profileImage">';
+        ?>
+        <!-- <img src="avatar-placeholder.jpg" alt="Profile Picture" class="profile-picture" id="profileImage"> -->
         <form action="../includes/PROFILE_PICTURE_PAGE/profile_image.inc.php" method="POST" enctype="multipart/form-data">
             <div class="button-group">
-                <label for="imageUpload">Upload Image</label>
+                <label for="imageUpload">Select Image</label>
                 <input type="file" id="imageUpload" name="profile_picture" accept="image/*" onchange="previewImage(event)">
-                <button type="submit">Database Upload</button>
+                <button type="submit" id="uploadButton" disabled>Upload Image</button>
             </div>
         </form>
 
@@ -155,6 +168,29 @@ $pdo = require_once '../includes/dbh.inc.php';
         };
         reader.readAsDataURL(event.target.files[0]);
     }
+
+    // Disable the upload button until a file is selected
+    const fileInput = document.getElementById('imageUpload');
+    const uploadButton = document.getElementById('uploadButton');
+    const form = uploadButton.closest('form');
+
+    // Enable the button when a file is selected
+    fileInput.addEventListener('change', function () {
+        if (fileInput.files.length > 0) {
+            uploadButton.disabled = false;
+        } else {
+            uploadButton.disabled = true;
+        }
+    });
+
+    // Prevent form submission and alert if no file is selected
+    form.addEventListener('submit', function (e) {
+        if (fileInput.files.length === 0) {
+            e.preventDefault();
+            alert('Please select an image before uploading.');
+            uploadButton.disabled = true;
+        }
+    });
 </script>
 </body>
 </html>
