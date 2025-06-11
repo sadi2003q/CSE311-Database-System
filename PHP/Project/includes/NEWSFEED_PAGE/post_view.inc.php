@@ -63,14 +63,17 @@ function show_new_suggession_form_database(object $pdo): void
                 $imageSrc = '../uploads/female_profile_icon_image.jpg';
             }
         }
+        
+
+        $link = 'suggested_profile.php?profile_id=' . $profile['user_id'] . '&username=' . $profile['username'] . '&gender=' . $profile['GENDER'] . '&image_url=' . $imageSrc;
 
         echo '<div class="suggestion" style="display: flex; align-items: center; margin-bottom: 10px;">' .
                 '<img src="' . $imageSrc . '" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;" />' .
-                '<div>' .
+                '<div style="padding: 5px;">' .
                     '<p style="margin: 0; font-weight: bold;">' . htmlspecialchars($profile['username']) . '</p>' .
-                    '<button>Add</button>' .
+                    '<a href=" ' . $link . '" style="display: inline-block; padding: 4px 8px; background-color: #007bff; color: white; text-decoration: none; font-size: 12px; border-radius: 4px;">Visit Profile</a>' .
                 '</div>' .
-             '</div>';
+            '</div>';
     }
 
     echo '</div>';

@@ -54,6 +54,20 @@ CREATE TABLE friends (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (friend_id) REFERENCES users(user_id)
 );
+CREATE TABLE notifications (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    recipient_id INT NOT NULL,                    -- User receiving the notification
+    sender_id INT,                                -- User who triggered the notification (can be NULL for system notifications)
+    status varchar(100) NOT NULL,
+    post_id INT,                                  -- Nullable: refers to the post related to the notification (if any)
+    comment_id INT,                               -- Nullable: refers to the comment related to the notification (if any)
+    message TEXT,                                 -- Optional descriptive message
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
+    FOREIGN KEY (recipient_id) REFERENCES users(user_id),
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (post_id) REFERENCES posts(post_id),
+    FOREIGN KEY (comment_id) REFERENCES comments(comment_id)
+);
 
 
