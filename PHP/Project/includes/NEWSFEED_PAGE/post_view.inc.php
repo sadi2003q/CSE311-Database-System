@@ -65,7 +65,7 @@ function show_new_suggession_form_database(object $pdo): void
         }
         
 
-        $link = 'suggested_profile.php?profile_id=' . $profile['user_id'] . '&username=' . $profile['username'] . '&gender=' . $profile['GENDER'] . '&image_url=' . $imageSrc;
+        $link = 'visiting_profile.php?profile_id=' . $profile['user_id'] ;
 
         echo '<div class="suggestion" style="display: flex; align-items: center; margin-bottom: 10px;">' .
                 '<img src="' . $imageSrc . '" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;" />' .
