@@ -26,13 +26,11 @@ function show_all_information(object $pdo): void {
     $gender = $result['GENDER'];
 
 
-    $image = '';
+    $image = '../uploads/male_profile_icon_image.png';
     if(!empty($result['image_url'])) {
         $image = '../uploads/'.$result['image_url'];
     } else {
-        if($gender=='mele') {
-            $image = '../uploads/male_profile_icon_image.png';
-        } else if($gender=='female') {
+        if($gender=='female') {
             $image = '../uploads/female_profile_icon_image.jpg';
         }
     }
@@ -50,6 +48,7 @@ function show_all_post(object $pdo): void {
 
 
     $user_id = (int)$_GET['profile_id'];
+    print_r($user_id);
 
     require_once 'visiting_profile.model.inc.php';
     $posts = fetch_all_post_from_database($pdo, $user_id);
@@ -57,12 +56,12 @@ function show_all_post(object $pdo): void {
 
     if (empty($posts)) {
         echo '<p>No Post Found</p>';
-        header("Location: ../../HTML/login.php?server=failed?function=newsfeed_model/fetch_all_post_from_user");;
+        return;
     }
 
 
     $profile_info = fetch_all_information_from_database($pdo, (int)$user_id);
-
+    
 
     foreach ($posts as $post) {
         $username = $profile_info['username'];

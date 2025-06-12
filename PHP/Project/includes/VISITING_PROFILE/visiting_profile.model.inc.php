@@ -28,20 +28,20 @@ function fetch_all_post_from_database(object $pdo, int $user_id) {
 
     try {
 
-        // $query = "SELECT * FROM posts WHERE USER_ID=:user_id";
-        // $statement = $pdo->prepare($query);
-        // $statement->execute([':user_id'=>$user_id]);
-
-        // $result = $statement->fetch(PDO::FETCH_ASSOC);
-        // return $result;
-
-
-        $query = "SELECT * FROM posts WHERE user_id = :user_id ORDER BY created_at DESC";
+        $query = "SELECT * FROM posts WHERE USER_ID=:user_id";
         $statement = $pdo->prepare($query);
-        $statement->execute([':user_id' => $user_id]);
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->execute([':user_id'=>$user_id]);
 
-        return $result ?: [];
+        $result = $statement->fetchALL(PDO::FETCH_ASSOC);
+        return $result ?? [];
+
+
+        // $query = "SELECT * FROM posts WHERE user_id = :user_id ORDER BY created_at DESC";
+        // $statement = $pdo->prepare($query);
+        // $statement->execute([':user_id' => $user_id]);
+        // $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // return $result ?: [];
 
 
         

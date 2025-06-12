@@ -52,6 +52,11 @@ function show_new_suggession_form_database(object $pdo): void
     echo '<h3 class="friend-suggestions">Suggested Profiles</h3>';
 
     foreach ($all_profile as $profile) {
+
+        if($_SESSION['user_id'] === $profile['user_id']) {
+            continue;
+        }
+
         // Determine image source
         $imageSrc = '';
         if($profile['image_url']) {
