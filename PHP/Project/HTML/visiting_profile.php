@@ -162,7 +162,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             <?php show_all_information($pdo) ?>
 
 
-            <form action="" method="POST">
+            <form action="../includes/VISITING_PROFILE/visiting_profile.inc.php" method="POST">
                 <div class="button-group">
                     <button type="submit" name="action" value="follow">Follow</button>
                 </div>
