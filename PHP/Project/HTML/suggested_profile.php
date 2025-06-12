@@ -1,13 +1,3 @@
-<?php 
-
-    require_once '../includes/config_session.inc.php';
-    $pdo = require_once '../includes/dbh.inc.php';
-
-    require_once '../includes/SUGGESTED_PROFILE/suggested_profile.view.inc.php'
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -159,37 +149,46 @@
 
     <div class="container">
         <div class="profile-section">
-             <?php show_profile_picture(); ?>
+            <img src="https://via.placeholder.com/100" alt="User Profile" />
+            <h2>John Doe</h2>
+            <p>Email: john.doe@example.com</p>
+            <p>Location: New York, USA</p>
 
-            
-
-            <?php show_prifile_name(); ?>
-
-            <?php show_basic_information_of_this_user($pdo); ?>
-
-            <form action="../includes/SUGGESTED_PROFILE/suggested_profile.inc.php?profile_id=".$_GET['profile_id']." method="POST">
+            <form action="#" method="POST">
                 <div class="button-group">
-                    <button type="submit" name="sent_request">Add Friend</button>
+                    <button type="submit">Add Friend</button>
                 </div>
             </form>
         </div>
 
         <div class="posts-section">
             <h3>Posts</h3>
-            <!-- <div class="post">
+
+            <div class="post">
                 <div class="post-header">
-                    <img src="profile.jpg" alt="Avatar" />
-                    <h3>User Name</h3>
+                    <img src="https://via.placeholder.com/40" alt="Avatar" />
+                    <h3>John Doe</h3>
                 </div>
-                <p>This is a sample post text with some content.</p>
-                <img src="post.jpg" alt="Sample" style="width:100%; border-radius:8px;" />
+                <p>This is a demo post to test the layout and design.</p>
+                <img src="https://via.placeholder.com/600x300" alt="Post Image" style="width:100%; border-radius:8px;" />
                 <div class="actions">
                     <button>Like (3)</button>
                     <button>Comment (1)</button>
                 </div>
-            </div> -->
+            </div>
 
-            <?php show_all_post_of_this_user($pdo); ?>
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" />
+                    <h3>John Doe</h3>
+                </div>
+                <p>Another post with sample content to show the layout.</p>
+                <img src="https://via.placeholder.com/600x300" alt="Post Image" style="width:100%; border-radius:8px;" />
+                <div class="actions">
+                    <button>Like (10)</button>
+                    <button>Comment (4)</button>
+                </div>
+            </div>
 
         </div>
     </div>
