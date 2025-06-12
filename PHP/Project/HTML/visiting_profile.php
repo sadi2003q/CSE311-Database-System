@@ -171,18 +171,11 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
 
         <div class="posts-section">
             <h3>Posts</h3>
-            <div class="post">
-                <div class="post-header">
-                    <img src="profile.jpg" alt="Avatar" />
-                    <h3>User Name</h3>
-                </div>
-                <p>This is a sample post text with some content.</p>
-                <img src="post.jpg" alt="Sample" style="width:100%; border-radius:8px;" />
-                <div class="actions">
-                    <button>Like (3)</button>
-                    <button>Comment (1)</button>
-                </div>
-            </div>
+
+            <!-- This will show all post from this user -->
+            <?php show_all_post($pdo) ?>
+
+            
         </div>
     </div>
 </body>
