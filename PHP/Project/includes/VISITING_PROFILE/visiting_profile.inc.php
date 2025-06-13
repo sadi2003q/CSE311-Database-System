@@ -13,22 +13,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $visiting_id = $_SESSION['current_profile_being_visited'];
         
 
-        if(check_follower($pdo, $visitor_id, $visiting_id)) {
-            header("Location: ../../HTML/newsfeed.php?following=Yes");
-            die();
+        $action = $_POST['action'] ?? '';
 
-        } 
-
-
-
-        $result = follow_now($pdo, $visitor_id, $visiting_id);
-
-        if(!$result) {
-            header("Location: ../../HTML/newsfeed.php?following=Failed");
+        if ($action === 'follow') {
+            $result = follow_now($pdo, $visitor_id, $visiting_id);
+            if($result) {
+                header("Location: ../../HTML/visiting_profile.php?profile_id=" . $visiting_id . "&following=Success");
+            } else {
+                header("Location: ../../HTML/visiting_profile.php?profile_id=" . $visiting_id . "&following=Failed");
+            }
+        } else if ($action === 'unfollow') {
+            $result = unfollow_now($pdo, $visitor_id, $visiting_id);
+            if($result) {
+                header("Location: ../../HTML/visiting_profile.php?profile_id=" . $visiting_id . "&unfollowing=Success");
+            } else {
+                header("Location: ../../HTML/visiting_profile.php?profile_id=" . $visiting_id . "&unfollowing=Failed");
+            }
         }
 
 
-        header("Location: ../../HTML/newsfeed.php?following=Successful");
         $pdo = null;
         die();
 

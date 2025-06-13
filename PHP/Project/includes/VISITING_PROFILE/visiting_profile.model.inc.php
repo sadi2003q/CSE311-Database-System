@@ -109,3 +109,23 @@ function follow_now(object $pdo, int $current_id, int $visiting_id)  : bool {
     }
 }
 
+
+function unfollow_now(object $pdo, int $current_id, int $visiting_id): bool {
+    try {
+        $pdo->beginTransaction();
+        
+        $query = "DELETE FROM FOLLOW WHERE FOLLOWER_ID = ? AND FOLLOWING_ID = ? LIMIT 1";
+        $statement = $pdo->prepare($query);
+        $statement->execute([$current_id, $visiting_id]);
+        
+        $rowsDeleted = $statement->rowCount();
+        $pdo->commit();
+        
+        return $rowsDeleted > 0;
+        
+    } catch (PDOException $e) {
+        $pdo->rollBack();
+        error_log("Unfollow failed: " . $e->getMessage());
+        return false;
+    }
+}

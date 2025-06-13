@@ -93,7 +93,40 @@ function show_all_post(object $pdo): void {
 }
 
 
+function show_appropriate_button(object $pdo) : void {
 
+    try {
+        $visitor_id = $_SESSION['user_id'];
+        $visiting_id = $_SESSION['current_profile_being_visited'];
+
+
+        $query = "SELECT 1 FROM FOLLOW 
+                WHERE FOLLOWER_ID = :follower_id 
+                AND FOLLOWING_ID = :following_id 
+                LIMIT 1";
+        
+        $statement = $pdo->prepare($query);
+        $statement->execute([
+            ':follower_id' => $visitor_id,
+            ':following_id' => $visiting_id
+        ]);
+        
+        
+        $is_following = (bool) $statement->fetch(PDO::FETCH_ASSOC);
+
+        if($is_following) {
+            echo '<button name="action" value="unfollow" style="background-color: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Unfollow</button>';
+            
+        } else if(!$is_following) {
+            echo '<button name="action" value="follow" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Follow</button>';
+            
+        }
+    } catch (PDOException $e) {
+        echo '<p>not working '. $e->getMessage() . '</p>';
+    }
+    
+
+}
 
 
 
