@@ -3,44 +3,88 @@
     require_once "../includes/LOGIN_PAGE/login_view.inc.php";
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Minimal Login</title>
+    <title>UDIA Login</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #f2f2f2;
+            background-color: #f0f2f5;
+            color: #1c1e21;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            max-width: 980px;
+            width: 100%;
+            align-items: flex-start;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .left-section {
+            flex: 1;
+            min-width: 300px;
+            padding-top: 20px;
+        }
+
+        .logo {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #1877f2, #42b72a, #ff4081);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 3s ease infinite;
+            text-align: left;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .inspiring-text {
+            font-size: 28px;
+            line-height: 32px;
+            color: #606770;
+            max-width: 500px;
         }
 
         .login-container {
             background-color: #fff;
-            padding: 2rem;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 320px;
+            max-width: 400px;
+            min-width: 300px;
+            text-align: center;
         }
 
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-            color: #333;
+        .login-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1c1e21;
         }
 
         form {
@@ -48,63 +92,90 @@
             flex-direction: column;
         }
 
-        label {
-            margin-bottom: 0.25rem;
-            font-size: 0.9rem;
-            color: #333;
-        }
-
         input[type="text"],
         input[type="password"] {
-            padding: 0.75rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 0.95rem;
+            padding: 14px 16px;
+            margin-bottom: 15px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 17px;
+            background-color: #fff;
+            color: #1c1e21;
         }
 
-        button, a {
-            padding: 0.75rem;
-            background-color: #333;
+        input:focus {
+            outline: none;
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .login-btn {
+            padding: 14px;
+            background-color: #1877f2;
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.95rem;
-            
-            display: flex;
-            align-content: center;
-            justify-content: center;
-            margin-top: 1rem;
-            text-decoration: none;
-            font-weight: bold;
-            font-family: "Times New Roman", Times, serif;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
 
-        button:hover, a:hover {
-            background-color: #555;
+        .login-btn:hover {
+            background-color: #166fe5;
+        }
+
+        .signup-link {
+            padding: 14px;
+            background-color: #42b72a;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .signup-link:hover {
+            background-color: #36a420;
+        }
+
+        .divider {
+            border-top: 1px solid #dddfe2;
+            margin: 20px 0;
+        }
+
+        .error-message {
+            color: #f02849;
+            font-size: 14px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-<div class="login-container">
-    <h2>Login</h2>
-    <form action="../includes/LOGIN_PAGE/login.inc.php" method="POST">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="sadi"/>
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" value="1234" />
-
-        <button type="submit">Login</button>
-        <a href="login_signup.php" style="background-color: gray;">GO to Sign in</a>
-    </form>
-    <div style="margin-top: 1rem;">
-        <?php
-            check_login_status();
-        ?>
+<div class="container">
+    <div class="left-section">
+        <div class="logo">UDIA</div>
+        <h2 class="inspiring-text">Connect with friends and the world around you ...</h2>
     </div>
-    
+    <div class="login-container">
+        <h2 class="login-title"> Sign In </h2>
+        <form action="../includes/LOGIN_PAGE/login.inc.php" method="POST">
+            <input type="text" id="username" name="username" placeholder="Username" value="sadi"/>
+            <input type="password" id="password" name="password" placeholder="Password" value="1234" />
+            <button type="submit" class="login-btn">Log In</button>
+            <div class="divider"></div>
+            <a href="login_signup.php" class="signup-link">Create new account</a>
+        </form>
+        <div class="error-message">
+            <?php
+                check_login_status();
+            ?>
+        </div>
+    </div>
 </div>
 </body>
 </html>
