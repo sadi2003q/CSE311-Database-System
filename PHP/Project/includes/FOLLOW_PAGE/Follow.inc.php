@@ -11,10 +11,9 @@ function fetch_all_following_from_Database($pdo, int $uid = -1) {
     try {
         
         $user_id = $_SESSION['user_id'];
-
-        if(!$uid == -1) {
-            $user_id = $uid;
-        }
+        if (isset($_GET['profile_id']) && !empty($_GET['profile_id'])) {
+            $user_id = (int) $_GET['profile_id'];
+        } 
 
         $query = "SELECT * FROM FOLLOW WHERE FOLLOWER_ID = :user_id";
         $statement = $pdo->prepare($query);
@@ -35,6 +34,9 @@ function fetch_all_follower_from_Database(object $pdo) {
     try {
 
         $user_id = $_SESSION['user_id'];
+        if (isset($_GET['profile_id']) && !empty($_GET['profile_id'])) {
+            $user_id = (int) $_GET['profile_id'];
+        }
 
         $query = "SELECT * FROM FOLLOW WHERE FOLLOWING_ID = :user_id";
         $statement = $pdo->prepare($query);
@@ -74,10 +76,27 @@ function show_all_following(object $pdo) {
 
     $followings = fetch_all_following_from_Database($pdo);
     
-    echo 'Total Followings: ' . count($followings ?? []) . '<br>';
+    echo '
+        <style>
+            .follow-header {
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: #1f2937;
+            }
+
+            .follow-empty {
+                font-size: 16px;
+                color: #6b7280;
+                margin-top: 20px;
+            }
+        </style>
+    ';
+
+    echo '<div class="follow-header">Total Followings: ' . count($followings ?? []) . '</div>';
 
     if (empty($followings)) {
-        echo '<p>No following found</p>';
+        echo '<p class="follow-empty">No following found</p>';
         return;
     }
 
@@ -139,10 +158,27 @@ function show_all_follower(object $pdo) {
 
     $followers = fetch_all_follower_from_Database($pdo);
     
-    echo 'Total Followings: ' . count($followers ?? []) . '<br>';
+    echo '
+        <style>
+            .follow-header {
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: #1f2937;
+            }
+
+            .follow-empty {
+                font-size: 16px;
+                color: #6b7280;
+                margin-top: 20px;
+            }
+        </style>
+    ';
+
+    echo '<div class="follow-header">Total Followings: ' . count($followers ?? []) . '</div>';
 
     if (empty($followers)) {
-        echo '<p>No following found</p>';
+        echo '<p class="follow-empty">No following found</p>';
         return;
     }
 

@@ -168,45 +168,29 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
                 </div>
             </form>
 
-            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
-                <a href="follower.php"
-                style="
-                    background-color: #2563EB;
-                    color: white;
-                    padding: 10px 24px;
-                    border: none;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    font-size: 16px;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    transition: background-color 0.3s ease, transform 0.2s ease;
-                "
-                onmouseover="this.style.backgroundColor='#1D4ED8'; this.style.transform='scale(1.05)'"
-                onmouseout="this.style.backgroundColor='#2563EB'; this.style.transform='scale(1)'"
-                >
-                    Followers
-                </a>
+            <!-- <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+            <a href="follower.php"
+            style="
+                background-color: #2563EB;
+                color: white;
+                padding: 10px 24px;
+                border: none;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 16px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            "
+            onmouseover="this.style.backgroundColor='#1D4ED8'; this.style.transform='scale(1.05)'"
+            onmouseout="this.style.backgroundColor='#2563EB'; this.style.transform='scale(1)'"
+            >
+                Followers && Following
+            </a> -->
+            <?php show_Follower_Following_button() ?>
 
-                <a href="following.php"
-                style="
-                    background-color: #2563EB;
-                    color: white;
-                    padding: 10px 24px;
-                    border: none;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    font-size: 16px;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    transition: background-color 0.3s ease, transform 0.2s ease;
-                "
-                onmouseover="this.style.backgroundColor='#1D4ED8'; this.style.transform='scale(1.05)'"
-                onmouseout="this.style.backgroundColor='#2563EB'; this.style.transform='scale(1)'"
-                >
-                    Following
-                </a>
-            </div>
+            
+        </div>
 
         </div>
 
