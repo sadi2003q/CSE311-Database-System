@@ -83,3 +83,51 @@ function show_new_suggession_form_database(object $pdo): void
 
     echo '</div>';
 }
+
+
+
+function show_new_feed(object $pdo): void {
+    require_once 'post_model.inc.php';
+
+    $feeds = fetch_all_new_feed($pdo);
+
+    foreach ($feeds as $feed) {
+        $id = $feed['user_id'];
+        $text = $feed['text_content'] ?? '';
+        $image = $feed['image_url'] ?? '';
+        $created_at = $feed['created_at'] ?? '';
+
+        // Fetch post maker info
+        $post_maker = fetch_post_maker_info($pdo, $id);
+        $post_maker_name = $post_maker['username'] ?? 'Unknown';
+
+        // Profile image logic
+        $post_maker_image = '../uploads/male_profile_icon_image.png';
+        if (!empty($post_maker['image_url'])) {
+            $post_maker_image = '../uploads/' . $post_maker['image_url'];
+        } elseif (($post_maker['gender'] ?? '') === 'female') {
+            $post_maker_image = '../uploads/female_profile_icon_image.jpg';
+        }
+
+        // Outer container
+        echo '<div class="post" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); max-width: 600px; margin-left: auto; margin-right: auto;">';
+
+        // Top section: profile image + username (left aligned)
+        echo '<div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                <img src="' . $post_maker_image . '" alt="Profile" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px; border: 2px solid #ccc;">
+                <h3 style="margin: 0;">@' . htmlspecialchars($post_maker_name) . '</h3>
+              </div>';
+
+        // Text content
+        if (empty($image)) {
+            echo '<p style="font-size: 22px; font-weight: bold; text-align: left; margin: 1rem 0;">' . nl2br(htmlspecialchars($text)) . '</p>';
+        } else {
+            echo '<p style="font-size: 16px; text-align: left; margin-bottom: 10px;">' . nl2br(htmlspecialchars($text)) . '</p>';
+            echo '<img src="../uploads/' . htmlspecialchars($image) . '" alt="Post image" style="display: block; max-width: 90%; max-height: 400px; margin: 0 auto; border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">';
+        }
+
+        // Timestamp
+        echo '<div class="meta" style="text-align: right; margin-top: 20px; color: #777; font-size: 13px;">Posted on ' . htmlspecialchars($created_at) . '</div>';
+        echo '</div>';
+    }
+}

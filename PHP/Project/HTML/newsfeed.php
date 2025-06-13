@@ -210,6 +210,18 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             /* even darker for better contrast */
         }
 
+        .main-content,
+        .sidebar {
+            max-height: calc(100vh - 80px); /* Adjust based on navbar height */
+            overflow-y: auto;
+            scrollbar-width: none; /* For Firefox */
+        }
+
+        .main-content::-webkit-scrollbar,
+        .sidebar::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, Edge */
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -299,7 +311,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 
             <!-- News Feed -->
             <div class="post">
-                <div class="post-header">
+                <!-- <div class="post-header">
                     <img src="avatar-placeholder.jpg" alt="Avatar" />
                     <h3>Username</h3>
                 </div>
@@ -308,7 +320,9 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
                 <div class="actions">
                     <button>Like (3)</button>
                     <button>Comment (1)</button>
-                </div>
+                </div> -->
+
+                <?php show_new_feed($pdo) ?>
             </div>
         </div>
 

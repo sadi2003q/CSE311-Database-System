@@ -39,3 +39,58 @@ function fetch_new_profile_for_suggession(object $pdo): array {
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+
+function fetch_all_new_feed(object $pdo) {
+
+    try {
+        
+        if (!isset($_SESSION['user_id'])) {
+            return []; 
+        }
+
+        $user_id = $_SESSION['user_id'];
+
+        $query = "SELECT *
+            FROM follow f
+            JOIN posts p ON f.FOLLOWING_ID = p.user_id
+            WHERE f.FOLLOWER_ID = :user_id ";
+        
+        $statement = $pdo->prepare($query);
+        $statement->execute([
+            ':user_id' => $user_id
+        ]);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $result ?? [];
+
+    } catch (Exception $e) {
+        echo '<p> Error Found : ' . $e->getMessage() . '</p>';
+    }
+
+}
+
+
+
+function fetch_post_maker_info(object $pdo, int $id) {
+    try {
+        $uid = (int)$id;
+
+        $query = "Select * from users where user_id = :uid";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+
+
+
+    } catch (Exception $e) {
+        print_r('Exception Found : ' . $e->getMessage());
+    }
+}
+
+
+

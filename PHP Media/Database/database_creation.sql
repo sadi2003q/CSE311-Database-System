@@ -8,8 +8,8 @@ CREATE TABLE users (
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    age INT,
-    sex ENUM('Male', 'Female', 'Other'),
+    dob DATE,
+    GENDER ENUM('Male', 'Female', 'Other'),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -69,5 +69,9 @@ CREATE TABLE notifications (
     FOREIGN KEY (post_id) REFERENCES posts(post_id),
     FOREIGN KEY (comment_id) REFERENCES comments(comment_id)
 );
+CREATE TABLE FOLLOW (
+    
 
+
+);
 
