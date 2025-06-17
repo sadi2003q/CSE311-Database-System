@@ -3,6 +3,7 @@
     require_once "../includes/LOGIN_PAGE/login_view.inc.php";
 ?>
 
+<!-- This is a Demo branch push command -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
