@@ -204,4 +204,13 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
         </div>
     </div>
 </body>
+
+<script>
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+    });
+</script>
+
 </html>
