@@ -9,7 +9,7 @@ CREATE TABLE users (
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     dob DATE,
-    GENDER ENUM('Male', 'Female', 'Other'),
+    GENDER varchar(40) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
