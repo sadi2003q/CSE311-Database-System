@@ -1,8 +1,8 @@
 <?php
-require_once "../includes/config_session.inc.php";
-$pdo = require_once "../includes/dbh.inc.php";;
-require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
-require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
+    require_once "../includes/config_session.inc.php";
+    $pdo = require_once "../includes/dbh.inc.php";;
+    require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
+    require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 ?>
 
 
@@ -298,30 +298,12 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 
                         <button type="submit">Post</button>
                     </div>
-                    <?php
-                    upload_error_occurred()
-                    ?>
-
-
-
-
-
+                    <?php upload_error_occurred() ?>
                 </form>
             </div>
 
             <!-- News Feed -->
             <div class="post">
-                <!-- <div class="post-header">
-                    <img src="avatar-placeholder.jpg" alt="Avatar" />
-                    <h3>Username</h3>
-                </div>
-                <p>This is a sample post text with some image.</p>
-                <img src="sample-image.jpg" alt="Sample" style="width:100%; border-radius:8px;" />
-                <div class="actions">
-                    <button>Like (3)</button>
-                    <button>Comment (1)</button>
-                </div> -->
-
                 <?php show_new_feed($pdo) ?>
             </div>
         </div>

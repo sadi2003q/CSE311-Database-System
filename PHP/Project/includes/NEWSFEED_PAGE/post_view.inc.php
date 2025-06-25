@@ -92,13 +92,14 @@ function show_new_feed(object $pdo): void {
     $feeds = fetch_all_new_feed($pdo);
 
     foreach ($feeds as $feed) {
-        $id = $feed['user_id'];
+        $postMakerID = $feed['user_id'];
+        $post_id=$feed['post_id'];
         $text = $feed['text_content'] ?? '';
         $image = $feed['image_url'] ?? '';
         $created_at = $feed['created_at'] ?? '';
 
         // Fetch post maker info
-        $post_maker = fetch_post_maker_info($pdo, $id);
+        $post_maker = fetch_post_maker_info($pdo, $postMakerID);
         $post_maker_name = $post_maker['username'] ?? 'Unknown';
 
         // Profile image logic
@@ -126,18 +127,17 @@ function show_new_feed(object $pdo): void {
             echo '<img src="../uploads/' . htmlspecialchars($image) . '" alt="Post image" style="display: block; max-width: 90%; max-height: 400px; margin: 0 auto; border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">';
         }
 
-        $new_link = 'profile.php';
         $current_state = 'React';
 
         // Buttons for Like and Comment with hover animation
         echo '<div style="display: flex; gap: 10px; margin-top: 15px;">
-        <a href="' . $new_link . '" style="text-decoration: none;">
-          <button style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#0056b3\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#007bff\';">'. $current_state . '</button>
-        </a>
-        <a href="#" style="text-decoration: none;">
-          <button style="padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#5a6268\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#6c757d\';">Comment</button>
-        </a>
-      </div>';
+                <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID='. ($post_id) . '&&postMakerID=' . $postMakerID . '&&postLikerID='. $_SESSION['user_id'] .'" style="margin: 0;">
+                    <button type="submit" name="react" style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#0056b3\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#007bff\';">'. $current_state . '</button>
+                </form>
+                <a href="#" style="text-decoration: none;">
+                    <button style="padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#5a6268\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#6c757d\';">Comment</button>
+                </a>
+              </div>';
 
         // Timestamp
         echo '<div class="meta" style="text-align: right; margin-top: 20px; color: #777; font-size: 13px;">Posted on ' . htmlspecialchars($created_at) . '</div>';
