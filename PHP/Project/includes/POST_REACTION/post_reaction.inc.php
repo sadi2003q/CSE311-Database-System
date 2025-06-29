@@ -94,11 +94,11 @@ function react_this_post(int $postID, int $postLikerID) {
 
         if (check_if_liked_or_not($postID, $postLikerID)==True) {
             unlike_this_post($postID, $postLikerID);
-            header("Location: ../../HTML/newsfeed.php?unliked");
+            header("Location: ../../HTML/newsfeed.php?unliked#post-$postID");
             return;
         } else {
             like_this_post($postID, $postLikerID);
-            header("Location: ../../HTML/newsfeed.php?liked");
+            header("Location: ../../HTML/newsfeed.php?liked#post-$postID");
         }
 
         die("successful");

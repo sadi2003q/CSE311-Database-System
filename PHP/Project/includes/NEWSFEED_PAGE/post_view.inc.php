@@ -113,7 +113,7 @@ function show_new_feed(object $pdo): void
         }
 
         // Outer container
-        echo '<div class="post" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); max-width: 600px; margin-left: auto; margin-right: auto;">';
+        echo '<div id="post-'.$post_id.'" class="post" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); max-width: 600px; margin-left: auto; margin-right: auto;">';
 
         // Top section: profile image + username (left aligned)
         echo '<div style="display: flex; align-items: center; margin-bottom: 1rem;">
@@ -139,7 +139,7 @@ function show_new_feed(object $pdo): void
 
         // Buttons for Like and Comment with hover animation
         echo '<div style="display: flex; gap: 10px; margin-top: 15px;">
-        <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID=' . ($post_id) . '&&postMakerID=' . $postMakerID . '&&postLikerID=' . $_SESSION['user_id'] . '" style="margin: 0;">
+        <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID='.$post_id.'&&postMakerID='.$postMakerID.'&&postLikerID='.$_SESSION['user_id'].'#post-'.$post_id.'"  style="margin: 0;">
             <button type="submit" name="react" 
                 style="padding: 8px 16px; background-color: ' . $button_bg . '; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);"
                 onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'' . $button_hover_bg . '\';" 
