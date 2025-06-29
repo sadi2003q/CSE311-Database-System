@@ -4,9 +4,10 @@
 declare(strict_types=1);
 
 
-function upload_error_occurred(): void {
+function upload_error_occurred(): void
+{
 
-    if($_GET['post']==='success') {
+    if ($_GET['post'] === 'success') {
         echo '
         <div class="success-message">
                     <h3>Post Uploaded Successfully</h3>
@@ -53,31 +54,31 @@ function show_new_suggession_form_database(object $pdo): void
 
     foreach ($all_profile as $profile) {
 
-        if($_SESSION['user_id'] === $profile['user_id']) {
+        if ($_SESSION['user_id'] === $profile['user_id']) {
             continue;
         }
 
         // Determine image source
         $imageSrc = '';
-        if($profile['image_url']) {
-            $imageSrc = '../uploads/'.$profile['image_url']; // Assuming images are stored in an 'uploads' 
+        if ($profile['image_url']) {
+            $imageSrc = '../uploads/' . $profile['image_url']; // Assuming images are stored in an 'uploads' 
         } else {
-            if($profile['GENDER'] == 'male') {
+            if ($profile['GENDER'] == 'male') {
                 $imageSrc = '../uploads/male_profile_icon_image.png';
-            } else if($profile['GENDER'] == 'female') {
+            } else if ($profile['GENDER'] == 'female') {
                 $imageSrc = '../uploads/female_profile_icon_image.jpg';
             }
         }
-        
 
-        $link = 'visiting_profile.php?profile_id=' . $profile['user_id'] ;
+
+        $link = 'visiting_profile.php?profile_id=' . $profile['user_id'];
 
         echo '<div class="suggestion" style="display: flex; align-items: center; margin-bottom: 10px;">' .
-                '<img src="' . $imageSrc . '" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;" />' .
-                '<div style="padding: 5px;">' .
-                    '<p style="margin: 0; font-weight: bold;">' . htmlspecialchars($profile['username']) . '</p>' .
-                    '<a href=" ' . $link . '" style="display: inline-block; padding: 4px 8px; background-color: #007bff; color: white; text-decoration: none; font-size: 12px; border-radius: 4px;">Visit Profile</a>' .
-                '</div>' .
+            '<img src="' . $imageSrc . '" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;" />' .
+            '<div style="padding: 5px;">' .
+            '<p style="margin: 0; font-weight: bold;">' . htmlspecialchars($profile['username']) . '</p>' .
+            '<a href=" ' . $link . '" style="display: inline-block; padding: 4px 8px; background-color: #007bff; color: white; text-decoration: none; font-size: 12px; border-radius: 4px;">Visit Profile</a>' .
+            '</div>' .
             '</div>';
     }
 
@@ -86,14 +87,15 @@ function show_new_suggession_form_database(object $pdo): void
 
 
 
-function show_new_feed(object $pdo): void {
+function show_new_feed(object $pdo): void
+{
     require_once 'post_model.inc.php';
 
     $feeds = fetch_all_new_feed($pdo);
 
     foreach ($feeds as $feed) {
         $postMakerID = $feed['user_id'];
-        $post_id=$feed['post_id'];
+        $post_id = $feed['post_id'];
         $text = $feed['text_content'] ?? '';
         $image = $feed['image_url'] ?? '';
         $created_at = $feed['created_at'] ?? '';
@@ -128,19 +130,53 @@ function show_new_feed(object $pdo): void {
         }
 
         $current_state = 'React';
+        if (check_if_liked_or_not($pdo, (int)$post_id)) {
+            $current_state = 'Reacted';
+        }
+
+        $button_bg = ($current_state === 'Reacted') ? '#28a745' : '#007bff'; // Green or blue
+        $button_hover_bg = ($current_state === 'Reacted') ? '#218838' : '#0056b3'; // Darker green or blue
 
         // Buttons for Like and Comment with hover animation
         echo '<div style="display: flex; gap: 10px; margin-top: 15px;">
-                <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID='. ($post_id) . '&&postMakerID=' . $postMakerID . '&&postLikerID='. $_SESSION['user_id'] .'" style="margin: 0;">
-                    <button type="submit" name="react" style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#0056b3\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#007bff\';">'. $current_state . '</button>
-                </form>
-                <a href="#" style="text-decoration: none;">
-                    <button style="padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#5a6268\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#6c757d\';">Comment</button>
-                </a>
-              </div>';
+        <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID=' . ($post_id) . '&&postMakerID=' . $postMakerID . '&&postLikerID=' . $_SESSION['user_id'] . '" style="margin: 0;">
+            <button type="submit" name="react" 
+                style="padding: 8px 16px; background-color: ' . $button_bg . '; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);"
+                onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'' . $button_hover_bg . '\';" 
+                onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'' . $button_bg . '\';">'
+            . $current_state .
+            '</button>
+        </form>
+        <a href="#" style="text-decoration: none;">
+            <button style="padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#5a6268\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#6c757d\';">Comment</button>
+        </a>
+      </div>';
 
         // Timestamp
         echo '<div class="meta" style="text-align: right; margin-top: 20px; color: #777; font-size: 13px;">Posted on ' . htmlspecialchars($created_at) . '</div>';
         echo '</div>';
     }
 }
+
+
+function check_if_liked_or_not(object $pdo, int $postID): bool {
+    try {
+        
+        $postLikerID = (int)$_SESSION['user_id'];
+
+
+        $query = "SELECT * FROM LIKES WHERE user_id = :postLikerID AND post_ID = :postID";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':postLikerID', $postLikerID, PDO::PARAM_INT);
+        $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Check if a row exists
+        return $stmt->rowCount() > 0;
+
+    } catch (Exception $e) {
+        echo 'Something went wrong: ' . $e->getMessage();
+        return false; // Return false on error
+    }
+}
+
