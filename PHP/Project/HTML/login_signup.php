@@ -3,6 +3,28 @@ require_once "../includes/SIGNUP_PAGE/signup_view.inc.php";
 require_once "../includes/config_session.inc.php";
 ?>
 
+
+<!-- 
+
+    This page Allow user to Signup with Social Media
+    -> username
+    -> age
+    -> email
+    -> password
+    -> dob
+
+
+    Check of the validaiton 
+    -> if duplicate username exist
+    -> if email is valid and it exist in the database
+    -> if given age is over 10 or not
+
+-->
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,22 +153,55 @@ require_once "../includes/config_session.inc.php";
 
     </style>
 </head>
+
+
+
 <body>
 <div class="signup-container">
+
+
+    <!-- 
+        Some Simple Message
+    -->
     <div class="signup-header">
         <h2 class="signup-title">Create a new account</h2>
         <p class="signup-subtitle">It’s quick and easy.</p>
     </div>
 
+
+
+
+    <!-- 
+        connect with signup.inc.php file and show user the field for siging up    
+        button for sign up
+        and go to login page if they already have one
+    -->
     <form action="../includes/SIGNUP_PAGE/signup.inc.php" method="POST">
         <?php signup_input(); ?>
         <button type="submit" class="form-button">Sign Up</button>
         <a href="login.php" class="link_signup">Already have an account?</a>
     </form>
 
+
+
+
+
+    <!-- 
+        This Part will only activate if there is showing some sort of error with given input
+    -->
     <div id="message-area">
         <?php check_signup_errors(); ?>
     </div>
+
+
+
+
+
 </div>
+
+
+
+
+
 </body>
 </html>

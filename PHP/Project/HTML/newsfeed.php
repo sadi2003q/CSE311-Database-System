@@ -1,13 +1,22 @@
 <?php
+    // --> Import session configuration and database connection
     require_once "../includes/config_session.inc.php";
-    $pdo = require_once "../includes/dbh.inc.php";;
+    $pdo = require_once "../includes/dbh.inc.php";
+
+    // --> Include feed and post logic view
     require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
     require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 ?>
 
 
 
-
+<!-- 
+    Newsfeed Page 
+    -> Displays navbar
+    -> Allows user to post status/images
+    -> Displays all user posts
+    -> Shows sidebar with user info and friend suggestions
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -267,7 +276,11 @@
 
 <body>
 
-    <!-- Navbar -->
+    <!-- 
+        Navbar 
+        -> Contains navigation links to home, profile, notifications, logout
+        -> Mobile hamburger menu for sidebar access
+    -->
     <nav class="navbar">
         <div class="navbar-links">
             <a href="newsfeed.php">Home</a>
@@ -278,39 +291,69 @@
         <button class="hamburger" onclick="toggleSidebar()">☰</button>
     </nav>
 
-    <!-- Main Container -->
+    <!-- 
+        Main container holds the feed and the sidebar 
+    -->
     <div class="container">
+
+        <!-- 
+            Main content area 
+            -> Includes post creation and feed display
+        -->
         <div class="main-content">
-            <!-- Create a Post -->
+
+            <!-- 
+                Post creation form 
+                -> User can write status and upload image
+                -> Form submits to post.inc.php
+                -> Displays error if upload fails
+            -->
             <div class="post-form">
                 <form action="../includes/NEWSFEED_PAGE/post.inc.php" method='POST' enctype="multipart/form-data">
-
-                    <!-- Status area -->
+                    
+                    <!-- Status text input -->
                     <label for="Status">
                         <textarea rows="4" placeholder="What's on your mind?" name="post_text">This is a sample Post</textarea>
                     </label>
 
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                        <!-- Image upload button -->
+                        
+                        <!-- Image input -->
                         <label for="Uploading Image">
                             <input type="file" accept="image/*" name="post_image">
                         </label>
 
+                        <!-- Post submission button -->
                         <button type="submit">Post</button>
                     </div>
+
+                    <!-- 
+                        Error Message Section 
+                        -> If image upload fails or invalid input
+                    -->
                     <?php upload_error_occurred() ?>
                 </form>
             </div>
 
-            <!-- News Feed -->
+            <!-- 
+                Feed display area 
+                -> Loads posts from database
+            -->
             <div class="post">
                 <?php show_new_feed($pdo) ?>
             </div>
         </div>
 
-        <!-- Sidebar -->
+        <!-- 
+            Sidebar 
+            -> Appears on right (desktop) or as slide-in (mobile)
+            -> Contains user info and suggested friends
+        -->
         <aside class="sidebar" id="sidebar">
-            <!-- Mobile-only nav links -->
+
+            <!-- 
+                Navigation links for mobile view 
+            -->
             <div class="nav-links-mobile">
                 <a href="newsfeed.php">Home</a>
                 <a href="profile.php">Profile</a>
@@ -318,59 +361,25 @@
                 <a href="#">Logout</a>
             </div>
 
-
-
-            <!-- User Information-->
+            <!-- 
+                User info section 
+                -> Profile picture, name, etc.
+            -->
             <div class="user-info">
-
-                <?php
-
-                show_user_information($pdo);
-
-                ?>
-
-
-
-
+                <?php show_user_information($pdo); ?>
             </div>
 
-
-            <!-- Suggested Friends -->
-
-            <!--        <div class="friend-suggestions">-->
-            <!--            <h3>Suggested Friends</h3>-->
-            <!--            <div class="suggestion">-->
-            <!--                <img src="friend-avatar.jpg" alt="Friend" />-->
-            <!--                <div>-->
-            <!--                    <p>Jane</p>-->
-            <!--                    <button>Add</button>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="suggestion">-->
-            <!--                <img src="friend-avatar2.jpg" alt="Friend" />-->
-            <!--                <div>-->
-            <!--                    <p>Mike</p>-->
-            <!--                    <button>Add</button>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--        </div>-->
-
-
-
-
-
-            <?php
-            show_new_suggession_form_database($pdo);
-            ?>
-
-
-
-
-
+            <!-- 
+                Friend Suggestions 
+                -> Dynamically loaded from database
+            -->
+            <?php show_new_suggession_form_database($pdo); ?>
         </aside>
     </div>
 
-    <!-- Script -->
+    <!-- 
+        Sidebar toggle script for mobile view 
+    -->
     <script>
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("active");

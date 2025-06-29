@@ -7,7 +7,10 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
 
 ?>
 
+<!-- 
+    This page allow user to visit other profile post follower and following list, also to follow or unfollow this account
 
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +19,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
     <style>
+        /* General Reset */
         * {
             margin: 0;
             padding: 0;
@@ -27,6 +31,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             background: #F3F4F6;
         }
 
+        /* Navigation Bar */
         .navbar {
             background: #1E3A8A;
             padding: 1rem;
@@ -60,6 +65,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             padding: 0 1rem;
         }
 
+        /* Profile Section */
         .profile-section {
             background: #fff;
             padding: 1.5rem;
@@ -98,6 +104,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             font-weight: 500;
         }
 
+        /* Posts Section */
         .posts-section {
             background: #fff;
             padding: 1rem;
@@ -132,6 +139,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             margin-right: 1rem;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 padding: 0 0.5rem;
@@ -149,68 +157,66 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
         }
     </style>
 </head>
+
 <body>
+
+    <!-- 
+        Top Navigation Bar
+        -> Back button to return to the previous page
+    -->
     <nav class="navbar">
         <button onclick="history.back()">Back</button>
     </nav>
 
     <div class="container">
+
+        <!-- 
+            Profile Section
+            -> Displays visiting user's profile picture and name
+            -> Data loaded from database using `show_all_information($pdo)`
+        -->
         <div class="profile-section">
-            <!-- <img src="profile.jpg" alt="Profile Picture" />
-            <h2>User Name</h2> -->
+            <?php show_all_information($pdo); ?>
 
-            <?php show_all_information($pdo) ?>
-
-
+            <!-- 
+                Follow/Unfollow Form
+                -> Calls `show_appropriate_button()` to show "Follow" or "Unfollow"
+            -->
             <form action="../includes/VISITING_PROFILE/visiting_profile.inc.php" method="POST">
                 <div class="button-group">
-                    <?php show_appropriate_button($pdo) ?>
+                    <?php show_appropriate_button($pdo); ?>
                 </div>
             </form>
 
-            <!-- <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
-            <a href="follower.php"
-            style="
-                background-color: #2563EB;
-                color: white;
-                padding: 10px 24px;
-                border: none;
-                border-radius: 8px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 16px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transition: background-color 0.3s ease, transform 0.2s ease;
-            "
-            onmouseover="this.style.backgroundColor='#1D4ED8'; this.style.transform='scale(1.05)'"
-            onmouseout="this.style.backgroundColor='#2563EB'; this.style.transform='scale(1)'"
-            >
-                Followers && Following
-            </a> -->
-            <?php show_Follower_Following_button() ?>
-
-            
+            <!-- 
+                Followers & Following Link
+                -> Displays button if profile is allowed to expose this info
+            -->
+            <?php show_Follower_Following_button(); ?>
         </div>
 
-        </div>
-
+        <!-- 
+            Posts Section
+            -> Displays all posts made by the visiting user
+        -->
         <div class="posts-section">
             <h3>Posts</h3>
-
-            <!-- This will show all post from this user -->
-            <?php show_all_post($pdo) ?>
-
-            
+            <?php show_all_post($pdo); ?>
         </div>
+
     </div>
+
+    <!-- 
+        Force refresh page from cache if revisited using back button
+        -> Prevents outdated follow/unfollow state
+    -->
+    <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                window.location.reload();
+            }
+        });
+    </script>
+
 </body>
-
-<script>
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-            window.location.reload();
-        }
-    });
-</script>
-
 </html>

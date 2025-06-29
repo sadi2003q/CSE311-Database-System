@@ -1,11 +1,21 @@
 <?php
-
+// Backend Logic Hander Page, Database connection and Session variable management page connection
 require_once '../includes/config_session.inc.php';
 $pdo = require_once '../includes/dbh.inc.php';
 require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
 
 
 ?>
+
+
+<!-- 
+  This page is about showing the followers of a profle
+  -> comming from visiting profile file
+  -> will show the follower list
+  -> another section will show the following list
+-->
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -156,6 +166,7 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
       <h1>Followers & Following</h1>
 
       <!-- Tab Buttons -->
+      <!-- Follower and following list button -->
       <div class="button-group">
         <button class="active" onclick="showList('following')">Following</button>
         <button onclick="showList('followers')">Followers</button>
@@ -163,22 +174,34 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
     </div>
 
     <!-- Content Section with Scroll -->
+     <!-- this section is the body which show the scorlling profile -->
     <div class="content" style="height: 80vh;">
-      <!-- Following List (Default Visible) -->
-      <div class="list active" id="following-list">
-        <?php show_all_following($pdo); ?>
-      </div>
+      
+    
+    
+    
+    <!-- Following List (Default Visible) -->
+    <div class="list active" id="following-list">
+      <?php show_all_following($pdo); ?>
+    </div>
 
-      <!-- Followers List (Hidden by default) -->
-      <div class="list" id="followers-list">
-        <!-- Here is for following -->
+    
+    
+    
+    
+    <!-- Followers List (Hidden by default) -->
+    <div class="list" id="followers-list">
+      <?php show_all_follower($pdo) ?>
+    </div>
 
-        <?php show_all_follower($pdo) ?>
 
-      </div>
+
     </div>
   </div>
 
+  
+  
+  <!-- This section the button for showing follower and following -->
   <script>
     /**
      * Handles tab switching for 'following' and 'followers'

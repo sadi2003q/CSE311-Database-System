@@ -3,7 +3,12 @@
     require_once "../includes/LOGIN_PAGE/login_view.inc.php";
 ?>
 
-<!-- This is a Demo branch push command -->
+<!-- 
+
+    This page will allow user to login with existing email and password
+    Check for some simple constrain like for username and password
+
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,12 +161,31 @@
         }
     </style>
 </head>
+
+
+
 <body>
 <div class="container">
+
+    <!-- 
+
+        Simple Message with Logo
+
+    -->
     <div class="left-section">
         <div class="logo">UDIA</div>
         <h2 class="inspiring-text">Connect with friends and the world around you ...</h2>
     </div>
+
+
+    <!-- 
+        main login part which connecte with login.inc.php and then
+        -> check for if all fields are empty or not
+        -> if username or password not exist on the database
+        -> verify username and password
+        -> Button for login
+        -> takes to create account page
+    -->
     <div class="login-container">
         <h2 class="login-title"> Sign In </h2>
         <form action="../includes/LOGIN_PAGE/login.inc.php" method="POST">
@@ -171,6 +195,11 @@
             <div class="divider"></div>
             <a href="login_signup.php" class="signup-link">Create new account</a>
         </form>
+
+
+
+
+        <!-- This portion will active if something is wrong found or error found -->
         <div class="error-message">
             <?php
                 check_login_status();
