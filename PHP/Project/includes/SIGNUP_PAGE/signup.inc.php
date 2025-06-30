@@ -1,7 +1,13 @@
 <?php
 require_once "../config_session.inc.php";
 
+
+// This Page will create new user on the database
+// check for error and validation then it will make the call in database
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    // Grabbing all input from user
     $username = $_POST['username'] ;
     $email = $_POST['email'] ;
     $password = $_POST['password'] ;
@@ -9,14 +15,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gender = $_POST['gender'] ;
 
     try {
+
+        // Connections
         $pdo = require_once "../dbh.inc.php";
         require_once "signup_model.inc.php";
         require_once "signup_contr.inc.php";
 
         // ERROR HANDLING
         $errors = [];
-
-        // Check empty fields first
         if (is_input_empty($username, $password, $email, $gender, $dob)){
             $errors['empty_input'] = "Please fill in all the fields";
         }
@@ -33,6 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors['age_invalid'] = "You must be at least 10 years old";
         }
 
+        // If error found then going to signup failed funcion
         if ($errors) {
             $_SESSION['error_signup'] = $errors;
 
@@ -49,10 +56,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // If we get here, proceed with signup
-        // You'll need to implement this part
-
         create_user($pdo, $username, $password, $email, $gender, $dob);
 
+        // Creation successfull and login
         header("Location: ../../HTML/login.php?signup=success");
 
         $pdo = null;
@@ -60,6 +66,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Login successful");
 
     } catch (PDOException $e) {
+
+        // if any exceptio is found reguading PDO then go to login failed 
         header("Location: ../../HTML/loginFailed.html");
         error_log("Errors found: " . print_r($e, true));
         die("Database error: " . $e->getMessage());

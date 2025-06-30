@@ -3,6 +3,7 @@
 
 declare(strict_types=1);
 
+// This function will show error only if the code has error 
 function show_error_while_logging_out(): void {
 
     if(!isset($_SESSION['error_logout'])) {

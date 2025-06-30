@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// If any Error Found then this function will activate and show little information related to the error
+
 function check_login_status(): void {
     if(isset($_SESSION['error_login'])) {
         $errors = $_SESSION['error_login'];

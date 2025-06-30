@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// This function will check if the given username for signing up already exist or not
 function get_username(object $pdo, string $username) {
     $query = "SELECT USERNAME FROM USERS WHERE username = :username";
     $statement = $pdo->prepare($query);
@@ -9,6 +10,7 @@ function get_username(object $pdo, string $username) {
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
+// This function will check if the given email for signing up already exist or not
 function get_email(object $pdo, string $email) {
     $query = "SELECT EMAIL FROM USERS WHERE email = :email";
     $statement = $pdo->prepare($query);
@@ -17,6 +19,8 @@ function get_email(object $pdo, string $email) {
 }
 
 
+
+// This will set the user into the database
 function set_user(object $pdo, string $username, string $password, string $email, string $gender, string $dob): void {
 
     $query = "INSERT INTO USERS (USERNAME, EMAIL, PASSWORD, DOB, GENDER) 

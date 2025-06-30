@@ -4,6 +4,7 @@
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
+        // Connection with session configuration
         require_once '../config_session.inc.php';
 
         // Unset all session variables
@@ -32,7 +33,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     } catch (Exception $e) {
-
+        
+        // this will leads to logout error 
         $error_logout['logout_error'] = 'Something went wrong while logging out';
         $_SESSION['error_logout'] = $error_logout;
 

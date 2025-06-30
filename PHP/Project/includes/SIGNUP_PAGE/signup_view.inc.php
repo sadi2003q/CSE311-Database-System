@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+
+// This function will be active when there will be any error found
 function check_signup_errors(): void {
     if(isset($_SESSION['error_signup'])) {
         $errors = $_SESSION['error_signup'];
@@ -25,7 +27,7 @@ function check_signup_errors(): void {
 
 
 
-
+// Input Field for signing up
 function signup_input(): void {
     // Username field
     echo '<div class="form-group">';

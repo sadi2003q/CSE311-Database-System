@@ -3,13 +3,16 @@
 
 declare(strict_types=1);
 
+// connection with session configuration file 
 require_once '../includes/config_session.inc.php';
 
 
-
+// Fetch all those users who is being followed 
 function fetch_all_following_from_Database($pdo, int $uid = -1) {
     try {
         
+        // By default it will show the following of the current loggin user, 
+        // but when variable is passed through the url then it will take that as the user_id
         $user_id = $_SESSION['user_id'];
         if (isset($_GET['profile_id']) && !empty($_GET['profile_id'])) {
             $user_id = (int) $_GET['profile_id'];
@@ -29,10 +32,12 @@ function fetch_all_following_from_Database($pdo, int $uid = -1) {
     }
 }
 
-
+// Fetching all those users who is following 
 function fetch_all_follower_from_Database(object $pdo) {
     try {
 
+        // By default it will show the follower of the current loggin user, 
+        // but when variable is passed through the url then it will take that as the user_id
         $user_id = $_SESSION['user_id'];
         if (isset($_GET['profile_id']) && !empty($_GET['profile_id'])) {
             $user_id = (int) $_GET['profile_id'];
@@ -53,7 +58,7 @@ function fetch_all_follower_from_Database(object $pdo) {
     }
 }
 
-
+// Fetch the name from database
 function fetch_name_from_Database(object $pdo, int $uid) {
     try {
         $query = "SELECT username FROM USERS WHERE user_id = :uuid";
@@ -71,9 +76,11 @@ function fetch_name_from_Database(object $pdo, int $uid) {
 }
 
 
-
+// view level code: 
+// it will show all the following
 function show_all_following(object $pdo) {
 
+    // Calling function to fetch all following from database
     $followings = fetch_all_following_from_Database($pdo);
     
     echo '
@@ -153,9 +160,10 @@ function show_all_following(object $pdo) {
 }
 
 
-
+// this this will show all the follower 
 function show_all_follower(object $pdo) {
 
+    // Calling function to fetch all follower from database
     $followers = fetch_all_follower_from_Database($pdo);
     
     echo '
@@ -175,6 +183,7 @@ function show_all_follower(object $pdo) {
         </style>
     ';
 
+    // Count number of follower
     echo '<div class="follow-header">Total Followings: ' . count($followers ?? []) . '</div>';
 
     if (empty($followers)) {
