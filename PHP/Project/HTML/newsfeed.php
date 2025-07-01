@@ -7,74 +7,47 @@
     require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
     require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 ?>
-
-
-
-<!-- 
-    Newsfeed Page 
-    -> Displays navbar
-    -> Allows user to post status/images
-    -> Displays all user posts
-    -> Shows sidebar with user info and friend suggestions
--->
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responsive News Feed</title>
+    <title>News Feed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* General Reset & Base */
+        /* Modern UI Reset & Variables */
+        :root {
+            --primary-color: #1877F2;
+            --primary-hover: #166FE5;
+            --background-color: #F0F2F5;
+            --card-background: #FFFFFF;
+            --text-color: #050505;
+            --secondary-text-color: #65676B;
+            --border-color: #dddfe2;
+            --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.1);
+            --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --border-radius: 8px;
+            --font-family: 'Poppins', sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background: #F3F4F6;
-        }
-
-        /* Navbar */
-        .navbar {
-            background: #1E3A8A;
-            padding: 1rem;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .navbar-links a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .hamburger {
-            display: none;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
+            background-color: var(--background-color);
+            font-family: var(--font-family);
+            color: var(--text-color);
         }
 
         /* Layout */
         .container {
             display: flex;
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 1.5rem auto;
             gap: 1.5rem;
             padding: 0 1rem;
@@ -82,208 +55,408 @@
 
         .main-content {
             flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .sidebar {
             flex: 1;
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 300px;
-            transition: transform 0.3s ease-in-out;
+            max-width: 360px;
+            position: sticky;
+            top: 80px; /* Navbar height + margin */
+            height: calc(100vh - 80px);
         }
 
-        /* Sidebar content */
-        .sidebar .nav-links-mobile {
-            display: none;
-            flex-direction: column;
-            margin-bottom: 2rem;
-        }
-
-        .sidebar .nav-links-mobile a {
-            color: #1E3A8A;
-            text-decoration: none;
-            margin: 0.25rem 0;
-            font-weight: bold;
-        }
-
-        .user-info,
-        .friend-suggestions {
-            margin-bottom: 1.5rem;
-        }
-
-        .user-info img {
-            width: 60px;
-            border-radius: 50%;
-            margin-bottom: 0.5rem;
-
-            img {
-                padding-top: 1rem;
-            }
-
-            p {
-                padding-top: 1rem;
-            }
-
-        }
-
-        .suggestion {
+        /* Navbar */
+        .navbar {
+            background: var(--card-background);
+            padding: 0 2rem;
+            height: 60px;
+            color: var(--text-color);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-1);
         }
 
-        .suggestion img {
-            width: 40px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
         }
 
-        .suggestion button {
-            background: #3B82F6;
-            color: #fff;
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar-links a {
+            color: var(--secondary-text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .navbar-links a:hover, .navbar-links a.active {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
             border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 1.5rem;
             cursor: pointer;
         }
 
-        /* Post form & post */
-        .post-form,
-        .post {
-            background: #fff;
+        /* Card Base Style */
+        .card {
+            background: var(--card-background);
             padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-1);
+        }
+
+        /* Post Form */
+        .post-form {
+            padding: 1.5rem;
+        }
+        
+        .post-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .post-form-input {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .post-form textarea {
             width: 100%;
             padding: 0.75rem;
-            resize: vertical;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            resize: none;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--background-color);
+            font-family: var(--font-family);
+            font-size: 1rem;
+            outline: none;
         }
 
-        .post-form button {
-            margin-top: 0.75rem;
-            background: #3B82F6;
-            color: #fff;
-            padding: 0.5rem 1rem;
+        .post-form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .post-form-actions label {
+            cursor: pointer;
+            color: var(--secondary-text-color);
+            font-weight: 500;
+        }
+        
+        .post-form-actions input[type="file"] {
+            display: none;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
             border: none;
             border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-family: var(--font-family);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Post Card */
+        .post {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .post-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 0.75rem;
         }
 
-        .post-header img {
+        .avatar {
             width: 40px;
+            height: 40px;
             border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .post-author-info {
+            display: flex;
+            flex-direction: column;
         }
 
-        .post .actions button {
-            background: none;
-            border: none;
-            color: #1E3A8A;
-            font-weight: bold;
-            cursor: pointer;
-            margin-right: 1rem;
+        .post-author {
+            font-weight: 600;
+            font-size: 0.95rem;
         }
 
-        .success-message {
-            width: 85%;
+        .post-meta {
+            font-size: 0.8rem;
+            color: var(--secondary-text-color);
+        }
+
+        .post-content .post-text {
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            font-size: 1.1rem; /* Slightly larger for readability */
+        }
+        .post-content .post-text.bold-status {
+            font-weight: 600; /* Make it bold */
+        }
+
+        .post-content .post-image {
+            max-width: 100%;
+            height: auto; /* Maintain aspect ratio */
+            max-height: 400px; /* Limit height to prevent excessively tall images */
+            border-radius: var(--border-radius);
+            object-fit: contain; /* Ensure the whole image is visible */
+            display: block; /* Remove extra space below image */
+            margin: 0 auto; /* Center the image */
+        }
+
+        .post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+    gap: 0.5rem;
+}
+
+        .action-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-text-color);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    text-align: center;
+}
+
+        .action-btn:hover {
+            background-color: #F2F2F2;
+        }
+        
+        .action-btn.reacted {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Sidebar */
+        .sidebar-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-section h3 {
+            font-size: 1.1rem;
+            color: var(--secondary-text-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .user-info .avatar {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .user-info p {
+            font-weight: 600;
+        }
+
+        .suggestions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 400px; /* Or adjust as needed */
+    overflow-y: auto;
+    padding-bottom: 2rem;
+    padding-right: 0.5rem; /* Allow space for scrollbar */
+}
+
+.suggestions-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestions-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .suggestion-info {
+            flex-grow: 1;
+        }
+        
+        .suggestion-info p {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .suggestion-info a {
+    display: inline-block;
+    font-size: 0.8rem;
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+.suggestion-info a:hover {
+    background-color: var(--primary-hover);
+}
+
+        /* Alert Messages */
+        .alert {
+            width: 100%;
             margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #d0f0c0;
-            /* soft light green background */
-            font-family: 'Times New Roman', Times, serif;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: var(--font-family);
         }
-
-        .success-message h3 {
-            color: #2e7d32;
-            /* dark green text */
-            margin: 0;
+        .alert-success {
+            background-color: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
         }
-
-        .success-message p {
-            margin-top: 5px;
-            color: #1b5e20;
-            /* even darker for better contrast */
+        .alert-danger {
+            background-color: #F8D7DA;
+            color: #721C24;
+            border: 1px solid #F5C6CB;
         }
-
-        .main-content,
-        .sidebar {
-            max-height: calc(100vh - 80px); /* Adjust based on navbar height */
-            overflow-y: auto;
-            scrollbar-width: none; /* For Firefox */
-        }
-
-        .main-content::-webkit-scrollbar,
-        .sidebar::-webkit-scrollbar {
-            display: none; /* For Chrome, Safari, Edge */
+        .alert h3 {
+            margin: 0 0 0.5rem 0;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
+        @media (max-width: 992px) {
+            .sidebar {
+                display: none;
             }
+            .container {
+                justify-content: center;
+            }
+            .main-content {
+                flex: 1;
+                max-width: 680px;
+            }
+        }
+        /* Allow Reacted button to have hover effect like Comment */
+.action-btn.reacted:hover {
+    background-color: #F2F2F2;
+}
 
+        @media (max-width: 768px) {
             .navbar-links {
                 display: none;
             }
-
             .hamburger {
                 display: block;
             }
-
+            .container {
+                padding: 0;
+                margin: 0;
+            }
+            .main-content {
+                gap: 0.5rem;
+            }
+            .card {
+                border-radius: 0;
+                box-shadow: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .post-form {
+                margin-bottom: 0.5rem;
+            }
+            /* Mobile Sidebar (Drawer) */
             .sidebar {
+                display: block;
                 position: fixed;
                 top: 0;
-                right: 0;
+                left: -100%;
                 height: 100%;
-                width: 260px;
-                transform: translateX(100%);
-                background: #fff;
+                width: 280px;
+                background: var(--card-background);
                 z-index: 1001;
                 overflow-y: auto;
+                transition: left 0.3s ease-in-out;
+                box-shadow: var(--shadow-2);
+                padding: 1.5rem;
             }
-
             .sidebar.active {
-                transform: translateX(0);
+                left: 0;
             }
-
             .sidebar .nav-links-mobile {
                 display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+            .sidebar .nav-links-mobile a {
+                color: var(--text-color);
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 1.1rem;
             }
         }
-
-        @media (min-width: 769px) {
-            .sidebar .nav-links-mobile {
+        @media (min-width: 992px) {
+            .nav-links-mobile {
                 display: none !important;
             }
         }
     </style>
 </head>
-
 <body>
 
-    <!-- 
-        Navbar 
-        -> Contains navigation links to home, profile, notifications, logout
-        -> Mobile hamburger menu for sidebar access
-    -->
     <nav class="navbar">
+        <a href="newsfeed.php" class="navbar-brand">Social</a>
         <div class="navbar-links">
-            <a href="newsfeed.php">Home</a>
+            <a href="newsfeed.php" class="active">Home</a>
             <a href="profile.php">Profile</a>
             <a href="#">Notifications</a>
             <a href="logout.php">Logout</a>
@@ -291,100 +464,59 @@
         <button class="hamburger" onclick="toggleSidebar()">☰</button>
     </nav>
 
-    <!-- 
-        Main container holds the feed and the sidebar 
-    -->
     <div class="container">
-
-        <!-- 
-            Main content area 
-            -> Includes post creation and feed display
-        -->
         <div class="main-content">
-
-            <!-- 
-                Post creation form 
-                -> User can write status and upload image
-                -> Form submits to post.inc.php
-                -> Displays error if upload fails
-            -->
-            <div class="post-form">
+            <div class="card post-form">
                 <form action="../includes/NEWSFEED_PAGE/post.inc.php" method='POST' enctype="multipart/form-data">
-                    
-                    <!-- Status text input -->
-                    <label for="Status">
-                        <textarea rows="4" placeholder="What's on your mind?" name="post_text">This is a sample Post</textarea>
-                    </label>
+                    <div class="post-form-input">
+                        <!-- User avatar here, needs to be fetched -->
+                        <?php show_current_user_avatar_for_post_form($pdo); ?>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
                         
-                        <!-- Image input -->
-                        <label for="Uploading Image">
-                            <input type="file" accept="image/*" name="post_image">
-                        </label>
-
-                        <!-- Post submission button -->
-                        <button type="submit">Post</button>
+                        <textarea rows="2" placeholder="What's on your mind?" name="post_text"></textarea>
                     </div>
-
-                    <!-- 
-                        Error Message Section 
-                        -> If image upload fails or invalid input
-                    -->
+                    <div class="post-form-actions">
+                        <label for="post_image_input">
+                            <!-- Icon for image upload -->
+                            📷 Photo/Video
+                            <input type="file" accept="image/*" name="post_image" id="post_image_input">
+                        </label>
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
                     <?php upload_error_occurred() ?>
                 </form>
             </div>
 
-            <!-- 
-                Feed display area 
-                -> Loads posts from database
-            -->
-            <div class="post">
-                <?php show_new_feed($pdo) ?>
-            </div>
+            <!-- Feed display area -->
+            <?php show_new_feed($pdo) ?>
         </div>
 
-        <!-- 
-            Sidebar 
-            -> Appears on right (desktop) or as slide-in (mobile)
-            -> Contains user info and suggested friends
-        -->
         <aside class="sidebar" id="sidebar">
-
-            <!-- 
-                Navigation links for mobile view 
-            -->
+            <!-- Mobile nav links -->
             <div class="nav-links-mobile">
                 <a href="newsfeed.php">Home</a>
                 <a href="profile.php">Profile</a>
                 <a href="#">Notifications</a>
-                <a href="#">Logout</a>
+                <a href="logout.php">Logout</a>
             </div>
-
-            <!-- 
-                User info section 
-                -> Profile picture, name, etc.
-            -->
-            <div class="user-info">
+            
+            <div class="card sidebar-section">
                 <?php show_user_information($pdo); ?>
             </div>
 
-            <!-- 
-                Friend Suggestions 
-                -> Dynamically loaded from database
-            -->
-            <?php show_new_suggession_form_database($pdo); ?>
+            <div class="card sidebar-section">
+                <h3>Suggested for you</h3>
+                <div class="suggestions-list">
+                    <?php show_new_suggession_form_database($pdo); ?>
+                </div>
+            </div>
         </aside>
     </div>
 
-    <!-- 
-        Sidebar toggle script for mobile view 
-    -->
     <script>
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("active");
         }
     </script>
 </body>
-
 </html>

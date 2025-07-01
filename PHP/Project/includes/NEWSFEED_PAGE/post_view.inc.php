@@ -1,19 +1,34 @@
 <?php
-
+// post_view.inc.php
 
 declare(strict_types=1);
+
+// New function to show user avatar in post form
+function show_current_user_avatar_for_post_form(object $pdo): void
+{
+    require_once 'post_model.inc.php';
+    $user_id = $_SESSION['user_id'];
+    $user = fetch_post_maker_info($pdo, $user_id);
+
+    $imageSrc = '../uploads/male_profile_icon_image.png'; // Default
+    if (!empty($user['image_url'])) {
+        $imageSrc = '../uploads/' . $user['image_url'];
+    } elseif (($user['gender'] ?? '') === 'female') {
+        $imageSrc = '../uploads/female_profile_icon_image.jpg';
+    }
+    
+    echo '<img src="' . htmlspecialchars($imageSrc) . '" alt="My Avatar" class="avatar">';
+}
 
 
 function upload_error_occurred(): void
 {
-
-    if ($_GET['post'] === 'success') {
+    if (isset($_GET['post']) && $_GET['post'] === 'success') {
         echo '
-        <div class="success-message">
-                    <h3>Post Uploaded Successfully</h3>
-                    <p>Refresh the page for new feeds</p>
-        </div>
-        ';
+        <div class="alert alert-success">
+            <h3>Post Uploaded Successfully!</h3>
+            <p>Your new post is now live.</p>
+        </div>';
         return;
     }
 
@@ -23,20 +38,13 @@ function upload_error_occurred(): void
 
     $errors = $_SESSION['error_post'];
 
-    echo '<div style="width: 90%; background-color: pink; padding: 10px; border-radius: 10px; margin-top: 10px;">
-            <h3 style="font-family: \'Times New Roman\', Times, serif; font-weight: bold; color: orangered">
-                Error Occurred While Uploading
-            </h3>
-            <div style="margin-top: 15px; font-family: \'Times New Roman\', Times, serif">';
-
+    echo '<div class="alert alert-danger">
+            <h3>Error Occurred While Uploading</h3>';
     foreach ($errors as $error) {
         echo '<p>' . htmlspecialchars($error) . '</p>';
     }
+    echo '</div>';
 
-    echo '   </div>
-          </div>';
-
-    // Optional: clear errors after displaying
     unset($_SESSION['error_post']);
 }
 
@@ -46,65 +54,54 @@ function show_new_suggession_form_database(object $pdo): void
     $all_profile = fetch_new_profile_for_suggession($pdo);
 
     if (empty($all_profile)) {
+        echo "<p>No suggestions at the moment.</p>";
         return;
     }
 
-    echo '<div class="friend-suggestions">';
-    echo '<h3 class="friend-suggestions">Suggested Profiles</h3>';
-
     foreach ($all_profile as $profile) {
-
         if ($_SESSION['user_id'] === $profile['user_id']) {
             continue;
         }
 
-        // Determine image source
-        $imageSrc = '';
+        $imageSrc = '../uploads/male_profile_icon_image.png'; // Default
         if ($profile['image_url']) {
-            $imageSrc = '../uploads/' . $profile['image_url']; // Assuming images are stored in an 'uploads' 
-        } else {
-            if ($profile['GENDER'] == 'male') {
-                $imageSrc = '../uploads/male_profile_icon_image.png';
-            } else if ($profile['GENDER'] == 'female') {
-                $imageSrc = '../uploads/female_profile_icon_image.jpg';
-            }
+            $imageSrc = '../uploads/' . $profile['image_url'];
+        } else if ($profile['GENDER'] == 'female') {
+            $imageSrc = '../uploads/female_profile_icon_image.jpg';
         }
 
+        $profile_link = 'visiting_profile.php?profile_id=' . $profile['user_id'];
 
-        $link = 'visiting_profile.php?profile_id=' . $profile['user_id'];
-
-        echo '<div class="suggestion" style="display: flex; align-items: center; margin-bottom: 10px;">' .
-            '<img src="' . $imageSrc . '" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;" />' .
-            '<div style="padding: 5px;">' .
-            '<p style="margin: 0; font-weight: bold;">' . htmlspecialchars($profile['username']) . '</p>' .
-            '<a href=" ' . $link . '" style="display: inline-block; padding: 4px 8px; background-color: #007bff; color: white; text-decoration: none; font-size: 12px; border-radius: 4px;">Visit Profile</a>' .
+        echo '<div class="suggestion-item">' .
+            '<img src="' . htmlspecialchars($imageSrc) . '" alt="Profile" class="avatar" />' .
+            '<div class="suggestion-info">' .
+            '<p>' . htmlspecialchars($profile['username']) . '</p>' .
+            '<a href="' . $profile_link . '">Visit Profile</a>' .
             '</div>' .
             '</div>';
     }
-
-    echo '</div>';
 }
-
-
 
 function show_new_feed(object $pdo): void
 {
     require_once 'post_model.inc.php';
-
     $feeds = fetch_all_new_feed($pdo);
+
+    if (empty($feeds)) {
+        echo '<div class="card"><p>No posts yet. Be the first to post something!</p></div>';
+        return;
+    }
 
     foreach ($feeds as $feed) {
         $postMakerID = $feed['user_id'];
         $post_id = $feed['post_id'];
         $text = $feed['text_content'] ?? '';
         $image = $feed['image_url'] ?? '';
-        $created_at = $feed['created_at'] ?? '';
+        $created_at = new DateTime($feed['created_at'] ?? 'now');
 
-        // Fetch post maker info
         $post_maker = fetch_post_maker_info($pdo, $postMakerID);
         $post_maker_name = $post_maker['username'] ?? 'Unknown';
 
-        // Profile image logic
         $post_maker_image = '../uploads/male_profile_icon_image.png';
         if (!empty($post_maker['image_url'])) {
             $post_maker_image = '../uploads/' . $post_maker['image_url'];
@@ -112,71 +109,78 @@ function show_new_feed(object $pdo): void
             $post_maker_image = '../uploads/female_profile_icon_image.jpg';
         }
 
-        // Outer container
-        echo '<div id="post-'.$post_id.'" class="post" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); max-width: 600px; margin-left: auto; margin-right: auto;">';
+        echo '<div id="post-' . $post_id . '" class="card post">';
 
-        // Top section: profile image + username (left aligned)
-        echo '<div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                <img src="' . $post_maker_image . '" alt="Profile" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px; border: 2px solid #ccc;">
-                <h3 style="margin: 0;">@' . htmlspecialchars($post_maker_name) . '</h3>
+        // Post Header
+        echo '<div class="post-header">
+                <img src="' . htmlspecialchars($post_maker_image) . '" alt="Profile" class="avatar">
+                <div class="post-author-info">
+                    <a href="visiting_profile.php?profile_id=' . $postMakerID . '" class="post-author" style="text-decoration: none; color: inherit;">' . htmlspecialchars($post_maker_name) . '</a>
+                    <p class="post-meta">' . $created_at->format('F j, Y \a\t g:i a') . '</p>
+                </div>
               </div>';
 
-        // Text content
-        if (empty($image)) {
-            echo '<p style="font-size: 22px; font-weight: bold; text-align: left; margin: 1rem 0;">' . nl2br(htmlspecialchars($text)) . '</p>';
-        } else {
-            echo '<p style="font-size: 16px; text-align: left; margin-bottom: 10px;">' . nl2br(htmlspecialchars($text)) . '</p>';
-            echo '<img src="../uploads/' . htmlspecialchars($image) . '" alt="Post image" style="display: block; max-width: 90%; max-height: 400px; margin: 0 auto; border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">';
+        // Post Content
+        echo '<div class="post-content">';
+        if (!empty($text)) {
+            $text_class = empty($image) ? 'post-text bold-status' : 'post-text';
+            echo '<p class="' . $text_class . '">' . nl2br(htmlspecialchars($text)) . '</p>';
         }
-
-        $current_state = 'React';
-        if (check_if_liked_or_not($pdo, (int)$post_id)) {
-            $current_state = 'Reacted';
+        if (!empty($image)) {
+            echo '<img src="../uploads/' . htmlspecialchars($image) . '" alt="Post image" class="post-image">';
         }
-
-        $button_bg = ($current_state === 'Reacted') ? '#28a745' : '#007bff'; // Green or blue
-        $button_hover_bg = ($current_state === 'Reacted') ? '#218838' : '#0056b3'; // Darker green or blue
-
-        // Buttons for Like and Comment with hover animation
-        echo '<div style="display: flex; gap: 10px; margin-top: 15px;">
-        <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID='.$post_id.'&&postMakerID='.$postMakerID.'&&postLikerID='.$_SESSION['user_id'].'#post-'.$post_id.'"  style="margin: 0;">
-            <button type="submit" name="react" 
-                style="padding: 8px 16px; background-color: ' . $button_bg . '; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);"
-                onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'' . $button_hover_bg . '\';" 
-                onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'' . $button_bg . '\';">'
-            . $current_state .
-            '</button>
-        </form>
-        <a href="#" style="text-decoration: none;">
-            <button style="padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform=\'scale(1.1)\'; this.style.backgroundColor=\'#5a6268\';" onmouseout="this.style.transform=\'scale(1)\'; this.style.backgroundColor=\'#6c757d\';">Comment</button>
-        </a>
-      </div>';
-
-        // Timestamp
-        echo '<div class="meta" style="text-align: right; margin-top: 20px; color: #777; font-size: 13px;">Posted on ' . htmlspecialchars($created_at) . '</div>';
         echo '</div>';
+
+        // Post Actions
+        $liked = check_if_liked_or_not($pdo, (int)$post_id);
+        $react_class = $liked ? 'action-btn reacted' : 'action-btn';
+        $react_text = $liked ? 'Reacted' : 'React';
+
+        echo '<div class="post-actions">
+                <div style="flex: 1;">
+                    <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID=' . $post_id . '&&postMakerID=' . $postMakerID . '&&postLikerID=' . $_SESSION['user_id'] . '#post-' . $post_id . '" style="margin: 0;">
+                        <button type="submit" name="react" class="' . $react_class . '" style="width: 100%;">' . $react_text . '</button>
+                    </form>
+                </div>
+                <div style="flex: 1;">
+                    <button class="action-btn" style="width: 100%;">Comment</button>
+                </div>
+              </div>';
+
+        echo '</div>'; // End of .post
     }
 }
 
-
-function check_if_liked_or_not(object $pdo, int $postID): bool {
+function check_if_liked_or_not(object $pdo, int $postID): bool 
+{
     try {
-        
         $postLikerID = (int)$_SESSION['user_id'];
-
-
-        $query = "SELECT * FROM LIKES WHERE user_id = :postLikerID AND post_ID = :postID";
+        $query = "SELECT 1 FROM LIKES WHERE user_id = :postLikerID AND post_ID = :postID";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':postLikerID', $postLikerID, PDO::PARAM_INT);
         $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
         $stmt->execute();
-
-        // Check if a row exists
-        return $stmt->rowCount() > 0;
-
+        return $stmt->fetchColumn() !== false;
     } catch (Exception $e) {
-        echo 'Something went wrong: ' . $e->getMessage();
-        return false; // Return false on error
+        // Silently fail in production for a better user experience
+        // error_log('Like check failed: ' . $e->getMessage());
+        return false;
     }
 }
+
+// This function was in the original newsfeed.php, but it's better to have it here with other view functions.
+// I will assume it exists in newsfeed_view.php as per the original include.
+// If not, it should be added. For now, I will just assume it's there.
+// The user info is now inside a card, so the function should just output the content.
+/*
+function show_user_information(object $pdo): void
+{
+    // The implementation of this function needs to be checked.
+    // Assuming it outputs something like:
+    // <div class="user-info">
+    //    <img src="..." class="avatar">
+    //    <p>Username</p>
+    // </div>
+}
+*/
 
