@@ -1,14 +1,15 @@
 <?php
-    // --> Import session configuration and database connection
-    require_once "../includes/config_session.inc.php";
-    $pdo = require_once "../includes/dbh.inc.php";
+// --> Import session configuration and database connection
+require_once "../includes/config_session.inc.php";
+$pdo = require_once "../includes/dbh.inc.php";
 
-    // --> Include feed and post logic view
-    require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
-    require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
+// --> Include feed and post logic view
+require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
+require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,6 +44,14 @@
             font-family: var(--font-family);
             color: var(--text-color);
         }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;     /* Firefox */
+        }
 
         /* Layout */
         .container {
@@ -51,6 +60,7 @@
             margin: 1.5rem auto;
             gap: 1.5rem;
             padding: 0 1rem;
+            height: 100vh;
         }
 
         .main-content {
@@ -58,13 +68,25 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            height: 100vh;
+            overflow: auto;
         }
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .main-content {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;     /* Firefox */
+        }
+        
 
         .sidebar {
             flex: 1;
             max-width: 360px;
             position: sticky;
-            top: 80px; /* Navbar height + margin */
+            top: 80px;
+            /* Navbar height + margin */
             height: calc(100vh - 80px);
         }
 
@@ -103,7 +125,8 @@
             transition: color 0.2s ease;
         }
 
-        .navbar-links a:hover, .navbar-links a.active {
+        .navbar-links a:hover,
+        .navbar-links a.active {
             color: var(--primary-color);
         }
 
@@ -128,7 +151,7 @@
         .post-form {
             padding: 1.5rem;
         }
-        
+
         .post-form form {
             display: flex;
             flex-direction: column;
@@ -166,7 +189,7 @@
             color: var(--secondary-text-color);
             font-weight: 500;
         }
-        
+
         .post-form-actions input[type="file"] {
             display: none;
         }
@@ -209,7 +232,7 @@
             border-radius: 50%;
             object-fit: cover;
         }
-        
+
         .post-author-info {
             display: flex;
             flex-direction: column;
@@ -228,47 +251,55 @@
         .post-content .post-text {
             margin-bottom: 1rem;
             line-height: 1.5;
-            font-size: 1.1rem; /* Slightly larger for readability */
+            font-size: 1.1rem;
+            /* Slightly larger for readability */
         }
+
         .post-content .post-text.bold-status {
-            font-weight: 600; /* Make it bold */
+            font-weight: 600;
+            /* Make it bold */
         }
 
         .post-content .post-image {
             max-width: 100%;
-            height: auto; /* Maintain aspect ratio */
-            max-height: 400px; /* Limit height to prevent excessively tall images */
+            height: auto;
+            /* Maintain aspect ratio */
+            max-height: 400px;
+            /* Limit height to prevent excessively tall images */
             border-radius: var(--border-radius);
-            object-fit: contain; /* Ensure the whole image is visible */
-            display: block; /* Remove extra space below image */
-            margin: 0 auto; /* Center the image */
+            object-fit: contain;
+            /* Ensure the whole image is visible */
+            display: block;
+            /* Remove extra space below image */
+            margin: 0 auto;
+            /* Center the image */
         }
 
         .post-actions {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--border-color);
-    gap: 0.5rem;
-}
+            display: flex;
+            justify-content: space-between;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
+            gap: 0.5rem;
+        }
 
         .action-btn {
-    background: none;
-    border: none;
-    color: var(--secondary-text-color);
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
-    width: 100%;
-    text-align: center;
-}
+            background: none;
+            border: none;
+            color: var(--secondary-text-color);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            text-align: center;
+        }
 
         .action-btn:hover {
             background-color: #F2F2F2;
         }
-        
+
         .action-btn.reacted {
             color: var(--primary-color);
             font-weight: 700;
@@ -278,7 +309,7 @@
         .sidebar-section {
             margin-bottom: 1.5rem;
         }
-        
+
         .sidebar-section h3 {
             font-size: 1.1rem;
             color: var(--secondary-text-color);
@@ -292,64 +323,67 @@
             align-items: center;
             gap: 0.75rem;
         }
-        
+
         .user-info .avatar {
             width: 50px;
             height: 50px;
         }
-        
+
         .user-info p {
             font-weight: 600;
         }
 
         .suggestions-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-height: 400px; /* Or adjust as needed */
-    overflow-y: auto;
-    padding-bottom: 2rem;
-    padding-right: 0.5rem; /* Allow space for scrollbar */
-}
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 400px;
+            /* Or adjust as needed */
+            overflow-y: auto;
+            padding-bottom: 2rem;
+            padding-right: 0.5rem;
+            /* Allow space for scrollbar */
+        }
 
-.suggestions-list::-webkit-scrollbar {
-    width: 6px;
-}
+        .suggestions-list::-webkit-scrollbar {
+            width: 6px;
+        }
 
-.suggestions-list::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-}
+        .suggestions-list::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
 
         .suggestion-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
-        
+
         .suggestion-info {
             flex-grow: 1;
         }
-        
+
         .suggestion-info p {
             font-weight: 500;
             font-size: 0.9rem;
         }
-        
+
         .suggestion-info a {
-    display: inline-block;
-    font-size: 0.8rem;
-    text-decoration: none;
-    background-color: var(--primary-color);
-    color: #fff;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    transition: background-color 0.2s ease;
-}
-.suggestion-info a:hover {
-    background-color: var(--primary-hover);
-}
+            display: inline-block;
+            font-size: 0.8rem;
+            text-decoration: none;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .suggestion-info a:hover {
+            background-color: var(--primary-hover);
+        }
 
         /* Alert Messages */
         .alert {
@@ -359,60 +393,95 @@
             border-radius: var(--border-radius);
             font-family: var(--font-family);
         }
+
         .alert-success {
             background-color: #D4EDDA;
             color: #155724;
             border: 1px solid #C3E6CB;
         }
+
         .alert-danger {
             background-color: #F8D7DA;
             color: #721C24;
             border: 1px solid #F5C6CB;
         }
+
         .alert h3 {
             margin: 0 0 0.5rem 0;
         }
+
+        .left-sidebar {
+            max-width: 260px;
+            flex: 1;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+        }
+
+        .desktop-only {
+            display: none;
+        }
+
+        
+
+        @media (min-width: 992px) {
+            .desktop-only {
+                display: block;
+            }
+        }
+
+
 
         /* Responsive */
         @media (max-width: 992px) {
             .sidebar {
                 display: none;
             }
+
             .container {
                 justify-content: center;
             }
+
             .main-content {
                 flex: 1;
                 max-width: 680px;
+
             }
         }
+
         /* Allow Reacted button to have hover effect like Comment */
-.action-btn.reacted:hover {
-    background-color: #F2F2F2;
-}
+        .action-btn.reacted:hover {
+            background-color: #F2F2F2;
+        }
 
         @media (max-width: 768px) {
             .navbar-links {
                 display: none;
             }
+
             .hamburger {
                 display: block;
             }
+
             .container {
                 padding: 0;
                 margin: 0;
             }
+
             .main-content {
                 gap: 0.5rem;
             }
+
             .card {
                 border-radius: 0;
                 box-shadow: none;
                 border-bottom: 1px solid var(--border-color);
             }
+
             .post-form {
                 margin-bottom: 0.5rem;
             }
+
             /* Mobile Sidebar (Drawer) */
             .sidebar {
                 display: block;
@@ -428,15 +497,18 @@
                 box-shadow: var(--shadow-2);
                 padding: 1.5rem;
             }
+
             .sidebar.active {
                 left: 0;
             }
+
             .sidebar .nav-links-mobile {
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
                 margin-bottom: 2rem;
             }
+
             .sidebar .nav-links-mobile a {
                 color: var(--text-color);
                 text-decoration: none;
@@ -444,6 +516,7 @@
                 font-size: 1.1rem;
             }
         }
+
         @media (min-width: 992px) {
             .nav-links-mobile {
                 display: none !important;
@@ -451,9 +524,12 @@
         }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar">
+        
+
         <a href="newsfeed.php" class="navbar-brand">Social</a>
         <div class="navbar-links">
             <a href="newsfeed.php" class="active">Home</a>
@@ -465,6 +541,22 @@
     </nav>
 
     <div class="container">
+        <div class="left-sidebar desktop-only">
+            <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                <?php show_user_information($pdo); ?>
+            </div>
+
+            <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                <?php show_user_information($pdo); ?>
+            </div>
+
+            <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                <?php show_user_information($pdo); ?>
+            </div>
+
+
+        </div>
+
         <div class="main-content">
             <div class="card post-form">
                 <form action="../includes/NEWSFEED_PAGE/post.inc.php" method='POST' enctype="multipart/form-data">
@@ -472,7 +564,7 @@
                         <!-- User avatar here, needs to be fetched -->
                         <?php show_current_user_avatar_for_post_form($pdo); ?>
 
-                        
+
                         <textarea rows="2" placeholder="What's on your mind?" name="post_text"></textarea>
                     </div>
                     <div class="post-form-actions">
@@ -499,16 +591,18 @@
                 <a href="#">Notifications</a>
                 <a href="logout.php">Logout</a>
             </div>
+
             
-            <div class="card sidebar-section">
-                <?php show_user_information($pdo); ?>
-            </div>
 
             <div class="card sidebar-section">
                 <h3>Suggested for you</h3>
                 <div class="suggestions-list">
                     <?php show_new_suggession_form_database($pdo); ?>
                 </div>
+
+
+               
+
             </div>
         </aside>
     </div>
@@ -519,4 +613,5 @@
         }
     </script>
 </body>
+
 </html>
