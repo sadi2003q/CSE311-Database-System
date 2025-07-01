@@ -43,6 +43,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             background-color: var(--background-color);
             font-family: var(--font-family);
             color: var(--text-color);
+            height: 100%;
         }
         body::-webkit-scrollbar {
             display: none;
@@ -542,17 +543,29 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 
     <div class="container">
         <div class="left-sidebar desktop-only">
+
+            <!-- Profile Information -->
             <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
                 <?php show_user_information($pdo); ?>
             </div>
 
-            <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
-                <?php show_user_information($pdo); ?>
-            </div>
 
+            <!-- Notification -->
             <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
                 <?php show_user_information($pdo); ?>
             </div>
+            
+
+            <!-- Setting -->
+            <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s ease;" onclick="window.location.href='setting.php'" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1.0)'">
+    <div style="display: flex; align-items: center;">
+        <svg style="width: 24px; height: 24px; margin-right: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span style="font-size: 16px;">Settings</span>
+    </div>
+</div>
 
 
         </div>
