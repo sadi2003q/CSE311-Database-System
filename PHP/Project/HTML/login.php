@@ -150,6 +150,7 @@
             color: #B0B3B8;
             font-size: 0.9rem;
         }
+        /*check*/
         .divider {
             display: flex;
             align-items: center;
