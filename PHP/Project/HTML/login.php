@@ -93,7 +93,6 @@
             flex-direction: column;
         }
         label {
-            margin-bottom: 0.25rem;
             margin-bottom: 0.25rem;/*bottom margin*/
             font-size: 0.9rem;
             color: #E4E6EB;
