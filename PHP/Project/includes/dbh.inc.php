@@ -1,5 +1,5 @@
-<?php
 
+<?php
 
 $host = "localhost";
 $dbName = 'SOCIAL_MEDIA';
