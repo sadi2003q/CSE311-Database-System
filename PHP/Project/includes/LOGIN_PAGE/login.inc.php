@@ -1,14 +1,26 @@
 <?php
 
 
+
+// This is the backend code for LOGIN 
+// this will check for possible error and verify login process 
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Grabbing username and password
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     try {
-        $pdo = require_once "../dbh.inc.php";
-        require_once "login_model.inc.php";
-        require_once "login_contr.inc.php";
+
+        // connections 
+        $pdo = require_once "../dbh.inc.php"; // database connection
+        require_once "login_model.inc.php"; // database login file connection
+        require_once "login_contr.inc.php"; // Business logic file connection
+
+
         // ERROR HANDLING
         $errors = [];
 
@@ -17,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors['empty_input'] = "Please fill in all the fields";
         }
 
+        // Fetching Result and Verification 
         $result = get_user($pdo, $username);
         if(is_username_wrong($result)) {
             $errors['username_wrong'] = "Username is wrong";
@@ -25,9 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors['password_wrong'] = "Password is wrong";
         }
 
-
+        // Session Variable configuration file connection
         require_once '../config_session.inc.php';
 
+
+        // if Error is found 
         if (!empty($errors)) {
             $_SESSION['error_login'] = $errors;
 
@@ -35,17 +50,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die('Error Found');
         }
 
+        // Security Purpose
         $newSessionId = session_create_id();
         $sessionId = $newSessionId . "_" . $result['user_id'];
         session_id($sessionId);
 
-
+        // Storing into session Variable
         $_SESSION['user_id'] = $result['user_id'];
-//        $_SESSION['username'] = htmlspecialchars($result['USERNAME']);
         $_SESSION['last_generation'] = time();
 
-//        header("Location: ../../HTML/login.php?login=success");
-
+        // Login Success
         header("Location: ../../HTML/newsfeed.php?user_id=" . $result['user_id']);
 
         $pdo = null;
@@ -54,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die('Login successful');
 
     } catch (Exception $e) {
+        // Any exception will lead to Server Failed Page
         header("Location: ../../HTML/ServerFailed.html");
         die("Error: " . $e->getMessage());
     }

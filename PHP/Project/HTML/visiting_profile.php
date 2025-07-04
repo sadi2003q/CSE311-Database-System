@@ -7,7 +7,10 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
 
 ?>
 
+<!-- 
+    This page allow user to visit other profile post follower and following list, also to follow or unfollow this account
 
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +19,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
     <style>
+        /* General Reset */
         * {
             margin: 0;
             padding: 0;
@@ -27,6 +31,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             background: #F3F4F6;
         }
 
+        /* Navigation Bar */
         .navbar {
             background: #1E3A8A;
             padding: 1rem;
@@ -60,6 +65,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             padding: 0 1rem;
         }
 
+        /* Profile Section */
         .profile-section {
             background: #fff;
             padding: 1.5rem;
@@ -98,6 +104,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             font-weight: 500;
         }
 
+        /* Posts Section */
         .posts-section {
             background: #fff;
             padding: 1rem;
@@ -132,6 +139,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
             margin-right: 1rem;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 padding: 0 0.5rem;
@@ -149,41 +157,66 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
         }
     </style>
 </head>
+
 <body>
+
+    <!-- 
+        Top Navigation Bar
+        -> Back button to return to the previous page
+    -->
     <nav class="navbar">
         <button onclick="history.back()">Back</button>
     </nav>
 
     <div class="container">
+
+        <!-- 
+            Profile Section
+            -> Displays visiting user's profile picture and name
+            -> Data loaded from database using `show_all_information($pdo)`
+        -->
         <div class="profile-section">
-            <!-- <img src="profile.jpg" alt="Profile Picture" />
-            <h2>User Name</h2> -->
+            <?php show_all_information($pdo); ?>
 
-            <?php show_all_information($pdo) ?>
-
-
-            <form action="" method="POST">
+            <!-- 
+                Follow/Unfollow Form
+                -> Calls `show_appropriate_button()` to show "Follow" or "Unfollow"
+            -->
+            <form action="../includes/VISITING_PROFILE/visiting_profile.inc.php" method="POST">
                 <div class="button-group">
-                    <button type="submit" name="action" value="follow">Follow</button>
+                    <?php show_appropriate_button($pdo); ?>
                 </div>
             </form>
+
+            <!-- 
+                Followers & Following Link
+                -> Displays button if profile is allowed to expose this info
+            -->
+            <?php show_Follower_Following_button(); ?>
         </div>
 
+        <!-- 
+            Posts Section
+            -> Displays all posts made by the visiting user
+        -->
         <div class="posts-section">
             <h3>Posts</h3>
-            <div class="post">
-                <div class="post-header">
-                    <img src="profile.jpg" alt="Avatar" />
-                    <h3>User Name</h3>
-                </div>
-                <p>This is a sample post text with some content.</p>
-                <img src="post.jpg" alt="Sample" style="width:100%; border-radius:8px;" />
-                <div class="actions">
-                    <button>Like (3)</button>
-                    <button>Comment (1)</button>
-                </div>
-            </div>
+            <?php show_all_post($pdo); ?>
         </div>
+
     </div>
+
+    <!-- 
+        Force refresh page from cache if revisited using back button
+        -> Prevents outdated follow/unfollow state
+    -->
+    <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                window.location.reload();
+            }
+        });
+    </script>
+
 </body>
 </html>

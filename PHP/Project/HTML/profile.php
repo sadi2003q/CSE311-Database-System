@@ -5,6 +5,10 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
 ?>
 
+
+<!-- 
+    This page allow user to show their progfile update informaiton as well as show their post
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -174,110 +178,111 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
 <body>
 
-    <!--Navigation Part-->
+    <!-- 
+        Navigation Bar
+        -> Includes links to main pages: Home, Profile, Notifications, Logout
+    -->
     <nav class="navbar">
         <a href="newsfeed.php">Home</a>
         <a href="profile.php">Profile</a>
         <a href="#">Notifications</a>
         <a href="logout.php">Logout</a>
     </nav>
+
     <div class="container">
 
-
-        <!--  Current Profile Information  -->
+        <!-- 
+            Profile Header Section
+            -> Displays user's basic information (profile image, name, etc.)
+            -> Loaded dynamically using PHP function
+        -->
         <div class="profile-header">
-            <?php
-
-            show_user_information_profile_view();
-
-            ?>
+            <?php show_user_information_profile_view(); ?>
         </div>
 
+        <!-- 
+            Followers & Following Button
+            -> Navigates to follower.php for follower/following list
+        -->
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+            <a href="follower.php"
+                style="
+                    background-color: #2563EB;
+                    color: white;
+                    padding: 10px 24px;
+                    border: none;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 16px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                "
+                onmouseover="this.style.backgroundColor='#1D4ED8'; this.style.transform='scale(1.05)'"
+                onmouseout="this.style.backgroundColor='#2563EB'; this.style.transform='scale(1)'"
+            >
+                Followers && Following
+            </a>
+        </div>
 
-
-
-        <!--  Profile Update Form  -->
+        <!-- 
+            Profile Update Form
+            -> Allows user to update username, email, and gender
+            -> Pre-filled from session variables
+            -> Submits to: ../includes/PROFILE_PAGE/profile.inc.php
+        -->
         <div class="profile-form">
             <form action="../includes/PROFILE_PAGE/profile.inc.php" method="POST">
 
+                <!-- Username Input -->
                 <div class="form-group">
                     <label for="username">Username</label>
                     <?php
-                    $username = $_SESSION['username'];
-                    echo '<input type="text" id="username" name="username" value="' . $username .  '" >';
+                        $username = $_SESSION['username'];
+                        echo '<input type="text" id="username" name="username" value="' . $username .  '" >';
                     ?>
-                    <!--                <input type="text" id="username" name="username" value="Username">-->
                 </div>
 
+                <!-- Email Input -->
                 <div class="form-group">
                     <label for="email">Email</label>
-
                     <?php
-                    $email = $_SESSION['email'];
-                    echo '<input type="email" id="email" name="email" value="' . $email .  '" >';
+                        $email = $_SESSION['email'];
+                        echo '<input type="email" id="email" name="email" value="' . $email .  '" >';
                     ?>
-
-                    <!--                <input type="email" id="email" name="email" value="user@example.com">-->
                 </div>
 
+                <!-- Gender Select -->
                 <div class="form-group">
                     <label for="sex">Sex</label>
-                    <!--                <select id="sex" name="sex">-->
-                    <!--                    <option value="Male" selected>Male</option>-->
-                    <!--                    <option value="Female">Female</option>-->
-                    <!--                    <option value="Other">Other</option>-->
-                    <!--                </select>-->
-
                     <select id="sex" name="sex">
                         <?php
-                        $gender = isset($_SESSION['gender']) ? $_SESSION['sex'] : '';
-                        $options = ['Male', 'Female', 'Other'];
-                        foreach ($options as $option) {
-                            $selected = ($option === $gender) ? 'selected' : '';
-                            echo "<option value=\"$option\" $selected>$option</option>";
-                        }
+                            $gender = isset($_SESSION['gender']) ? $_SESSION['sex'] : '';
+                            $options = ['Male', 'Female', 'Other'];
+                            foreach ($options as $option) {
+                                $selected = ($option === $gender) ? 'selected' : '';
+                                echo "<option value=\"$option\" $selected>$option</option>";
+                            }
                         ?>
                     </select>
                 </div>
                 
+                <!-- Submit Button -->
                 <button type="submit">Update Profile</button>
-                
 
-                <a href="profile_image.php" style="background-color: green;" >Upload IMage</a>
+                <!-- Link to Upload Profile Image -->
+                <a href="profile_image.php" style="background-color: green;">Upload Image</a>
 
-
-                <?php
-                error_found_while_updating_profile()
-                ?>
-
-
+                <!-- Display Error Message If Any -->
+                <?php error_found_while_updating_profile(); ?>
             </form>
         </div>
 
-
-        <!--      Users Posts-->
-        <!--    <div class="post">-->
-        <!--        <h4>@alex_dev</h4>-->
-        <!--        <p>Just finished working on a new portfolio site. Loving how it turned out!</p>-->
-        <!--        <img src="https://picsum.photos/200/300" alt="Post image" style="display: block; max-width: 80%; height: auto; border-radius: 6px; margin: 1rem auto 10px; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);">-->
-        <!--        <div class="meta">Posted on June 6, 2025</div>-->
-        <!--    </div>-->
-        <!---->
-        <!--    <div class="post">-->
-        <!--        <h4>@emma.codes</h4>-->
-        <!--        <p style="margin-top: 15px; margin-bottom: 20px; font-size: 25px; font-weight: 550;">Working late tonight on a new feature. Sometimes you just get into the zone.</p>-->
-        <!--        <div class="meta">Posted on June 5, 2025</div>-->
-        <!--    </div>-->
-        <?php
-
-        show_all_post_from_user($pdo);
-
-
-
-        ?>
-
-
+        <!-- 
+            User's Posts Section
+            -> Displays all posts created by the currently logged-in user
+        -->
+        <?php show_all_post_from_user($pdo); ?>
     </div>
 </body>
-
 </html>
