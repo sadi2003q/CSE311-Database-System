@@ -1,7 +1,7 @@
 <?php
 require_once "../includes/config_session.inc.php";
 $pdo = require_once "../includes/dbh.inc.php";
-require_once "../includes/SETTING_PAGE/setting.inc.php";
+// require_once "../includes/SETTING_PAGE/setting.inc.php";
 
 ?>
 
@@ -230,12 +230,20 @@ require_once "../includes/SETTING_PAGE/setting.inc.php";
 
             <form id="edit-profile-form" action="../includes/SETTING_PAGE/setting.inc.php" method="GET">
                 <div class="form-group">
+
+
+
+                    <!-- Username -->
                     <label for="username">Username</label>
                     <?php
                         $username = $_SESSION['username'];
                         echo '<input type="text" id="username" name="username" value="' . $username .  '" >';
                     ?>
                 </div>
+
+
+
+                <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email</label>
                     <?php
@@ -243,11 +251,22 @@ require_once "../includes/SETTING_PAGE/setting.inc.php";
                         echo '<input type="email" id="email" name="email" value="' . $email .  '" >';
                     ?>
                 </div>
+
+
+
+
+                <!-- current Password -->
                 <div class="form-group">
-                    <label for="password">New Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter new password">
+                    <label for="password">Current Password</label>
+                    <input type="password" id="password" name="current_password" placeholder="Enter new password">
                 </div>
 
+
+                <!-- New Password -->
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input type="password" id="password" name="new_password" placeholder="Enter new password">
+                </div>
                 
 
                 <button type="submit">Save Changes</button>
