@@ -228,12 +228,10 @@ $pdo = require_once "../includes/dbh.inc.php";
         <div class="settings-section">
             <h2>Edit Profile</h2>
 
-            <form id="edit-profile-form" action="../includes/SETTING_PAGE/setting.inc.php" method="GET">
+            <form id="edit-profile-form" action="../includes/SETTING_PAGE/  setting.inc.php" method="GET">
+
+                <!-- Username -->
                 <div class="form-group">
-
-
-
-                    <!-- Username -->
                     <label for="username">Username</label>
                     <?php
                         $username = $_SESSION['username'];
@@ -272,6 +270,11 @@ $pdo = require_once "../includes/dbh.inc.php";
                 <button type="submit">Save Changes</button>
                 <p class="error-message" id="error-message">Please fill in all required fields correctly.</p>
             </form>
+
+
+            <?php error_found_while_updating_profile() ?>
+
+
         </div>
 
         <!-- Activity Log Section -->

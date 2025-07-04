@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD']=='GET') {
         }
 
         if ($error) {
-            $_SESSION['setting_error'] = $error;
+            $_SESSION['update_profile_error'] = $error;
             header("Location: ../../HTML/setting.php?error");
             
         }
@@ -131,3 +131,25 @@ function check_current_password_matched(object $pdo, string $password) : bool {
 }
 
 
+
+function error_found_while_updating_profile(): void {
+    if (empty($_SESSION['update_profile_error'])) {
+        return;
+    }
+
+    $errors = $_SESSION['update_profile_error'];
+
+    echo '<div style="width: 90%; padding: 10px; margin: 15px auto; background-color: #ffe5e5; border-left: 5px solid red; border-radius: 4px;">';
+    echo '<strong style="color: red;">⚠️ Error Occurred:</strong>';
+    echo '<ul style="margin-left: 20px; color: #333;">';
+
+    foreach ($errors as $error) {
+        echo '<li>' . htmlspecialchars($error) . '</li>';
+    }
+
+    echo '</ul>';
+    echo '</div>';
+
+    $_SESSION['update_profile_error'] = null;
+}
+?>
