@@ -349,12 +349,31 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
 
 
         <!-- Activity Log Section -->
-        <div class="settings-section">
-            <h2>Activity Log</h2>
+        <div class="settings-section" style="max-height: 500px; overflow-y: auto;">
+            <h2 style="
+                position: sticky;
+                top: 0;
+                background-color: white;
+                z-index: 10;
+                padding: 1rem 0;
+                border-bottom: 2px solid #E5E7EB;
+                margin: 0 -2rem 1.5rem -2rem;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            ">
+                Activity Log
+            </h2>
+
             <div class="activity-log" id="activity-log">
-                
+                <?php show_all_activities_log($pdo) ?>
             </div>
         </div>
+
+
+
+
+
+
 
         <!-- Logout Section -->
         <!-- Account Actions Section -->

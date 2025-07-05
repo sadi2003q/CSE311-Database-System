@@ -58,3 +58,30 @@ function apply_success_border(): void
     }
     echo '</style>';
 }
+
+
+
+function show_all_activities_log(object $pdo): void {
+    
+    $user_id = (int)$_SESSION['user_id'];
+    $query = "SELECT * FROM FOLLOW WHERE FOLLOWER_ID = :user_id ORDER BY FOLLOWER_DATE ASC";
+    $statement = $pdo->prepare($query);
+    $statement->execute([':user_id' => $user_id]);
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+
+
+    echo '<div style="background-color: #f9f9f9; padding: 16px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-family: Arial, sans-serif; max-width: 98%; margin: 20px auto;">';
+    echo '<h4 style="text-decoration: underline; margin-bottom: 16px; color: #333;">All Following</h4>';
+
+    foreach ($results as $result) {
+        echo '<div style="padding: 10px 0; border-bottom: 1px solid #e0e0e0; color: #555;">';
+        echo '👤 <strong>User ID:</strong> ' . ($result['FOLLOWING_ID']) . '<br>';
+        echo '🕒 <span style="font-size: 0.9em;">Followed on: ' . ($result['FOLLOWER_DATE']) . '</span>';
+        echo '</div>';
+    }
+
+    echo '</div>';
+
+
+}

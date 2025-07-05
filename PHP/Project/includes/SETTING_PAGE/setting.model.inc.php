@@ -111,3 +111,13 @@ function update_password(object $pdo, string $new_password) : void {
     $stmt->execute();
 
 }
+
+
+
+// Fetch all Interraction
+// FOLLOW, likes, posts
+
+
+
+
+
