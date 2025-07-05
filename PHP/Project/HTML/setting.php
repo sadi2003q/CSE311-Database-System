@@ -1,7 +1,11 @@
 <?php
 require_once "../includes/config_session.inc.php";
 $pdo = require_once "../includes/dbh.inc.php";
-// require_once "../includes/SETTING_PAGE/setting.inc.php";
+require_once "../includes/SETTING_PAGE/setting.view.inc.php";
+
+
+// $pdo = require_once "../includes/dbh.inc.php";
+// require_once "../includes/PROFILE_PAGE/profile_view.php";
 
 ?>
 
@@ -167,15 +171,75 @@ $pdo = require_once "../includes/dbh.inc.php";
             display: none;
             font-weight: 500;
         }
+
         /* Stronger delete button hover */
         .settings-section .action-button[href*="delete"] {
             background-color: #991B1B;
+        }
+
+        .Error_box {
+            background-color: #FEF2F2;
+            /* A very light red */
+            border: 1px solid #F87171;
+            /* A soft red border */
+            color: #991B1B;
+            /* Dark red text for context */
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .Error_box h2 {
+            color: #7F1D1D;
+            /* A darker red for the heading */
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .Error_box p {
+            color: #B91C1C;
+            /* A slightly lighter, but still strong red for the message */
+            font-size: 0.95rem;
         }
 
         .settings-section .action-button[href*="delete"]:hover {
             background-color: #7F1D1D;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .Error_box_insider {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+            /* Smooth transition */
+
+            &:hover {
+                transform: scale(1.01);
+                /* Use transform for scaling */
+            }
+        }
+
+        /* Individual Update Button */
+        .small-button {
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            background-color: #3B82F6;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .small-button:hover {
+            background-color: #1E40AF;
+            transform: translateY(-1px);
         }
 
         /* Responsive Grid Layout */
@@ -212,7 +276,7 @@ $pdo = require_once "../includes/dbh.inc.php";
 </head>
 
 <body>
-    
+
     <nav class="navbar">
         <a href="newsfeed.html">Home</a>
         <a href="profile.html">Profile</a>
@@ -225,57 +289,61 @@ $pdo = require_once "../includes/dbh.inc.php";
 
 
         <!-- Edit Profile Section -->
-        <div class="settings-section">
+        <div class="settings-section" style="overflow: auto;">
             <h2>Edit Profile</h2>
 
-            <form id="edit-profile-form" action="../includes/SETTING_PAGE/  setting.inc.php" method="GET">
-
-                <!-- Username -->
-                <div class="form-group">
-                    <label for="username">Username</label>
+            <!-- Update Username Form -->
+            <form action="../includes/SETTING_PAGE/setting.inc.php" method="POST" class="form-row">
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <label for="username" style="flex: 0 0 100px;">Username</label>
                     <?php
-                        $username = $_SESSION['username'];
-                        echo '<input type="text" id="username" name="username" value="' . $username .  '" >';
+                    $username = $_SESSION['username'];
+                    echo '<input type="text" id="username" name="username" value="' . $username .  '" style="flex: 1;">';
                     ?>
+                    <button type="submit" name="update_username" class="small-button">Update</button>
                 </div>
+            </form>
 
-
-
-                <!-- Email -->
-                <div class="form-group">
-                    <label for="email">Email</label>
+            <!-- Update Email Form -->
+            <form action="../includes/SETTING_PAGE/setting.inc.php" method="POST" class="form-row">
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <label for="email" style="flex: 0 0 100px;">Email</label>
                     <?php
-                        $email = $_SESSION['email'];
-                        echo '<input type="email" id="email" name="email" value="' . $email .  '" >';
+                    $email = $_SESSION['email'];
+                    echo '<input type="email" id="email" name="email" value="' . $email .  '" style="flex: 1;">';
                     ?>
+                    <button type="submit" name="update_email" class="small-button">Update</button>
                 </div>
+            </form>
 
-
-
-
-                <!-- current Password -->
+            <!-- Update Password Form -->
+            <form action="../includes/SETTING_PAGE/setting.inc.php" method="POST">
+                <!-- Current Password -->
                 <div class="form-group">
-                    <label for="password">Current Password</label>
-                    <input type="password" id="password" name="current_password" placeholder="Enter new password">
+                    <label for="current_password">Current Password</label>
+                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password">
                 </div>
-
 
                 <!-- New Password -->
                 <div class="form-group">
-                    <label for="password">New Password</label>
-                    <input type="password" id="password" name="new_password" placeholder="Enter new password">
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
                 </div>
-                
 
-                <button type="submit">Save Changes</button>
-                <p class="error-message" id="error-message">Please fill in all required fields correctly.</p>
+                <button type="submit" name="update_password" class="small-button">Update Password</button>
             </form>
 
-
-            <?php error_found_while_updating_profile() ?>
-
-
+            <!-- Error display -->
+            <p class="error-message" id="error-message">Please fill in all required fields correctly.</p>
+            <br>
+            <?php error_found_while_updating_profile(); ?>
         </div>
+
+
+
+
+
+
 
         <!-- Activity Log Section -->
         <div class="settings-section">
@@ -307,7 +375,7 @@ $pdo = require_once "../includes/dbh.inc.php";
     <script>
         // Basic form validation
         document.getElementById('edit-profile-form').addEventListener('submit', function(e) {
-            
+
         });
 
         // Simulate activity log
