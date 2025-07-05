@@ -84,4 +84,71 @@ function show_all_activities_log(object $pdo): void {
     echo '</div>';
 
 
+
+
+    $query = "SELECT * FROM POSTS WHERE user_id = :user_id ORDER BY created_at ASC";
+    $statement = $pdo->prepare($query);
+    $statement->execute([':user_id' => $user_id]);
+    $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+    echo '<div style="background-color: #fefefe; padding: 16px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-family: Arial, sans-serif; max-width: 98%; margin: 20px auto;">';
+    echo '<h4 style="text-decoration: underline; margin-bottom: 16px; color: #333;">Your Posts</h4>';
+
+    if (count($posts) === 0) {
+        echo '<p style="color: #777;">You haven\'t posted anything yet.</p>';
+    }
+
+    foreach ($posts as $post) {
+        echo '<div style="padding: 14px 0; border-bottom: 1px solid #e0e0e0; color: #444;">';
+        echo '📝 <strong>Text:</strong> ' . nl2br(htmlspecialchars($post['text_content'])) . '<br>';
+
+        if (!empty($post['image_url'])) {
+            echo '<img src="' . htmlspecialchars($post['image_url']) . '" alt="Post Image" style="max-width: 100%; margin-top: 10px; border-radius: 4px;"><br>';
+        }
+
+        echo '❤️ <strong>Likes:</strong> ' . (int)$post['like_count'] . ' &nbsp; 💬 <strong>Comments:</strong> ' . (int)$post['comment_count'] . '<br>';
+        echo '📅 <span style="font-size: 0.9em;">Posted on: ' . htmlspecialchars($post['created_at']) . '</span>';
+        echo '</div>';
+    }
+
+    echo '</div>';
+
+    
+
+    $query = "SELECT DISTINCT u.USERNAME, l.created_at
+        FROM LIKES l
+        JOIN POSTS p ON l.POST_ID = p.post_id
+        JOIN USERS u ON p.user_id = u.user_id
+        WHERE l.user_id = :user_id
+        ORDER by l.created_at ASC";
+
+    $statement = $pdo->prepare($query);
+    $statement->execute([':user_id' => $user_id]);
+    $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+    echo '<div style="background-color: #fffefc; padding: 16px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-family: Arial, sans-serif; max-width: 98%; margin: 20px auto;">';
+    echo '<h4 style="text-decoration: underline; margin-bottom: 16px; color: #333;">Liked Posts Activity</h4>';
+
+    if (count($posts) === 0) {
+        echo '<p style="color: #777;">You haven\'t liked any posts yet.</p>';
+    }
+
+    foreach ($posts as $post) {
+        echo '<div style="background-color: #fdfdfd; padding: 16px; margin-bottom: 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);">';
+        echo '<div style="font-size: 15px; color: #333;">';
+        echo '👍 <strong>You liked a post of</strong> <span style="color: #2a7ae2;">' . htmlspecialchars($post['USERNAME']) . '</span>';
+        echo '</div>';
+        echo '<div style="font-size: 13px; color: #666; margin-top: 6px;">🕒 Liked on: ' . htmlspecialchars($post['created_at']) . '</div>';
+        echo '</div>';
+    }
+
+    echo '</div>';
+
+
+
+    
+
+
 }

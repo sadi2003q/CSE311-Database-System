@@ -349,7 +349,7 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
 
 
         <!-- Activity Log Section -->
-        <div class="settings-section" style="max-height: 500px; overflow-y: auto;">
+        <div class="settings-section" style="max-height: 500px; overflow-y: auto; cursor: pointer; scrollbar-width: none; -ms-overflow-style: none;">
             <h2 style="
                 position: sticky;
                 top: 0;
