@@ -60,27 +60,54 @@ function check_if_username_already_exist(object $pdo, string $username): bool
     return false;
 }
 
+
 function check_current_password_matched(object $pdo, string $password): bool
 {
-
-
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT PASSWORD FROM USERS WHERE USER_ID = userID";
+    
+    $query = "SELECT PASSWORD FROM USERS WHERE USER_ID = :USER_ID";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':USER_ID', $user_id, PDO::PARAM_STR);
+    $stmt->bindParam(':USER_ID', $user_id, PDO::PARAM_INT);
     $stmt->execute();
 
-    $option = [
-        'cost' => 12,
-    ];
-
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $option);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if ($row && isset($row['PASSWORD'])) {
-        return password_verify($password, $row['PASSWORD']);
+        return password_verify($password, $row['PASSWORD']); // ✅ correct comparison
     }
+
     return false;
 }
 
 
 
+function update_username(object $pdo, string $username) : void {
+    $user_id = $_SESSION['user_id'];
+    $query = "UPDATE USERS SET USERNAME = :username WHERE USER_ID = :user_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+}
+
+
+function update_email(object $pdo, string $email) : void {
+    $user_id = $_SESSION['user_id'];
+    $query = "UPDATE USERS SET EMAIL = :email WHERE USER_ID = :user_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+}
+
+
+function update_password(object $pdo, string $new_password) : void {
+    $user_id = $_SESSION['user_id'];
+    $hashed = password_hash($new_password, PASSWORD_BCRYPT);
+    $query = "UPDATE USERS SET PASSWORD = :password WHERE USER_ID = :user_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':password', $hashed);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+
+}

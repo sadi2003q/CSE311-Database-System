@@ -20,12 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             if (empty($error)) {
-                $user_id = $_SESSION['user_id'];
-                $query = "UPDATE USERS SET USERNAME = :username WHERE USER_ID = :user_id";
-                $stmt = $pdo->prepare($query);
-                $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':user_id', $user_id);
-                $stmt->execute();
+                update_username($pdo, $username);
 
                 $_SESSION['username'] = $username;
                 header("Location: ../../HTML/setting.php?update=username_success");
@@ -46,12 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             if (empty($error)) {
-                $user_id = $_SESSION['user_id'];
-                $query = "UPDATE USERS SET EMAIL = :email WHERE USER_ID = :user_id";
-                $stmt = $pdo->prepare($query);
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':user_id', $user_id);
-                $stmt->execute();
+                update_email($pdo, $email);
 
                 $_SESSION['email'] = $email;
                 header("Location: ../../HTML/setting.php?update=email_success");
@@ -71,14 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             if (empty($error)) {
-                $user_id = $_SESSION['user_id'];
-                $hashed = password_hash($new_password, PASSWORD_BCRYPT);
-                $query = "UPDATE USERS SET PASSWORD = :password WHERE USER_ID = :user_id";
-                $stmt = $pdo->prepare($query);
-                $stmt->bindParam(':password', $hashed);
-                $stmt->bindParam(':user_id', $user_id);
-                $stmt->execute();
-
+                update_password($pdo, $new_password);
                 header("Location: ../../HTML/setting.php?update=password_success");
                 exit();
             }

@@ -336,7 +336,10 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
             <!-- Error display -->
             <p class="error-message" id="error-message">Please fill in all required fields correctly.</p>
             <br>
-            <?php error_found_while_updating_profile(); ?>
+            <?php 
+                error_found_while_updating_profile(); 
+                apply_success_border()
+            ?>
         </div>
 
 
@@ -349,7 +352,7 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
         <div class="settings-section">
             <h2>Activity Log</h2>
             <div class="activity-log" id="activity-log">
-                <!-- Activity items will be populated by JavaScript -->
+                
             </div>
         </div>
 
