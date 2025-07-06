@@ -60,6 +60,14 @@ function apply_success_border(): void
 }
 
 
+function Fetch_Username(object $pdo, int $userID)  {
+    $query = "SELECT * FROM USERS WHERE USER_ID = :user_id";
+    $statement = $pdo->prepare($query);
+    $statement->execute([':user_id' => $userID]);
+    return $statement->fetch(PDO::FETCH_ASSOC);
+}
+
+
 
 function show_all_activities_log(object $pdo): void {
     
@@ -76,8 +84,9 @@ function show_all_activities_log(object $pdo): void {
 
     foreach ($results as $result) {
         echo '<div style="padding: 10px 0; border-bottom: 1px solid #e0e0e0; color: #555;">';
-        echo '👤 <strong>User ID:</strong> ' . ($result['FOLLOWING_ID']) . '<br>';
-        echo '🕒 <span style="font-size: 0.9em;">Followed on: ' . ($result['FOLLOWER_DATE']) . '</span>';
+        $name = Fetch_Username($pdo, (int)$result['FOLLOWING_ID']) ?? 'No Name';
+        echo '👤 <a>Started Following </a> <strong>' . ($name['username']) . ' </strong><br>';
+        echo '🕒 <span style="font-size: 0.9em;">on: ' . ($result['FOLLOWER_DATE']) . '</span>';
         echo '</div>';
     }
 
