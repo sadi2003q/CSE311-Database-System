@@ -382,7 +382,7 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
             <div class="settings-section" style="flex: 1 1 320px;">
                 <h2>Log Out</h2>
                 <p style="color: #6B7280; font-size: 0.95rem;">Sign out of your account securely.</p>
-                <a href="logout.html" class="action-button logout-button" style="margin-top: 1rem;">Log Out</a>
+                <a href="logout.php" class="action-button logout-button" style="margin-top: 1rem;">Log Out</a>
             </div>
 
             <!-- Delete Account Card -->

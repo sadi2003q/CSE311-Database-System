@@ -215,20 +215,19 @@
 
 <body>
 
-    <!-- 
-        Navbar with navigation links 
-        -> newsfeed with current page
-        -> Porfile Page
-        -> Notificaition Page
-    -->
-    <nav class="navbar">
-        <div class="navbar-links">
-            <a href="newsfeed.php">Home</a>
-            <a href="profile.php">Profile</a>
-            <a href="notifications.html">Notifications</a>
-        </div>
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-    </nav>
+    <div style="padding: 1rem;">
+        <button onclick="window.location.href='newsfeed.php'" style="
+            background-color: #1E3A8A;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            ← Back
+        </button>
+    </div>
 
     <!-- 
         Main Logout Confirmation Section 
