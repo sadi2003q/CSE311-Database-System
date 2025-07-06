@@ -163,6 +163,7 @@
             flex: 1;
             border-bottom: 1px solid #3E4042;
         }
+        
         .divider span {
             margin: 0 1rem;
             color: #B0B3B8;
