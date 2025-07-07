@@ -6,12 +6,14 @@
     <file url="file://$PROJECT_DIR$/Database Creation/DB_Practise_Problem_02.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Database Creation/DB_Practise_Problem_04.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Database Creation/DB_Practise_Problem_05.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Database Creation/DB_Practise_Problem_06.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/PHP Media/Database/database_creation.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-01.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-02.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-03.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-04.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem-05.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/SQL Problems/Problem-06.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/SQL Problems/Problem2_01.sql" dialect="MySQL" />
   </component>
 </project>
