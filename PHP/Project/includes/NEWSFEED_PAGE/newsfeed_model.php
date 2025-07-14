@@ -15,6 +15,7 @@ function find_user_information(object $pdo) {
 
     $userId = $_SESSION['user_id'] ;
 
+    //Exception finding   
     try {
         // Prepare SQL query to fetch user information
         $query = "SELECT * FROM USERS WHERE user_id = :id";
