@@ -18,14 +18,14 @@ These questions combine INNER JOIN, LEFT JOIN, subqueries, GROUP BY, and date ca
 
 /*
  [Authors]                        [Books]
-+-------------+                  +-----------------+
++-------------+                +----------------+
 | AuthorID    |◄──┐            | BookID         |
 | FirstName   |   │            | Title          |
 | LastName    |   │            | AuthorID (FK)  |◄───┐
 | BirthYear   |   │            | Genre          |    │
 +-------------+   │            | PublicationYear|    │
                   │            | ISBN           |    │
-                  │            +-----------------+   │
+                  │            +----------------+    │
                   │                                  │
                   │                                  │
 [Members]         │            [Loans]               │
