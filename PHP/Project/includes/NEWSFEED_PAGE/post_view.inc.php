@@ -53,6 +53,7 @@ function show_new_suggession_form_database(object $pdo): void {
     echo '</div>';
 }
 
+//This is function
 function show_new_feed(object $pdo): void {
     $feeds = fetch_all_new_feed($pdo);
     $reaction_types = ['Like' => '👍', 'Love' => '❤️', 'Haha' => '😄', 'Sad' => '😢', 'Angry' => '😡'];
