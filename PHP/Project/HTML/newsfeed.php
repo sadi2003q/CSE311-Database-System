@@ -580,7 +580,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 </head>
 
 <body>
-
+    <!-- Navigation -->
     <nav class="navbar">
         
 

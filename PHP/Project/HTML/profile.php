@@ -2,9 +2,7 @@
 require_once "../includes/config_session.inc.php";
 $pdo = require_once "../includes/dbh.inc.php";
 require_once "../includes/PROFILE_PAGE/profile_view.php";
-
 ?>
-
 
 <!-- 
     This page allow user to show their progfile update informaiton as well as show their post
@@ -16,273 +14,293 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Social Media</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #F3F4F6;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
         .navbar {
-            background-color: #1E3A8A;
-            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .navbar a {
-            color: #FFFFFF;
+            color: var(--white);
             text-decoration: none;
-            margin: 0 1rem;
-            font-size: 1rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .navbar a:hover {
-            color: #3B82F6;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 2rem auto;
-        }
-
-        .profile-picture-box {
-            background-color: #FFFFFF;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .profile-picture-box h1 {
-            color: #111827;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .profile-picture {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: #D1D5DB;
-            margin: 0 auto 1.5rem;
-            object-fit: cover;
-            border: 2px solid #3B82F6;
-        }
-
-        .profile-header {
-            background-color: #FFFFFF;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .profile-header h1 {
-            color: #111827;
-            margin-bottom: 0.5rem;
-        }
-
-        .profile-header p {
-            color: #6B7280;
-        }
-
-        .profile-form {
-            background-color: #FFFFFF;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        label {
-            display: block;
-            color: #111827;
-            margin-bottom: 0.5rem;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #D1D5DB;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #3B82F6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        /* ====================== Buttons and Link Styling ====================== */
-        button[type="submit"],
-        a[href="profile_image.php"] {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: #3B82F6;
-            color: #FFFFFF;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-top: 1rem;
-        }
-
-        button[type="submit"]:hover,
-        a[href="profile_image.php"]:hover {
-            background-color: #1E3A8A;
+            background-color: rgba(255, 255, 255, 0.15);
             transform: scale(1.05);
         }
 
-        /* ===================================================================== */
+        .navbar a i {
+            font-size: 1.1rem;
+        }
+
+        .navbar div {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            height: calc(100vh - 60px);
+        }
+
+        .profile-section {
+            height: 100%;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: var(--shadow);
+            margin: 0 auto 1.5rem;
+        }
+
+        .profile-card h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .profile-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-info {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-item span {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .info-item small {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            margin: 0.25rem 0;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #d91a6d;
+        }
+
+        .profile-actions {
+            margin-top: 1rem;
+        }
+
+        .posts-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            height: 100%;
+            overflow-y: auto;
+        }
 
         .post {
-            background-color: #FFFFFF;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
             margin-bottom: 1rem;
         }
 
-        .post h3 {
-            color: #111827;
-            margin-bottom: 0.5rem;
+        .post-user {
+            font-weight: 600;
+            color: var(--dark);
         }
 
-        .post p {
-            color: #111827;
-            margin-bottom: 0.5rem;
+        .post-time {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-left: auto;
         }
 
-        .post .meta {
-            color: #6B7280;
+        .post-content {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .error-message {
+            color: #dc3545;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
             font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                height: auto; /* Allow natural height */
+                overflow: visible;
+            }
+
+            .profile-section,
+            .posts-section {
+                height: auto;
+                overflow: visible;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- 
-        Navigation Bar
-        -> Includes links to main pages: Home, Profile, Notifications, Logout
-    -->
+    <!-- Navigation Bar -->
     <nav class="navbar">
-        <a href="newsfeed.php">Home</a>
-        <a href="profile.php">Profile</a>
-        <a href="#">Notifications</a>
-        <a href="logout.php">Logout</a>
+        <div>
+            <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
+            <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
+            <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+        </div>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 
     <div class="container">
-
-        <!-- 
-            Profile Header Section
-            -> Displays user's basic information (profile image, name, etc.)
-            -> Loaded dynamically using PHP function
-        -->
-        <div class="profile-header">
-            <?php show_user_information_profile_view(); ?>
-        </div>
-
-        <!-- 
-            Followers & Following Button
-            -> Navigates to follower.php for follower/following list
-        -->
-        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
-            <a href="follower.php"
-                style="
-                    background-color: #2563EB;
-                    color: white;
-                    padding: 10px 24px;
-                    border: none;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    font-size: 16px;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    transition: background-color 0.3s ease, transform 0.2s ease;
-                "
-                onmouseover="this.style.backgroundColor='#1D4ED8'; this.style.transform='scale(1.05)'"
-                onmouseout="this.style.backgroundColor='#2563EB'; this.style.transform='scale(1)'"
-            >
-                Followers && Following
-            </a>
-        </div>
-
-        <!-- 
-            Profile Update Form
-            -> Allows user to update username, email, and gender
-            -> Pre-filled from session variables
-            -> Submits to: ../includes/PROFILE_PAGE/profile.inc.php
-        -->
-        <div class="profile-form">
-            <form action="../includes/PROFILE_PAGE/profile.inc.php" method="POST">
-
-                <!-- Username Input -->
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <?php
-                        $username = $_SESSION['username'];
-                        echo '<input type="text" id="username" name="username" value="' . $username .  '" >';
-                    ?>
-                </div>
-
-                <!-- Email Input -->
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <?php
-                        $email = $_SESSION['email'];
-                        echo '<input type="email" id="email" name="email" value="' . $email .  '" >';
-                    ?>
-                </div>
-
-                <!-- Gender Select -->
-                <div class="form-group">
-                    <label for="sex">Sex</label>
-                    <select id="sex" name="sex">
-                        <?php
-                            $gender = isset($_SESSION['gender']) ? $_SESSION['sex'] : '';
-                            $options = ['Male', 'Female', 'Other'];
-                            foreach ($options as $option) {
-                                $selected = ($option === $gender) ? 'selected' : '';
-                                echo "<option value=\"$option\" $selected>$option</option>";
-                            }
-                        ?>
-                    </select>
-                </div>
+        <!-- Left Column - Profile Info -->
+        <div class="profile-section">
+            <div class="profile-card">
+                <?php show_user_information_profile_view(); ?>
                 
-                <!-- Submit Button -->
-                <button type="submit">Update Profile</button>
-
-                <!-- Link to Upload Profile Image -->
-                <a href="profile_image.php" style="background-color: green;">Upload Image</a>
-
-                <!-- Display Error Message If Any -->
-                <?php error_found_while_updating_profile(); ?>
-            </form>
+                <div class="profile-actions">
+                    <a href="follower.php" class="btn">
+                        <i class="fas fa-users"></i> Followers & Following
+                    </a>
+                    <a href="profile_image.php" class="btn btn-secondary">
+                        <i class="fas fa-camera"></i> Upload Image
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <!-- 
-            User's Posts Section
-            -> Displays all posts created by the currently logged-in user
-        -->
-        <?php show_all_post_from_user($pdo); ?>
+        <!-- Right Column - Posts -->
+        <div class="posts-section">
+            <?php show_all_post_from_user($pdo); ?>
+        </div>
     </div>
 </body>
 </html>
