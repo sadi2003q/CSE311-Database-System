@@ -11,6 +11,7 @@ require_once "../includes/config_session.inc.php";
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
       --primary-color: #1877F2;
@@ -34,9 +35,10 @@ require_once "../includes/config_session.inc.php";
       color: var(--text-color);
     }
 
+    /* Responsive Navigation */
     .navbar {
       background: var(--card-background);
-      padding: 0 2rem;
+      padding: 0.5rem 1rem;
       height: 60px;
       display: flex;
       justify-content: space-between;
@@ -56,7 +58,8 @@ require_once "../includes/config_session.inc.php";
 
     .navbar-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
+      align-items: center;
     }
 
     .navbar-links a {
@@ -64,8 +67,23 @@ require_once "../includes/config_session.inc.php";
       text-decoration: none;
       font-weight: 500;
       font-size: 1rem;
+      transition: color 0.3s;
     }
 
+    .navbar-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--secondary-text-color);
+      font-size: 1.5rem;
+    }
+
+    /* Search Container */
     .search-container {
       width: 100%;
       background: var(--card-background);
@@ -102,6 +120,7 @@ require_once "../includes/config_session.inc.php";
       font-size: 1rem;
     }
 
+    /* Main Content */
     .main-container {
       max-width: 800px;
       margin: 2rem auto;
@@ -121,6 +140,59 @@ require_once "../includes/config_session.inc.php";
       border-radius: var(--border-radius);
       box-shadow: var(--shadow-1);
     }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: var(--card-background);
+      padding: 1rem;
+      box-shadow: var(--shadow-2);
+      z-index: 998;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mobile-menu a {
+      color: var(--secondary-text-color);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .navbar-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .mobile-menu.active {
+        display: flex;
+      }
+
+      .search-container {
+        padding: 0.8rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar-brand {
+        font-size: 1.2rem;
+      }
+
+      .search-input {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 
@@ -128,18 +200,29 @@ require_once "../includes/config_session.inc.php";
 
   <nav class="navbar">
     <a href="newsfeed.php" class="navbar-brand">Social</a>
+    
     <div class="navbar-links">
       <a href="newsfeed.php">Home</a>
       <a href="profile.php">Profile</a>
       <a href="#">Notifications</a>
       <a href="logout.php">Logout</a>
     </div>
+    
+    <button class="hamburger">
+      <i class="fas fa-bars"></i>
+    </button>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="newsfeed.php">Home</a>
+    <a href="profile.php">Profile</a>
+    <a href="#">Notifications</a>
+    <a href="logout.php">Logout</a>
+  </div>
 
   <div class="search-container">
     <div class="search-wrapper">
       <input type="text" id="searchInput" placeholder="Search..." class="search-input" />
-      <button class="search-icon">🔍</button>
     </div>
   </div>
 
@@ -151,6 +234,7 @@ require_once "../includes/config_session.inc.php";
   </main>
 
   <script>
+    // Search functionality
     const searchInput = document.getElementById("searchInput");
     const userList = document.getElementById("userList");
 
@@ -165,6 +249,21 @@ require_once "../includes/config_session.inc.php";
         .catch(error => {
           userList.innerHTML = "<li>Error loading results.</li>";
         });
+    });
+
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.navbar') && mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+      }
     });
   </script>
 </body>
