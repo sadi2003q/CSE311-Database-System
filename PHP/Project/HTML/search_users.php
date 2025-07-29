@@ -25,6 +25,8 @@ if (count($filtered_users) === 0) {
   echo '<li>No users found.</li>';
 } else {
   foreach ($filtered_users as $user) {
-    echo '<li>' . htmlspecialchars($user['username']) . '</li>';
+    $profile_link = 'visiting_profile.php?profile_id=' . $user['user_id'];
+    // '<a href="' . $profile_link . '">Visit Profile</a>' .
+    echo '<li><a href="' . $profile_link . '" style="text-decoration: none; color: inherit; display: block;">' . htmlspecialchars($user['username']) . '</a></li>';
   }
 }
