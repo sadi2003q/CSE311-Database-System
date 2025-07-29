@@ -61,7 +61,8 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             margin: 1.5rem auto;
             gap: 1.5rem;
             padding: 0 1rem;
-            height: 100vh;
+            height: 95vh; /* Keep this to span the full screen */
+            overflow: hidden; /* Prevent scrolling of parent */
         }
 
         .main-content {
@@ -69,11 +70,13 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            height: 100vh;
-            overflow: auto;
+            height: 100%; /* Full viewport height */
+            overflow-y: auto; /* Enable scroll */
+            scrollbar-width: none; /* Firefox */
         }
+
         .main-content::-webkit-scrollbar {
-            display: none;
+            display: none; /* Chrome, Safari */
         }
 
         .main-content {
@@ -86,7 +89,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             flex: 1;
             max-width: 360px;
             position: sticky;
-            top: 80px;
+            /* top: 80px; */
             /* Navbar height + margin */
             height: calc(100vh - 80px);
         }
@@ -415,12 +418,25 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             max-width: 260px;
             flex: 1;
             position: sticky;
-            top: 80px;
+            /* top: 80px; */
             height: calc(100vh - 80px);
         }
 
         .desktop-only {
             display: none;
+        }
+
+        .left-sidebar.desktop-only {
+            max-width: 260px;
+            flex: 1;
+            position: relative;
+            height: 100vh; /* Full viewport height */
+            overflow-y: auto; /* Enable scroll */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .left-sidebar.desktop-only::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
         }
 
         
