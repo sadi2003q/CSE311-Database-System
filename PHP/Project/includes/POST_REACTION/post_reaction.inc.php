@@ -63,7 +63,12 @@ function like_this_post(int $postID, int $postLikerID) {
         $stmt->bindParam(':post_id', $postID, PDO::PARAM_INT);
         $stmt->execute();
 
-        up_like($postID);
+        $query = "UPDATE POSTS 
+                SET LIKE_COUNT = LIKE_COUNT + 1 
+                WHERE POST_ID = :post_id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':post_id', $postID, PDO::PARAM_INT);
+        $stmt->execute();
 
     } catch (Exception $e) {
         echo 'Something went wrong: ' . $e->getMessage();
@@ -81,7 +86,12 @@ function unlike_this_post(int $postID, int $postLikerID) {
         $stmt->bindParam(':post_id', $postID, PDO::PARAM_INT);
         $stmt->execute();
 
-        down_like($postID);
+        $query = "UPDATE POSTS 
+                SET LIKE_COUNT = LIKE_COUNT - 1 
+                WHERE POST_ID = :post_id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':post_id', $postID, PDO::PARAM_INT);
+        $stmt->execute();
 
     } catch (Exception $e) {
         echo 'Something went wrong: ' . $e->getMessage();
