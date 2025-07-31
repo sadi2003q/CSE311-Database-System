@@ -598,7 +598,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             <div class="navbar-links">
                 <a href="newsfeed.php" class="active">Home</a>
                 <a href="profile.php">Profile</a>
-                <a href="#">Notifications</a>
+                <a href="comment.php">Notifications</a>
                 <a href="logout.php">Logout</a>
             </div>
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
