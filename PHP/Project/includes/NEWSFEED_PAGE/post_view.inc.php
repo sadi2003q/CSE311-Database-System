@@ -143,7 +143,7 @@ function show_new_feed(object $pdo): void
                     </form>
                 </div>
                 <div style="flex: 1;">
-                    <button class="action-btn" style="width: 100%;">Comment</button>
+                    <a href="comment.php?post_id=' . $post_id . '" class="action-btn" style="display: block; text-align: center; width: 100%; text-decoration: none; font-size: 13px;">Comment</a>
                 </div>
               </div>';
 

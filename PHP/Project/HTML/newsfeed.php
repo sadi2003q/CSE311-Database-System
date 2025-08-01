@@ -61,7 +61,8 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             margin: 1.5rem auto;
             gap: 1.5rem;
             padding: 0 1rem;
-            height: 100vh;
+            height: 95vh; /* Keep this to span the full screen */
+            overflow: hidden; /* Prevent scrolling of parent */
         }
 
         .main-content {
@@ -69,11 +70,13 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            height: 100vh;
-            overflow: auto;
+            height: 100%; /* Full viewport height */
+            overflow-y: auto; /* Enable scroll */
+            scrollbar-width: none; /* Firefox */
         }
+
         .main-content::-webkit-scrollbar {
-            display: none;
+            display: none; /* Chrome, Safari */
         }
 
         .main-content {
@@ -86,7 +89,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             flex: 1;
             max-width: 360px;
             position: sticky;
-            top: 80px;
+            /* top: 80px; */
             /* Navbar height + margin */
             height: calc(100vh - 80px);
         }
@@ -415,12 +418,62 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             max-width: 260px;
             flex: 1;
             position: sticky;
-            top: 80px;
+            /* top: 80px; */
             height: calc(100vh - 80px);
         }
 
         .desktop-only {
             display: none;
+        }
+
+        .left-sidebar.desktop-only {
+            max-width: 260px;
+            flex: 1;
+            position: relative;
+            height: 100vh; /* Full viewport height */
+            overflow-y: auto; /* Enable scroll */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .left-sidebar.desktop-only::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+
+        .navbar-search {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            width: 220px;
+            outline: none;
+            font-family: var(--font-family);
+            transition: width 0.3s ease;
+        }
+
+        .search-icon {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--secondary-text-color);
+            transition: color 0.2s ease;
+        }
+
+        .search-icon:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive: Hide input on smaller screens */
+        @media (max-width: 768px) {
+            .search-input {
+                display: none;
+            }
         }
 
         
@@ -527,18 +580,30 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 </head>
 
 <body>
-
+    <!-- Navigation -->
     <nav class="navbar">
         
 
         <a href="newsfeed.php" class="navbar-brand">Social</a>
-        <div class="navbar-links">
-            <a href="newsfeed.php" class="active">Home</a>
-            <a href="profile.php">Profile</a>
-            <a href="#">Notifications</a>
-            <a href="logout.php">Logout</a>
+
+        
+        <div style="display: flex; align-items: center;">
+            
+            
+            <form class="navbar-search" style="padding-right: 10px;" onsubmit="return goToSearchPage(event)">
+                <input type="text" name="query" placeholder="Search..." class="search-input" onclick="handleSearchInputClick(event)" />
+                <button type="submit" class="search-icon">🔍</button>
+            </form>
+
+            <div class="navbar-links">
+                <a href="newsfeed.php" class="active">Home</a>
+                <a href="profile.php">Profile</a>
+                <a href="comment.php">Notifications</a>
+                <a href="logout.php">Logout</a>
+            </div>
+            <button class="hamburger" onclick="toggleSidebar()">☰</button>
         </div>
-        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        
     </nav>
 
     <div class="container">
@@ -624,6 +689,34 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("active");
         }
+        function goToSearchPage(event) {
+            event.preventDefault(); // prevent default form submission
+            const inputValue = document.querySelector('.search-input').value;
+            const encodedQuery = encodeURIComponent(inputValue);
+            window.location.href = `search.php?focus=true&query=${encodedQuery}`;
+            return false;
+        }
+
+        function handleSearchInputClick(event) {
+            // If you're not already on search.html, redirect to it
+            if (!window.location.href.includes('search.php')) {
+                event.preventDefault();
+                window.location.href = "search.php?focus=true";
+            }
+        }
+
+        // When on search.html, focus the input if 'focus=true' in URL
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('focus') === 'true') {
+                const input = document.querySelector('.search-input');
+                if (input) input.focus();
+
+                // Optional: Pre-fill query if passed
+                const query = params.get('query');
+                if (query) input.value = query;
+            }
+        });
     </script>
 </body>
 
