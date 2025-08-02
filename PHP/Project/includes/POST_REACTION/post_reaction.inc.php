@@ -143,32 +143,6 @@ function unlike_this_post(int $postID, int $postLikerID) {
  * @param int $postID The ID of the post being reacted to.
  * @param int $postLikerID The ID of the user reacting to the post.
  */
-// function react_this_post(int $postID, int $postLikerID) {
-//     try {
-        
-//         // Check if the user has already liked the post.
-//         if (check_if_liked_or_not($postID, $postLikerID)==True) {
-//             // If liked, unlike the post and redirect.
-//             unlike_this_post($postID, $postLikerID);
-//             header("Location: ../../HTML/newsfeed.php?unliked#post-$postID");
-//             return;
-//         } else {
-//             // If not liked, like the post and redirect.
-//             like_this_post($postID, $postLikerID);
-//             header("Location: ../../HTML/newsfeed.php?liked#post-$postID");
-//         }
-
-//         // Terminate the script after redirection.
-//         die("successful");
-        
-
-//     } catch (Exception $e) {
-//         // Output error message on exception.
-//         echo 'Something went wrong: ' . $e->getMessage();
-//     }
-// }
-
-
 function react_this_post(int $postID, int $postLikerID) {
     try {
         // Determine where to redirect back to

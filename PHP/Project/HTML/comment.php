@@ -325,13 +325,16 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
                 <p>People who reacted to this post will appear here.</p>
             </div>
             
+            <!-- Showing all Reaction here -->
             <div class="comments-section">
                 <h3 class="comments-title">Comments</h3>
                 <!-- Comments will go here -->
                 <p>Comments on this post will appear here.</p>
                 
-                <form class="comment-form">
-                    <textarea id="commentInput" class="comment-input" placeholder="Write a comment..."></textarea>
+
+                <!-- Comment Section Area -->
+                <form class="comment-form" action="../includes/COMMENT_PAGE/comment.inc.php" method="POST">
+                    <textarea name="user_comment" id="commentInput" class="comment-input" placeholder="Write a comment..."></textarea>
                     <button type="submit" class="comment-submit"><i class="fas fa-paper-plane"></i></button>
                 </form>
             </div>

@@ -9,6 +9,9 @@ require_once('comment.model.inc.php');
 function show_this_post(object $pdo) {
 
     if (isset($_GET['post_id'])) {
+
+        $_SESSION['working_on_post'] = $_GET['post_id'];
+
         $post_id = (int) $_GET['post_id'];
         $post_info = fetch_the_post($pdo, $post_id);
         $post_maker = fetch_post_maker_information($pdo, $post_info['user_id']);
