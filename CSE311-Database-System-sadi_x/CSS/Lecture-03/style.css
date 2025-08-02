@@ -1,0 +1,33 @@
+*{
+    background-color: black;
+    color: white;
+}
+
+
+p {
+    font-size: 25px;
+}
+
+#box1 {
+    height: 100px;
+    width: 100px;
+    background-color: pink;
+    text-align: center;
+    border: 5px dashed red;
+}
+
+#box2 {
+    height: 100px;
+    width: 100px;
+    background-color: pink;
+    text-align: center;
+    /*border: <border-width> <border-style> <border-color>;*/
+    border: 3px solid gold;
+    border-radius: 5%;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+
+
+

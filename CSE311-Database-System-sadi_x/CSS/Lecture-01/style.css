@@ -1,0 +1,20 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+#button_click {
+    background-color: aliceblue;
+    color: purple;
+    border: none;
+    cursor: pointer;
+}
+#button_click:hover {
+    background-color: red;
+    color: gold;
+}
+#button_click:active {
+    background-color: yellow;
+    color: pink;
+
+}
