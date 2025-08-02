@@ -143,28 +143,58 @@ function unlike_this_post(int $postID, int $postLikerID) {
  * @param int $postID The ID of the post being reacted to.
  * @param int $postLikerID The ID of the user reacting to the post.
  */
+// function react_this_post(int $postID, int $postLikerID) {
+//     try {
+        
+//         // Check if the user has already liked the post.
+//         if (check_if_liked_or_not($postID, $postLikerID)==True) {
+//             // If liked, unlike the post and redirect.
+//             unlike_this_post($postID, $postLikerID);
+//             header("Location: ../../HTML/newsfeed.php?unliked#post-$postID");
+//             return;
+//         } else {
+//             // If not liked, like the post and redirect.
+//             like_this_post($postID, $postLikerID);
+//             header("Location: ../../HTML/newsfeed.php?liked#post-$postID");
+//         }
+
+//         // Terminate the script after redirection.
+//         die("successful");
+        
+
+//     } catch (Exception $e) {
+//         // Output error message on exception.
+//         echo 'Something went wrong: ' . $e->getMessage();
+//     }
+// }
+
+
 function react_this_post(int $postID, int $postLikerID) {
     try {
-        
-        // Check if the user has already liked the post.
-        if (check_if_liked_or_not($postID, $postLikerID)==True) {
-            // If liked, unlike the post and redirect.
-            unlike_this_post($postID, $postLikerID);
-            header("Location: ../../HTML/newsfeed.php?unliked#post-$postID");
-            return;
-        } else {
-            // If not liked, like the post and redirect.
-            like_this_post($postID, $postLikerID);
-            header("Location: ../../HTML/newsfeed.php?liked#post-$postID");
+        // Determine where to redirect back to
+        $referrer = 'newsfeed'; // default
+        if (isset($_GET['referrer']) && $_GET['referrer'] === 'comment') {
+            $referrer = 'comment';
         }
 
-        // Terminate the script after redirection.
+        if (check_if_liked_or_not($postID, $postLikerID)==True) {
+            unlike_this_post($postID, $postLikerID);
+            $redirect = ($referrer === 'comment') 
+                ? "Location: ../../HTML/comment.php?post_id=$postID&unliked#post-$postID"
+                : "Location: ../../HTML/newsfeed.php?unliked#post-$postID";
+            header($redirect);
+            return;
+        } else {
+            like_this_post($postID, $postLikerID);
+            $redirect = ($referrer === 'comment') 
+                ? "Location: ../../HTML/comment.php?post_id=$postID&liked#post-$postID"
+                : "Location: ../../HTML/newsfeed.php?liked#post-$postID";
+            header($redirect);
+        }
+
         die("successful");
         
-
     } catch (Exception $e) {
-        // Output error message on exception.
         echo 'Something went wrong: ' . $e->getMessage();
     }
 }
-
