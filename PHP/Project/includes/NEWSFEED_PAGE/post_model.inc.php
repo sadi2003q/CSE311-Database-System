@@ -71,8 +71,8 @@ function fetch_all_new_feed(object $pdo) {
 }
 
 
-
-function fetch_post_maker_info(object $pdo, int $id) {
+// New version support for both mac and windows
+function fetch_post_maker_info(object $pdo, $id) {
     try {
         $uid = (int)$id;
 
