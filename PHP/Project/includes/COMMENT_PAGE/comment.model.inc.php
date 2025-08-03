@@ -46,19 +46,30 @@ function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID): bool
 }
 
 
-function post_the_comment(object $pdo, int $postID, string $comment_text) : void {
-    
+function post_the_comment(object $pdo, int $postID, string $comment_text): void {
+    require_once '../config_session.inc.php';
+
+    if (!isset($_SESSION['user_id'])) {
+        throw new Exception("User not logged in.");
+    }
 
     $user_id = $_SESSION['user_id'];
-    print('here');
-    // $query = "INSERT INTO COMMENTS (user_id, post_id, created_at)
-    //         VALUES (:user_id, :post_id, :comment_text )";
-    // $statement = $pdo->prepare($query);
-    // $statement->bindParam(':postID', $postID);
-    // $statement->bindParam(':commenterID', $user_id);
-    // $statement->bindParam(':comment_text', $comment_text);
+
+    print($user_id);
+    print($postID);
+    print($comment_text);
+
+    $query = "INSERT INTO comments (user_id, post_id, comment_text, created_at)
+              VALUES (:user_id, :post_id, :comment_text, NOW())";
     
-    // $statement->execute();
+    $statement = $pdo->prepare($query);
 
+    // Use bindValue when you don't need to bind by reference
+    $statement->bindValue(':user_id', (int)$user_id, PDO::PARAM_INT);
+    $statement->bindValue(':post_id', $postID, PDO::PARAM_INT);
+    $statement->bindValue(':comment_text', $comment_text, PDO::PARAM_STR);
 
+    if (!$statement->execute()) {
+        throw new Exception("Failed to post comment");
+    }
 }
