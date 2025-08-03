@@ -112,3 +112,14 @@ function fetch_the_number_of_comment(object $pdo) {
     $result = $statement->fetchColumn();
     return $result ? (int)$result : 0;
 }
+
+
+function delete_comment(object $pdo, int $comment_number) {
+    $query = "DELETE FROM comments WHERE comment_id = :comment_id";
+    $statement = $pdo->prepare($query);
+    $statement->bindValue(':comment_id', $comment_number, PDO::PARAM_INT);
+    $statement->execute();
+
+}
+
+

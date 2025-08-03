@@ -6,6 +6,7 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,6 +90,8 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             display: grid;
             grid-template-columns: 1fr;
             gap: 2rem;
+            align-items: start;
+            /* Changed from default stretch */
         }
 
         @media (min-width: 768px) {
@@ -102,7 +105,7 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 1.5rem;
-            height:100%;
+            height: 100%;
             overflow-y: auto;
         }
 
@@ -111,11 +114,18 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 1.5rem;
-            height:100%;
+            height: fit-content;
+            /* Changed from 100% */
+            max-height: 100vh;
+            /* Added to limit height */
             overflow-y: auto;
+            /* Keep scroll */
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            position: sticky;
+            top: 80px;
+            /* Adjusted based on navbar height */
         }
 
         /* Post */
@@ -229,7 +239,8 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            overflow-y: auto;  /* ✅ this is what enables scrolling */
+            overflow-y: auto;
+            /* ✅ this is what enables scrolling */
         }
 
         .comments-title {
@@ -321,14 +332,15 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             flex-direction: column;
             height: 100%;
             position: relative;
-            overflow: hidden;
+            overflow: auto;
         }
 
         /* New scrollable container just for comments */
         .comment-list {
             flex: 1;
             overflow-y: auto;
-            padding-right: 4px; /* space for scrollbar */
+            padding-right: 4px;
+            /* space for scrollbar */
         }
 
         /* Fix the comment form at bottom */
@@ -343,13 +355,38 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             padding-bottom: 0.5rem;
             border-top: 1px solid var(--light-gray);
         }
-        
+
         .comment-submit:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
             opacity: 0.6;
         }
-        
+
+        /* Delete button */
+        .delete-icon-button {
+            background-color: transparent;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .delete-icon-button:hover {
+            color: #c0392b;
+            /* darker red on hover */
+        }
+
+        .comment-box {
+            position: relative;
+            padding: 1rem;
+            padding-top: 2.5rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
 
         @media (max-width: 768px) {
             .navbar {
@@ -357,19 +394,19 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
                 padding: 1rem;
                 gap: 0.5rem;
             }
-            
+
             .navbar div {
                 width: 100%;
                 justify-content: space-between;
             }
-            
+
             .navbar a {
                 flex-grow: 1;
                 text-align: center;
                 padding: 0.5rem;
                 font-size: 0.85rem;
             }
-            
+
             .post-column,
             .interaction-column {
                 height: auto;
@@ -377,18 +414,21 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
                 overflow-y: visible;
             }
         }
-        
+
         @media (max-width: 480px) {
             .navbar a {
                 font-size: 0.8rem;
             }
-            
+
             .navbar a i {
                 font-size: 1rem;
             }
         }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
@@ -403,18 +443,18 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
         <div class="post-column">
             <?php show_this_post($pdo) ?>
         </div>
-        
+
         <div class="interaction-column">
-            
-            
+
+
             <!-- Showing all Reaction here -->
             <div class="comments-section">
 
-                
+
                 <?php show_like_and_comment_count($pdo) ?>
                 <!-- Comment List Wrapper -->
                 <div class="comment-list">
-                    <?php show_all_comment($pdo) ?>
+                    <?php show_all_comment($pdo, (int)$_SESSION['user_id']) ?>
                 </div>
 
                 <!-- Comment Section Form -->
@@ -434,33 +474,32 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
 
 
     <script>
-        
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const commentButton = document.querySelector(".focus-comment-btn");
             const commentInput = document.getElementById("commentInput");
 
             if (commentButton && commentInput) {
-                commentButton.addEventListener("click", function () {
+                commentButton.addEventListener("click", function() {
                     commentInput.focus();
                 });
             }
         });
 
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const commentInput = document.getElementById("commentInput");
             const commentSubmit = document.querySelector(".comment-submit");
 
             // Disable initially
             commentSubmit.disabled = true;
 
-            commentInput.addEventListener("input", function () {
+            commentInput.addEventListener("input", function() {
                 // Trim whitespace and check if there's content
                 commentSubmit.disabled = commentInput.value.trim() === "";
             });
         });
-                
     </script>
 
 </body>
+
 </html>
