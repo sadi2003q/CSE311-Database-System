@@ -85,3 +85,30 @@ function fetch_all_comment(object $pdo, $postID): array {
         return []; 
     }
 }
+
+
+
+function find_the_number_of_like(object $pdo) {
+
+    $postID = $_SESSION['working_on_post'];
+
+    $query = "SELECT COUNT(post_id) FROM likes WHERE POST_ID=:postID";
+    $statement = $pdo->prepare($query);
+    $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+    $statement->execute();
+    $result = $statement->fetchColumn();
+    return $result ? (int)$result : 0;
+
+}
+
+
+
+function fetch_the_number_of_comment(object $pdo) {
+    $postID = $_SESSION['working_on_post'];
+    $query = "SELECT COUNT(post_id) from COMMENTS where post_id=:postID";
+    $statement = $pdo->prepare($query);
+    $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+    $statement->execute();
+    $result = $statement->fetchColumn();
+    return $result ? (int)$result : 0;
+}

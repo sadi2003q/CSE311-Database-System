@@ -123,3 +123,34 @@ function show_all_comment(object $pdo) {
         </div>';
     }
 }
+
+
+function show_like_and_comment_count(object $pdo) {
+
+    $like_count = find_the_number_of_like($pdo);
+    $comment_count = fetch_the_number_of_comment($pdo);
+
+
+    echo '
+    <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    ">
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: #4361ee; font-weight: 600;">
+            <i class="fas fa-thumbs-up"></i>
+            <span>'. $like_count . ' Likes</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: #3a0ca3; font-weight: 600;">
+            <i class="fas fa-comment"></i>
+            <span>'. $comment_count . ' Comments</span>
+        </div>
+    </div>';
+}

@@ -102,7 +102,7 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 1.5rem;
-            height: calc(100vh - 150px);
+            height:100%;
             overflow-y: auto;
         }
 
@@ -111,7 +111,7 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 1.5rem;
-            height: calc(100vh - 150px);
+            height:100%;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -343,6 +343,13 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             padding-bottom: 0.5rem;
             border-top: 1px solid var(--light-gray);
         }
+        
+        .comment-submit:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
 
         @media (max-width: 768px) {
             .navbar {
@@ -403,11 +410,8 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             <!-- Showing all Reaction here -->
             <div class="comments-section">
 
-                <div class="reactions-section">
-                    <h3 class="reactions-title">Reactions</h3>
-                    <!-- Reactions content will go here -->
-                    <p>People who reacted to this post will appear here.</p>
-                </div>
+                
+                <?php show_like_and_comment_count($pdo) ?>
                 <!-- Comment List Wrapper -->
                 <div class="comment-list">
                     <?php show_all_comment($pdo) ?>
@@ -441,7 +445,21 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
                 });
             }
         });
-        
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const commentInput = document.getElementById("commentInput");
+            const commentSubmit = document.querySelector(".comment-submit");
+
+            // Disable initially
+            commentSubmit.disabled = true;
+
+            commentInput.addEventListener("input", function () {
+                // Trim whitespace and check if there's content
+                commentSubmit.disabled = commentInput.value.trim() === "";
+            });
+        });
+                
     </script>
 
 </body>
