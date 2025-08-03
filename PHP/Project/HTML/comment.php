@@ -229,6 +229,7 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            overflow-y: auto;  /* ✅ this is what enables scrolling */
         }
 
         .comments-title {
@@ -238,9 +239,10 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
         }
 
         .comment-form {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: auto;
+            position: sticky;
+            bottom: 0;
+            background-color: var(--white);
+            border-top: 1px solid var(--light-gray);
         }
 
         .comment-input {
@@ -402,10 +404,10 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             <div class="comments-section">
 
                 <div class="reactions-section">
-                <h3 class="reactions-title">Reactions</h3>
-                <!-- Reactions content will go here -->
-                <p>People who reacted to this post will appear here.</p>
-            </div>
+                    <h3 class="reactions-title">Reactions</h3>
+                    <!-- Reactions content will go here -->
+                    <p>People who reacted to this post will appear here.</p>
+                </div>
                 <!-- Comment List Wrapper -->
                 <div class="comment-list">
                     <?php show_all_comment($pdo) ?>
