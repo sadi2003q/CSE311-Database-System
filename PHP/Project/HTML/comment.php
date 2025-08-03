@@ -265,6 +265,83 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             background-color: var(--primary-dark);
         }
 
+
+        /* Comment */
+        .comment-box {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-username {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .comment-time {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .comment-text {
+            font-size: 0.95rem;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        /* Comment Box */
+        .comments-section {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* New scrollable container just for comments */
+        .comment-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px; /* space for scrollbar */
+        }
+
+        /* Fix the comment form at bottom */
+        .comment-form {
+            margin-top: auto;
+            display: flex;
+            gap: 0.5rem;
+            padding-top: 0.75rem;
+            background-color: var(--white);
+            position: sticky;
+            bottom: 0;
+            padding-bottom: 0.5rem;
+            border-top: 1px solid var(--light-gray);
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
@@ -319,20 +396,22 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
         </div>
         
         <div class="interaction-column">
-            <div class="reactions-section">
+            
+            
+            <!-- Showing all Reaction here -->
+            <div class="comments-section">
+
+                <div class="reactions-section">
                 <h3 class="reactions-title">Reactions</h3>
                 <!-- Reactions content will go here -->
                 <p>People who reacted to this post will appear here.</p>
             </div>
-            
-            <!-- Showing all Reaction here -->
-            <div class="comments-section">
-                <h3 class="comments-title">Comments</h3>
-                <!-- Comments will go here -->
-                <p>Comments on this post will appear here.</p>
-                
+                <!-- Comment List Wrapper -->
+                <div class="comment-list">
+                    <?php show_all_comment($pdo) ?>
+                </div>
 
-                <!-- Comment Section Area -->
+                <!-- Comment Section Form -->
                 <form class="comment-form" action="../includes/COMMENT_PAGE/comment.inc.php" method="POST">
                     <textarea name="user_comment" id="commentInput" class="comment-input" placeholder="Write a comment..."></textarea>
                     <button type="submit" class="comment-submit"><i class="fas fa-paper-plane"></i></button>

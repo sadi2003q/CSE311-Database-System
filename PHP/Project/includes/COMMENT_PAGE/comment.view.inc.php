@@ -73,20 +73,53 @@ function show_this_post(object $pdo) {
             </div>';
 
         echo '</div>'; // End of .post
-
-
-
-        
-
-
-
-
         
     } else {
         echo "No post ID provided in URL.";
     }
+}
 
-    
 
-    
+function show_all_comment(object $pdo) {
+    if (!isset($_GET['post_id'])) {
+        echo "No post ID provided.";
+        return;
+    }
+
+    $postID = (int) $_GET['post_id'];
+    $all_comments = fetch_all_comment($pdo, $postID); // Assuming it returns an array of all comments
+
+    if (!$all_comments || count($all_comments) === 0) {
+        echo "<p style='color: var(--gray);'>No comments yet.</p>";
+        return;
+    }
+
+    foreach ($all_comments as $comment) {
+        $user_id = $comment['user_id'];
+        $text = $comment['comment_text'];
+        $created_at = new DateTime($comment['created_at']);
+
+        $user_info = fetch_post_maker_information($pdo, $user_id);
+        $username = htmlspecialchars($user_info['username'] ?? 'Unknown');
+        
+        // Default profile picture
+        $profile_img = '../uploads/male_profile_icon_image.png';
+        if (!empty($user_info['image_url'])) {
+            $profile_img = '../uploads/' . $user_info['image_url'];
+        } elseif (($user_info['gender'] ?? '') === 'female') {
+            $profile_img = '../uploads/female_profile_icon_image.jpg';
+        }
+
+        echo '
+        <div class="comment-box">
+            <div class="comment-header">
+                <img src="' . htmlspecialchars($profile_img) . '" alt="Avatar" class="comment-avatar">
+                <div class="comment-user-info">
+                    <span class="comment-username">' . $username . '</span>
+                    <span class="comment-time">' . $created_at->format('F j, Y \a\t g:i a') . '</span>
+                </div>
+            </div>
+            <p class="comment-text">' . nl2br(htmlspecialchars($text)) . '</p>
+        </div>';
+    }
 }

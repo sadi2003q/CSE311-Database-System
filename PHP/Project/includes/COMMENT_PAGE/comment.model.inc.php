@@ -55,21 +55,33 @@ function post_the_comment(object $pdo, int $postID, string $comment_text): void 
 
     $user_id = $_SESSION['user_id'];
 
-    print($user_id);
-    print($postID);
-    print($comment_text);
 
     $query = "INSERT INTO comments (user_id, post_id, comment_text, created_at)
               VALUES (:user_id, :post_id, :comment_text, NOW())";
     
     $statement = $pdo->prepare($query);
 
-    // Use bindValue when you don't need to bind by reference
     $statement->bindValue(':user_id', (int)$user_id, PDO::PARAM_INT);
     $statement->bindValue(':post_id', $postID, PDO::PARAM_INT);
     $statement->bindValue(':comment_text', $comment_text, PDO::PARAM_STR);
 
     if (!$statement->execute()) {
         throw new Exception("Failed to post comment");
+    }
+}
+
+
+
+
+function fetch_all_comment(object $pdo, $postID): array {
+    $query = "SELECT * FROM comments WHERE post_id = :postID ORDER BY created_at DESC";
+    $statement = $pdo->prepare($query);
+    
+    $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+    
+    if ($statement->execute()) {
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        return []; 
     }
 }
