@@ -93,13 +93,25 @@ function show_all_post_from_user(object $pdo): void {
         echo '<h4>@' . htmlspecialchars($username) . '</h4>';
         
         if (!empty($post_image_url)) {
-            echo '<p>' . nl2br(htmlspecialchars($post_text_content)) . '</p>';
+            echo '<p style="
+                    font-size: 1rem;
+                    color: #444;
+                    margin-top: 15px;
+                    margin-bottom: 20px;
+                    line-height: 1.5;
+                    font-weight: 500;
+                    font-style: normal;
+                    text-align: left;
+                    opacity: 0.85;
+                    font-weight: 550;
+                    
+                ">' . nl2br(htmlspecialchars($post_text_content)) . '</p>';
             echo '<img src="../uploads/' . htmlspecialchars($post_image_url) . '" alt="Post image" style="display: block; max-width: 80%; max-height: 400px; object-fit: cover; border-radius: 6px; margin: 1rem auto 10px; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);">';
         } else {
             echo '<p style="margin-top: 15px; margin-bottom: 20px; font-size: 25px; font-weight: 550;">' . nl2br(htmlspecialchars($post_text_content)) . '</p>';
         }
 
-        echo '<div class="meta">Posted on ' . $created_at . '</div>';
+        echo '<div class="meta" style="font-size: 0.8rem; color: #6c757d; opacity: 0.6; font-style: italic;">Posted on ' . $created_at . '</div>';
 
         // LIKE and COMMENT BUTTONS
         $liked = check_if_liked_or_not($pdo, (int)$post_id, (int)$user_id);
