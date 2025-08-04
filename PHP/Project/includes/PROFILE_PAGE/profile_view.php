@@ -112,7 +112,7 @@ function show_all_post_from_user(object $pdo): void {
         echo '  <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID=' . $post_id . '&postMakerID=' . $post_maker_id . '&postLikerID=' . $user_id . '&referrer=profile" style="margin: 0; flex: 1;">';
         echo '      <button type="submit" name="react" class="' . $react_class . '" style="width: 100%;">' . $react_text . '</button>';
         echo '  </form>';
-        echo '  <a href="../../PHP/comment.php?post_id=' . $post_id . '" class="action-btn" style="flex: 1; text-align: center; text-decoration: none;">Comment</a>';
+        echo '  <a href="comment.php?post_id=' . $post_id . '" class="action-btn" style="flex: 1; text-align: center; text-decoration: none;">Comment</a>';
         echo '</div>';
 
         echo '</div>';

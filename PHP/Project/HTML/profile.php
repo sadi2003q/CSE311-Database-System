@@ -357,5 +357,42 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             <?php show_all_post_from_user($pdo); ?>
         </div>
     </div>
+
+
+
+
+    
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle all react buttons
+    document.querySelectorAll('form[action*="post_reaction.inc.php"]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const button = form.querySelector('button[name="react"]');
+            const formData = new FormData(form);
+            
+            // Store current scroll position
+            const scrollPosition = window.scrollY;
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(() => {
+                // Toggle the reacted class and text
+                button.classList.toggle('reacted');
+                button.textContent = button.classList.contains('reacted') ? 'Reacted' : 'React';
+                
+                // Restore scroll position
+                window.scrollTo(0, scrollPosition);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
 </body>
 </html>
