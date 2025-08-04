@@ -2,7 +2,7 @@
 
 
 $host = "localhost";
-$dbName = 'social_media';
+$dbName = 'SOCIAL_MEDIA';
 $dbUsername = 'root';
 $dbPassword = '';
 
