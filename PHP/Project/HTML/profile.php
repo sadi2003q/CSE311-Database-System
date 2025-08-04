@@ -251,6 +251,27 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
+        .action-btn {
+    background: none;
+    border: none;
+    color: #6c757d;          /* gray */
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.action-btn:hover {
+    background-color: #f0f0f0;  /* light gray */
+}
+
+.action-btn.reacted {
+    color: #0d6efd;           /* primary blue */
+    font-weight: 700;
+}
 
         @media (max-width: 768px) {
             .container {
