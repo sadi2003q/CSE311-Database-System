@@ -53,3 +53,9 @@ function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID) {
 }
 
 
+function delete_the_post(object $pdo, int $postID) {
+    $query = "DELETE FROM POSTS WHERE POST_ID = :postID";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
+    $stmt->execute();
+}

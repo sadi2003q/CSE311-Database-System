@@ -64,6 +64,83 @@ function error_found_while_updating_profile(): void {
     $_SESSION['error_UpdateProfile'] = null;
 }
 
+// function show_all_post_from_user(object $pdo): void {
+    
+//     if (!isset($_SESSION['user_id'])) {
+//         header("Location: ../../HTML/login.php");
+//         exit;
+//     }
+
+//     $user_id = $_SESSION['user_id'];
+//     require_once 'profile_model.php';
+//     $posts = fetch_all_post_from_user($pdo);
+
+//     if (empty($posts)) {
+//         echo '<p>No Post Found</p>';
+//         header("Location: ../../HTML/login.php?server=failed&function=newsfeed_model/fetch_all_post_from_user");
+//         exit;
+//     }
+
+//     foreach ($posts as $post) {
+//         $post_id = $post['post_id'];
+//         $post_maker_id = $post['user_id'];
+//         $username = $_SESSION['username'];
+//         $created_at = (new DateTime($post['created_at']))->format('F j, Y \a\t g:i a');
+//         $post_text_content = $post['text_content'];
+//         $post_image_url = $post['image_url'];
+
+//         echo '<div class="post" style="margin-bottom: 2rem;">';
+
+
+//         // With this:
+//         echo '<div style="display: flex; justify-content: space-between; align-items: center;">';
+//         echo '    <h4 style="margin: 0;">@' . htmlspecialchars($username) . '</h4>';
+//         echo '    <form method="POST" action="../includes/POST_DELETE/delete.php" style="margin: 0;">';
+//         echo '        <input type="hidden" name="post_id" value="' . $post_id . '">';
+//         echo '        <button type="submit" name="delete_post" style="background: none; border: none; color: #ff4d4d; font-weight: bold; font-size: 1.2rem; cursor: pointer;" title="Delete this post">🗑️</button>';
+//         echo '    </form>';
+//         echo '</div>';
+        
+//         if (!empty($post_image_url)) {
+//             echo '<p style="
+//                     font-size: 1rem;
+//                     color: #444;
+//                     margin-top: 15px;
+//                     margin-bottom: 20px;
+//                     line-height: 1.5;
+//                     font-weight: 500;
+//                     font-style: normal;
+//                     text-align: left;
+//                     opacity: 0.85;
+//                     font-weight: 550;
+                    
+//                 ">' . nl2br(htmlspecialchars($post_text_content)) . '</p>';
+//             echo '<img src="../uploads/' . htmlspecialchars($post_image_url) . '" alt="Post image" style="display: block; max-width: 80%; max-height: 400px; object-fit: cover; border-radius: 6px; margin: 1rem auto 10px; box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);">';
+//         } else {
+//             echo '<p style="margin-top: 15px; margin-bottom: 20px; font-size: 25px; font-weight: 550;">' . nl2br(htmlspecialchars($post_text_content)) . '</p>';
+//         }
+
+//         echo '<div class="meta" style="font-size: 0.8rem; color: #6c757d; opacity: 0.6; font-style: italic;">Posted on ' . $created_at . '</div>';
+
+//         // LIKE and COMMENT BUTTONS
+//         $liked = check_if_liked_or_not($pdo, (int)$post_id, (int)$user_id);
+//         // $liked = true;
+//         $react_class = $liked ? 'action-btn reacted' : 'action-btn';
+//         $react_text = $liked ? 'Reacted' : 'React';
+        
+
+//         echo '<div class="post-actions" style="margin-top: 1rem; display: flex; gap: 1rem;">';
+//         echo '  <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID=' . $post_id . '&postMakerID=' . $post_maker_id . '&postLikerID=' . $user_id . '&referrer=profile" style="margin: 0; flex: 1;">';
+//         echo '      <button type="submit" name="react" class="' . $react_class . '" style="width: 100%;">' . $react_text . '</button>';
+//         echo '  </form>';
+//         echo '  <a href="comment.php?post_id=' . $post_id . '" class="action-btn" style="flex: 1; text-align: center; text-decoration: none;">Comment</a>';
+//         echo '</div>';
+
+//         echo '</div>';
+//     }
+// }
+
+
 function show_all_post_from_user(object $pdo): void {
     
     if (!isset($_SESSION['user_id'])) {
@@ -90,7 +167,16 @@ function show_all_post_from_user(object $pdo): void {
         $post_image_url = $post['image_url'];
 
         echo '<div class="post" style="margin-bottom: 2rem;">';
+        echo '<div style="display: flex; justify-content: space-between; align-items: center;">';
         echo '<h4>@' . htmlspecialchars($username) . '</h4>';
+        // Add delete button form here
+        echo '<form method="POST" action="../includes/PROFILE_PAGE/delete_post.inc.php" style="margin: 0;">';
+        echo '<input type="hidden" name="post_id" value="' . $post_id . '">';
+        echo '<button type="submit" name="delete_post" style="background: none; border: none; color: #dc3545; cursor: pointer; font-size: 0.9rem;">';
+        echo '<i class="fas fa-trash-alt"></i> Delete';
+        echo '</button>';
+        echo '</form>';
+        echo '</div>'; // Close the flex container
         
         if (!empty($post_image_url)) {
             echo '<p style="
@@ -115,7 +201,6 @@ function show_all_post_from_user(object $pdo): void {
 
         // LIKE and COMMENT BUTTONS
         $liked = check_if_liked_or_not($pdo, (int)$post_id, (int)$user_id);
-        // $liked = true;
         $react_class = $liked ? 'action-btn reacted' : 'action-btn';
         $react_text = $liked ? 'Reacted' : 'React';
         
