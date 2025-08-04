@@ -47,7 +47,7 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
         }
 
         .navbar {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background-color: var(--white);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -56,11 +56,11 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--light-gray);
         }
 
         .navbar a {
-            color: var(--white);
+            color: var(--dark);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -73,7 +73,7 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
         }
 
         .navbar a:hover {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: var(--light-gray);
             transform: scale(1.05);
         }
 
@@ -251,11 +251,32 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
+        .action-btn {
+    background: none;
+    border: none;
+    color: #6c757d;          /* gray */
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.action-btn:hover {
+    background-color: #f0f0f0;  /* light gray */
+}
+
+.action-btn.reacted {
+    color: #0d6efd;           /* primary blue */
+    font-weight: 700;
+}
 
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
-                height: auto; /* Allow natural height */
+                height: auto;
                 overflow: visible;
             }
 
@@ -263,6 +284,39 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             .posts-section {
                 height: auto;
                 overflow: visible;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+            
+            .navbar div {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .navbar a {
+                flex-grow: 1;
+                text-align: center;
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            .navbar a:last-child {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar a {
+                font-size: 0.8rem;
+            }
+            
+            .navbar a i {
+                font-size: 1rem;
             }
         }
     </style>
@@ -272,12 +326,13 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
     <!-- Navigation Bar -->
     <nav class="navbar">
+        <div></div>
         <div>
             <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
             <a href="#"><i class="fas fa-bell"></i> Notifications</a>
         </div>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        
     </nav>
 
     <div class="container">
