@@ -123,3 +123,14 @@ function delete_comment(object $pdo, int $comment_number) {
 }
 
 
+function update_comment(object $pdo, int $commentID, string $newText): void {
+    $query = "UPDATE comments SET comment_text = :newText WHERE comment_id = :commentID";
+    $statement = $pdo->prepare($query);
+
+    $statement->bindValue(':newText', $newText, PDO::PARAM_STR);
+    $statement->bindValue(':commentID', $commentID, PDO::PARAM_INT);
+
+    if (!$statement->execute()) {
+        throw new Exception("Failed to update comment");
+    }
+}

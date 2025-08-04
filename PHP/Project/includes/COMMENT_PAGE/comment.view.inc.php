@@ -114,36 +114,61 @@ function show_all_comment(object $pdo, int $user_id) {
         $condition = $user_id==$comment['user_id'];
 
         echo '
-            <div class="comment-box" style="position: relative;">
-                <!-- COMMENT HEADER -->
-                <div class="comment-header" style="display: flex; align-items: center; justify-content: space-between; width: 100%; position: relative;">
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <img src="' . htmlspecialchars($profile_img) . '" alt="Avatar" class="comment-avatar">
-                        <div class="comment-user-info">
-                            <span class="comment-username">' . $username . '</span>
-                            <span class="comment-time">' . $created_at->format('F j, Y \a\t g:i a') . '</span>
-                        </div>
-                    </div>';
+        <div class="comment-box" style="position: relative;" id="comment-'.$commentID.'">
+            <!-- COMMENT HEADER -->
+            <div class="comment-header" style="display: flex; align-items: center; justify-content: space-between; width: 100%; position: relative;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <img src="' . htmlspecialchars($profile_img) . '" alt="Avatar" class="comment-avatar">
+                    <div class="comment-user-info">
+                        <span class="comment-username">' . $username . '</span>
+                        <span class="comment-time">' . $created_at->format('F j, Y \a\t g:i a') . '</span>
+                    </div>
+                </div>';
 
-        // Only show delete button if condition is true
+        // Only show delete and edit buttons if condition is true
         if ($condition) {
             echo '
-                    <form method="POST" action="../includes/COMMENT_PAGE/comment.inc.php" style="margin: 0;">
-                        <input type="hidden" name="comment_id" value="' . $commentID . '">
-                        <input type="hidden" name="post_id" value="' . $postID . '">
-                        <button type="submit" name="delete_comment" class="delete-icon-button" 
-                                title="Delete Comment" style="margin-left: auto;">
-                            <i class="fas fa-trash"></i>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" class="edit-icon-button" 
+                                title="Edit Comment" onclick="enableEdit('.$commentID.')">
+                            <i class="fas fa-edit"></i>
                         </button>
-                    </form>';
+                        <form method="POST" action="../includes/COMMENT_PAGE/comment.inc.php" style="margin: 0;">
+                            <input type="hidden" name="comment_id" value="' . $commentID . '">
+                            <input type="hidden" name="post_id" value="' . $postID . '">
+                            <button type="submit" name="delete_comment" class="delete-icon-button" 
+                                    title="Delete Comment">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>';
         }
 
         echo '
-                </div>
+            </div>
 
-                <!-- COMMENT TEXT -->
+            <!-- COMMENT TEXT -->
+            <div id="comment-text-'.$commentID.'">
                 <p class="comment-text">' . nl2br(htmlspecialchars($text)) . '</p>
-            </div>';
+            </div>
+            
+            <!-- EDIT FORM (HIDDEN BY DEFAULT) -->
+            <div id="edit-form-'.$commentID.'" style="display: none;">
+                <form method="POST" action="../includes/COMMENT_PAGE/comment.inc.php" class="edit-comment-form">
+                    <input type="hidden" name="comment_id" value="'.$commentID.'">
+                    <input type="hidden" name="post_id" value="'.$postID.'">
+                    <textarea name="edited_comment" class="edit-comment-input">'.htmlspecialchars($text).'</textarea>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                        <button type="submit" name="update_comment" class="save-edit-btn">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <button type="button" class="cancel-edit-btn" onclick="cancelEdit('.$commentID.')">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>';
     }
 }
 

@@ -387,6 +387,59 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             margin-bottom: 1.5rem;
         }
 
+        /* Comment Edit Icon button */
+        /* Edit button styles */
+.edit-icon-button {
+    background-color: transparent;
+    border: none;
+    color: #3498db;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.edit-icon-button:hover {
+    color: #2980b9;
+}
+
+/* Edit form styles */
+.edit-comment-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    resize: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.save-edit-btn, .cancel-edit-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.save-edit-btn {
+    background-color: var(--primary);
+    color: white;
+}
+
+.save-edit-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.cancel-edit-btn {
+    background-color: var(--light-gray);
+    color: var(--dark);
+}
+
+.cancel-edit-btn:hover {
+    background-color: #d1d5db;
+}
+
 
         @media (max-width: 768px) {
             .navbar {
@@ -498,6 +551,21 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
                 commentSubmit.disabled = commentInput.value.trim() === "";
             });
         });
+        function enableEdit(commentId) {
+        // Hide the comment text
+        document.getElementById('comment-text-' + commentId).style.display = 'none';
+        // Show the edit form
+        document.getElementById('edit-form-' + commentId).style.display = 'block';
+        // Focus on the textarea
+        document.querySelector('#edit-form-' + commentId + ' textarea').focus();
+    }
+
+    function cancelEdit(commentId) {
+        // Show the comment text
+        document.getElementById('comment-text-' + commentId).style.display = 'block';
+        // Hide the edit form
+        document.getElementById('edit-form-' + commentId).style.display = 'none';
+    }
     </script>
 
 </body>
