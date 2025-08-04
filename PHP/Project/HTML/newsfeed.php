@@ -45,13 +45,16 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             color: var(--text-color);
             height: 100%;
         }
+
         body::-webkit-scrollbar {
             display: none;
         }
 
         body {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;     /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         /* Layout */
@@ -61,8 +64,10 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             margin: 1.5rem auto;
             gap: 1.5rem;
             padding: 0 1rem;
-            height: 95vh; /* Keep this to span the full screen */
-            overflow: hidden; /* Prevent scrolling of parent */
+            height: 95vh;
+            /* Keep this to span the full screen */
+            overflow: hidden;
+            /* Prevent scrolling of parent */
         }
 
         .main-content {
@@ -70,20 +75,26 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            height: 100%; /* Full viewport height */
-            overflow-y: auto; /* Enable scroll */
-            scrollbar-width: none; /* Firefox */
+            height: 100%;
+            /* Full viewport height */
+            overflow-y: auto;
+            /* Enable scroll */
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         .main-content::-webkit-scrollbar {
-            display: none; /* Chrome, Safari */
+            display: none;
+            /* Chrome, Safari */
         }
 
         .main-content {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;     /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
-        
+
 
         .sidebar {
             flex: 1;
@@ -430,13 +441,17 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             max-width: 260px;
             flex: 1;
             position: relative;
-            height: 100vh; /* Full viewport height */
-            overflow-y: auto; /* Enable scroll */
-            scrollbar-width: none; /* Firefox */
+            height: 100vh;
+            /* Full viewport height */
+            overflow-y: auto;
+            /* Enable scroll */
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         .left-sidebar.desktop-only::-webkit-scrollbar {
-            display: none; /* Chrome, Safari */
+            display: none;
+            /* Chrome, Safari */
         }
 
 
@@ -476,7 +491,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             }
         }
 
-        
+
 
         @media (min-width: 992px) {
             .desktop-only {
@@ -582,14 +597,14 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        
+
 
         <a href="newsfeed.php" class="navbar-brand">Social</a>
 
-        
+
         <div style="display: flex; align-items: center;">
-            
-            
+
+
             <form class="navbar-search" style="padding-right: 10px;" onsubmit="return goToSearchPage(event)">
                 <input type="text" name="query" placeholder="Search..." class="search-input" onclick="handleSearchInputClick(event)" />
                 <button type="submit" class="search-icon">🔍</button>
@@ -603,7 +618,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             </div>
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
         </div>
-        
+
     </nav>
 
     <div class="container">
@@ -619,18 +634,18 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
                 <?php show_user_information($pdo); ?>
             </div>
-            
+
 
             <!-- Setting -->
             <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s ease;" onclick="window.location.href='setting.php'" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1.0)'">
-    <div style="display: flex; align-items: center;">
-        <svg style="width: 24px; height: 24px; margin-right: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
-        <span style="font-size: 16px;">Settings</span>
-    </div>
-</div>
+                <div style="display: flex; align-items: center;">
+                    <svg style="width: 24px; height: 24px; margin-right: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <span style="font-size: 16px;">Settings</span>
+                </div>
+            </div>
 
 
         </div>
@@ -670,7 +685,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
                 <a href="logout.php">Logout</a>
             </div>
 
-            
+
 
             <div class="card sidebar-section">
                 <h3>Suggested for you</h3>
@@ -679,7 +694,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
                 </div>
 
 
-               
+
 
             </div>
         </aside>
@@ -689,6 +704,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("active");
         }
+
         function goToSearchPage(event) {
             event.preventDefault(); // prevent default form submission
             const inputValue = document.querySelector('.search-input').value;
@@ -719,35 +735,35 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-    // Handle all react buttons
-    document.querySelectorAll('form[action*="post_reaction.inc.php"]').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const form = this;
-            const button = form.querySelector('button[name="react"]');
-            const formData = new FormData(form);
-            
-            // Store current scroll position
-            const scrollPosition = window.scrollY;
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(() => {
-                // Toggle the reacted class and text
-                button.classList.toggle('reacted');
-                button.textContent = button.classList.contains('reacted') ? 'Reacted' : 'React';
-                
-                // Restore scroll position
-                window.scrollTo(0, scrollPosition);
-            })
-            .catch(error => console.error('Error:', error));
+            // Handle all react buttons
+            document.querySelectorAll('form[action*="post_reaction.inc.php"]').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const form = this;
+                    const button = form.querySelector('button[name="react"]');
+                    const formData = new FormData(form);
+
+                    // Store current scroll position
+                    const scrollPosition = window.scrollY;
+
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(() => {
+                            // Toggle the reacted class and text
+                            button.classList.toggle('reacted');
+                            button.textContent = button.classList.contains('reacted') ? 'Reacted' : 'React';
+
+                            // Restore scroll position
+                            window.scrollTo(0, scrollPosition);
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
         });
-    });
-});
     </script>
 </body>
 

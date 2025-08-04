@@ -212,7 +212,8 @@ function react_this_post(int $postID, int $postLikerID, string $destination) {
                     $file = 'profile.php';
                     break;
                 case "visiting_profile":
-                    $file = 'visiting_profile.php';
+                    $profileID=$_GET['profileID'];
+                    $file = 'visiting_profile.php?profile_id=' . $profileID .'';
                     break;
                 default:
                     $file = 'newsfeed.php';

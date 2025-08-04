@@ -1,222 +1,402 @@
-<?php 
+<?php
 require_once '../includes/config_session.inc.php';
 $pdo = require_once '../includes/dbh.inc.php';
 require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
-
-
-
 ?>
-
-<!-- 
-    This page allow user to visit other profile post follower and following list, also to follow or unfollow this account
-
--->
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Social Media</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* General Reset */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: #F3F4F6;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
-        /* Navigation Bar */
         .navbar {
-            background: #1E3A8A;
-            padding: 1rem;
-            color: #fff;
+            background-color: var(--white);
+            padding: 1rem 2rem;
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
+            border-bottom: 1px solid var(--light-gray);
         }
 
-        .navbar button {
-            background: none;
-            border: none;
-            color: #fff;
+        .navbar a {
+            color: var(--dark);
+            text-decoration: none;
             font-weight: 500;
-            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1rem;
         }
 
-        .navbar button::before {
-            content: "←";
+        .navbar a:hover {
+            background-color: var(--light-gray);
+            transform: scale(1.05);
+        }
+
+        .navbar a i {
+            font-size: 1.1rem;
+        }
+
+        .navbar div {
+            display: flex;
+            gap: 0.5rem;
         }
 
         .container {
             max-width: 1200px;
-            margin: 1.5rem auto;
+            margin: 0 auto;
             padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            height: calc(100vh - 60px);
         }
 
-        /* Profile Section */
         .profile-section {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
             text-align: center;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: var(--shadow);
+            margin: 0 auto 1.5rem;
+        }
+
+        .profile-card h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .profile-card p {
+            color: var(--gray);
             margin-bottom: 1.5rem;
         }
 
-        .profile-section img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1rem;
-        }
-
-        .profile-section h2 {
-            margin-bottom: 1rem;
-            color: #1E3A8A;
-        }
-
-        .button-group {
+        .profile-info {
             display: flex;
             justify-content: center;
             gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .button-group button {
-            background: #3B82F6;
-            color: #fff;
+        .info-item {
+            text-align: center;
+        }
+
+        .info-item span {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .info-item small {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--white);
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
             font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            margin: 0.25rem 0;
+            width: 100%;
         }
 
-        /* Posts Section */
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #d91a6d;
+        }
+
+        .btn-follow {
+            background-color: #4CAF50;
+        }
+
+        .btn-follow:hover {
+            background-color: #3e8e41;
+        }
+
+        .btn-unfollow {
+            background-color: #f44336;
+        }
+
+        .btn-unfollow:hover {
+            background-color: #d32f2f;
+        }
+
+        .profile-actions {
+            margin-top: 1rem;
+        }
+
         .posts-section {
-            background: #fff;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            height: 100%;
+            overflow-y: auto;
         }
 
         .post {
-            margin-bottom: 1.5rem;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
         }
 
         .post-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
             margin-bottom: 1rem;
         }
 
-        .post-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .post-user {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .post-time {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            max-height: 400px;
             object-fit: cover;
         }
 
-        .post .actions button {
+        .action-btn {
             background: none;
             border: none;
-            color: #1E3A8A;
-            font-weight: bold;
+            color: #6c757d;
+            font-weight: 600;
             cursor: pointer;
-            margin-right: 1rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            text-align: center;
         }
 
-        /* Responsive Design */
+        .action-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .action-btn.reacted {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+
         @media (max-width: 768px) {
             .container {
-                padding: 0 0.5rem;
+                grid-template-columns: 1fr;
+                height: auto;
+                overflow: visible;
             }
 
-            .profile-section img {
-                width: 80px;
-                height: 80px;
+            .profile-section,
+            .posts-section {
+                height: auto;
+                overflow: visible;
             }
 
-            .button-group {
+            .navbar {
                 flex-direction: column;
+                padding: 1rem;
                 gap: 0.5rem;
+            }
+
+            .navbar div {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .navbar a {
+                flex-grow: 1;
+                text-align: center;
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar a {
+                font-size: 0.8rem;
+            }
+
+            .navbar a i {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 
 <body>
-
-    <!-- 
-        Top Navigation Bar
-        -> Back button to return to the previous page
-    -->
+    <!-- Navigation Bar -->
     <nav class="navbar">
-        <button onclick="history.back()">Back</button>
+        <div></div>
+        <div>
+            <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
+            <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
+            <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+            <a href="#" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
     </nav>
 
     <div class="container">
-
-        <!-- 
-            Profile Section
-            -> Displays visiting user's profile picture and name
-            -> Data loaded from database using `show_all_information($pdo)`
-        -->
+        <!-- Left Column - Profile Info -->
         <div class="profile-section">
-            <?php show_all_information($pdo); ?>
+            <div class="profile-card">
+                <?php show_all_information($pdo); ?>
 
-            <!-- 
-                Follow/Unfollow Form
-                -> Calls `show_appropriate_button()` to show "Follow" or "Unfollow"
-            -->
-            <form action="../includes/VISITING_PROFILE/visiting_profile.inc.php" method="POST">
-                <div class="button-group">
-                    <?php show_appropriate_button($pdo); ?>
+                <div class="profile-actions">
+                    <form action="../includes/VISITING_PROFILE/visiting_profile.inc.php" method="POST">
+                        <?php show_appropriate_button($pdo); ?>
+                    </form>
+
+                    <a href="follower.php?profile_id=<?php echo $_GET['profile_id']; ?>" class="btn">
+                        <i class="fas fa-users"></i> Followers & Following
+                    </a>
                 </div>
-            </form>
-
-            <!-- 
-                Followers & Following Link
-                -> Displays button if profile is allowed to expose this info
-            -->
-            <?php show_Follower_Following_button(); ?>
+            </div>
         </div>
 
-        <!-- 
-            Posts Section
-            -> Displays all posts made by the visiting user
-        -->
+        <!-- Right Column - Posts -->
         <div class="posts-section">
-            <h3>Posts</h3>
             <?php show_all_post($pdo); ?>
         </div>
-
     </div>
 
-    <!-- 
-        Force refresh page from cache if revisited using back button
-        -> Prevents outdated follow/unfollow state
-    -->
     <script>
-        window.addEventListener('pageshow', function (event) {
+        window.addEventListener('pageshow', function(event) {
             if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                 window.location.reload();
             }
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle all react buttons
+            document.querySelectorAll('form[action*="post_reaction.inc.php"]').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const form = this;
+                    const button = form.querySelector('button[name="react"]');
+                    const formData = new FormData(form);
+
+                    // Store current scroll position
+                    const scrollPosition = window.scrollY;
+
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(() => {
+                            // Toggle the reacted class and text
+                            button.classList.toggle('reacted');
+                            button.textContent = button.classList.contains('reacted') ? 'Reacted' : 'React';
+
+                            // Restore scroll position
+                            window.scrollTo(0, scrollPosition);
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    </script>
 </body>
+
 </html>
