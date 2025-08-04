@@ -40,6 +40,16 @@ function fetch_all_post_from_user(object $pdo): array {
 }
 
 
+function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID) {
+    // SQL query to find a like from the user on the specific post.
+    $query = "SELECT * FROM LIKES WHERE user_id = :postLikerID AND post_ID = :postID";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':postLikerID', $postLikerID, PDO::PARAM_INT);
+    $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
+    $stmt->execute();
 
+    // If a row is found, it means the post is liked.
+    return $stmt->rowCount() > 0;
+}
 
 

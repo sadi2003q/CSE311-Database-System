@@ -138,7 +138,7 @@ function show_new_feed(object $pdo): void
 
         echo '<div class="post-actions">
                 <div style="flex: 1;">
-                    <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID=' . $post_id . '&&postMakerID=' . $postMakerID . '&&postLikerID=' . $_SESSION['user_id'] . '#post-' . $post_id . '" style="margin: 0;">
+                    <form method="POST" action="../includes/POST_REACTION/post_reaction.inc.php?postID=' . $post_id . '&&postMakerID=' . $postMakerID . '&&postLikerID=' . $_SESSION['user_id'] . '#post-' . $post_id . '&referrer=NewsFeed" style="margin: 0;">
                         <button type="submit" name="react" class="' . $react_class . '" style="width: 100%;">' . $react_text . '</button>
                     </form>
                 </div>

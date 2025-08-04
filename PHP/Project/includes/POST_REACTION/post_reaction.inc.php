@@ -17,9 +17,20 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
             $postID = (int)$_GET['postID'];
             $postMakerID = (int)$_GET['postMakerID']; // Note: postMakerID is retrieved but not used in this block.
             $postLikerID = (int)$_GET['postLikerID'];
+            
+            $referrer = isset($_GET['referrer']) ? $_GET['referrer'] : 'newsfeed';
+
+            switch ($referrer) {
+                case "profile":
+                    react_this_post($postID, $postLikerID, "profile");
+                case "visiting_profile":
+                    react_this_post($postID, $postLikerID, "visiting_profile");
+                default:
+                    react_this_post($postID, $postLikerID, "newsfeed");
+            }
 
             // Process the like/unlike action.
-            react_this_post($postID, $postLikerID);
+            
 
 
             
@@ -143,7 +154,37 @@ function unlike_this_post(int $postID, int $postLikerID) {
  * @param int $postID The ID of the post being reacted to.
  * @param int $postLikerID The ID of the user reacting to the post.
  */
-function react_this_post(int $postID, int $postLikerID) {
+// function react_this_post(int $postID, int $postLikerID) {
+//     try {
+//         // Determine where to redirect back to
+//         $referrer = 'newsfeed'; // default
+//         if (isset($_GET['referrer']) && $_GET['referrer'] === 'comment') {
+//             $referrer = 'comment';
+//         }
+
+//         if (check_if_liked_or_not($postID, $postLikerID)==True) {
+//             unlike_this_post($postID, $postLikerID);
+//             $redirect = ($referrer === 'comment') 
+//                 ? "Location: ../../HTML/comment.php?post_id=$postID&unliked#post-$postID"
+//                 : "Location: ../../HTML/newsfeed.php?unliked#post-$postID";
+//             header($redirect);
+//             return;
+//         } else {
+//             like_this_post($postID, $postLikerID);
+//             $redirect = ($referrer === 'comment') 
+//                 ? "Location: ../../HTML/comment.php?post_id=$postID&liked#post-$postID"
+//                 : "Location: ../../HTML/newsfeed.php?liked#post-$postID";
+//             header($redirect);
+//         }
+
+//         die("successful");
+        
+//     } catch (Exception $e) {
+//         echo 'Something went wrong: ' . $e->getMessage();
+//     }
+// }
+
+function react_this_post(int $postID, int $postLikerID, string $destination) {
     try {
         // Determine where to redirect back to
         $referrer = 'newsfeed'; // default
@@ -151,23 +192,37 @@ function react_this_post(int $postID, int $postLikerID) {
             $referrer = 'comment';
         }
 
-        if (check_if_liked_or_not($postID, $postLikerID)==True) {
+        $liked = check_if_liked_or_not($postID, $postLikerID);
+
+        // Perform like/unlike
+        if ($liked) {
             unlike_this_post($postID, $postLikerID);
-            $redirect = ($referrer === 'comment') 
-                ? "Location: ../../HTML/comment.php?post_id=$postID&unliked#post-$postID"
-                : "Location: ../../HTML/newsfeed.php?unliked#post-$postID";
-            header($redirect);
-            return;
+            $status = 'unliked';
         } else {
             like_this_post($postID, $postLikerID);
-            $redirect = ($referrer === 'comment') 
-                ? "Location: ../../HTML/comment.php?post_id=$postID&liked#post-$postID"
-                : "Location: ../../HTML/newsfeed.php?liked#post-$postID";
-            header($redirect);
+            $status = 'liked';
         }
 
-        die("successful");
-        
+        // Determine redirection path
+        if ($referrer === 'comment') {
+            $redirect = "Location: ../../HTML/comment.php?post_id=$postID&$status#post-$postID";
+        } else {
+            switch ($destination) {
+                case "profile":
+                    $file = 'profile.php';
+                    break;
+                case "visiting_profile":
+                    $file = 'visiting_profile.php';
+                    break;
+                default:
+                    $file = 'newsfeed.php';
+            }
+            $redirect = "Location: ../../HTML/$file?$status#post-$postID";
+        }
+
+        header($redirect);
+        exit;
+
     } catch (Exception $e) {
         echo 'Something went wrong: ' . $e->getMessage();
     }

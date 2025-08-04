@@ -65,6 +65,7 @@ function error_found_while_updating_profile(): void {
 }
 
 function show_all_post_from_user(object $pdo): void {
+    
     if (!isset($_SESSION['user_id'])) {
         header("Location: ../../HTML/login.php");
         exit;
@@ -101,8 +102,8 @@ function show_all_post_from_user(object $pdo): void {
         echo '<div class="meta">Posted on ' . $created_at . '</div>';
 
         // LIKE and COMMENT BUTTONS
-        // $liked = check_if_liked_or_not($pdo, (int)$post_id, (int)$user_id);
-        $liked = true;
+        $liked = check_if_liked_or_not($pdo, (int)$post_id, (int)$user_id);
+        // $liked = true;
         $react_class = $liked ? 'action-btn reacted' : 'action-btn';
         $react_text = $liked ? 'Reacted' : 'React';
         
