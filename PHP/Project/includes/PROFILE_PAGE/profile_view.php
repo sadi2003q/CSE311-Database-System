@@ -76,7 +76,7 @@ function show_all_post_from_user(object $pdo): void {
 
     if (empty($posts)) {
         echo '<p>No Post Found</p>';
-        header("Location: ../../HTML/login.php?server=failed&function=newsfeed_model/fetch_all_post_from_user");
+      
         exit;
     }
 

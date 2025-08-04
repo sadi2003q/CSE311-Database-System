@@ -385,12 +385,29 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
                 <a href="logout.php" class="action-button logout-button" style="margin-top: 1rem;">Log Out</a>
             </div>
 
-            <!-- Delete Account Card -->
-            <div class="settings-section" style="flex: 1 1 320px;">
-                <h2>Delete Account</h2>
-                <p style="color: #6B7280; font-size: 0.95rem;">Permanently delete your account and all data.</p>
-                <a href="delete_account.html" class="action-button logout-button" style="background-color: #991B1B; margin-top: 1rem;">Delete Account</a>
+ <!-- Delete Account Card -->
+<div class="settings-section" style="flex: 1 1 320px;">
+    <h2>Request Account Deletion</h2>
+    <p style="color: #6B7280; font-size: 0.95rem;">Request permanent deletion of your account and all data.</p>
+    
+    <?php if (!isset($_GET['confirm_request'])) : ?>
+        <form method="GET" action="">
+            <input type="hidden" name="confirm_request" value="1">
+            <button type="submit" class="action-button logout-button" style="background-color: #991B1B; margin-top: 1rem;">
+                Request Account Deletion
+            </button>
+        </form>
+    <?php else : ?>
+        <form method="POST" action="../includes/SETTING_PAGE/setting.inc.php">
+            <p>Please let us know why you're leaving (optional):</p>
+            <textarea name="delete_reason" rows="4" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #d1d5db; border-radius: 4px;"></textarea>
+            <div style="display: flex; gap: 1rem;">
+                <a href="?" class="action-button" style="background-color: #e5e7eb; color: #000; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px;">Cancel</a>
+                <button type="submit" name="request_deletion" class="action-button" style="background-color: #dc2626; padding: 0.5rem 1rem; border-radius: 4px; border: none; color: white;">Submit Deletion Request</button>
             </div>
+        </form>
+    <?php endif; ?>
+</div>
         </div>
     </div>
 
