@@ -80,7 +80,6 @@ function show_this_post(object $pdo) {
     }
 }
 
-
 function show_all_comment(object $pdo, int $user_id) {
     if (!isset($_GET['post_id'])) {
         echo "No post ID provided.";
@@ -97,12 +96,13 @@ function show_all_comment(object $pdo, int $user_id) {
 
     foreach ($all_comments as $comment) {
         $commentID = $comment['comment_id'];
-        $user_id = $comment['user_id'];
+        $comment_user_id = $comment['user_id'];
         $text = $comment['comment_text'];
         $created_at = new DateTime($comment['created_at']);
 
-        $user_info = fetch_post_maker_information($pdo, $user_id);
+        $user_info = fetch_post_maker_information($pdo, $comment_user_id);
         $username = htmlspecialchars($user_info['username'] ?? 'Unknown');
+        $post_maker_id = fetch_Post_Maker_ID($pdo, $comment['post_id']);
 
         $profile_img = '../uploads/male_profile_icon_image.png';
         if (!empty($user_info['image_url'])) {
@@ -110,8 +110,9 @@ function show_all_comment(object $pdo, int $user_id) {
         } elseif (($user_info['gender'] ?? '') === 'female') {
             $profile_img = '../uploads/female_profile_icon_image.jpg';
         }
-        
-        $condition = $user_id==$comment['user_id'];
+
+        $condition = $user_id == $comment_user_id;
+        $condition2 = $post_maker_id == $user_id;
 
         echo '
         <div class="comment-box" style="position: relative;" id="comment-'.$commentID.'">
@@ -125,23 +126,29 @@ function show_all_comment(object $pdo, int $user_id) {
                     </div>
                 </div>';
 
-        // Only show delete and edit buttons if condition is true
-        if ($condition) {
+        // Show edit button only if condition is true
+        // Show delete button if condition or condition2 is true
+        if ($condition || $condition2) {
+            echo '<div style="display: flex; gap: 0.5rem;">';
+
+            if ($condition) {
+                echo '
+                    <button type="button" class="edit-icon-button" 
+                            title="Edit Comment" onclick="enableEdit('.$commentID.')">
+                        <i class="fas fa-edit"></i>
+                    </button>';
+            }
+
             echo '
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button type="button" class="edit-icon-button" 
-                                title="Edit Comment" onclick="enableEdit('.$commentID.')">
-                            <i class="fas fa-edit"></i>
+                    <form method="POST" action="../includes/COMMENT_PAGE/comment.inc.php" style="margin: 0;">
+                        <input type="hidden" name="comment_id" value="' . $commentID . '">
+                        <input type="hidden" name="post_id" value="' . $postID . '">
+                        <button type="submit" name="delete_comment" class="delete-icon-button" 
+                                title="Delete Comment">
+                            <i class="fas fa-trash"></i>
                         </button>
-                        <form method="POST" action="../includes/COMMENT_PAGE/comment.inc.php" style="margin: 0;">
-                            <input type="hidden" name="comment_id" value="' . $commentID . '">
-                            <input type="hidden" name="post_id" value="' . $postID . '">
-                            <button type="submit" name="delete_comment" class="delete-icon-button" 
-                                    title="Delete Comment">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </div>';
+                    </form>
+                </div>';
         }
 
         echo '

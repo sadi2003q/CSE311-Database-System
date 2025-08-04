@@ -134,3 +134,15 @@ function update_comment(object $pdo, int $commentID, string $newText): void {
         throw new Exception("Failed to update comment");
     }
 }
+
+
+
+function fetch_Post_Maker_ID(object $pdo, int $postID) {
+    $query = "SELECT USER_ID FROM POSTS WHERE POST_ID=:postID";
+    $statement = $pdo->prepare($query);
+    $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+    $statement->execute();
+    $result = $statement->fetchColumn();
+    return $result ? (int)$result : -1;
+
+}

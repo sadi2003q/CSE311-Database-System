@@ -552,18 +552,13 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
             });
         });
         function enableEdit(commentId) {
-        // Hide the comment text
         document.getElementById('comment-text-' + commentId).style.display = 'none';
-        // Show the edit form
         document.getElementById('edit-form-' + commentId).style.display = 'block';
-        // Focus on the textarea
         document.querySelector('#edit-form-' + commentId + ' textarea').focus();
     }
 
     function cancelEdit(commentId) {
-        // Show the comment text
         document.getElementById('comment-text-' + commentId).style.display = 'block';
-        // Hide the edit form
         document.getElementById('edit-form-' + commentId).style.display = 'none';
     }
     </script>
