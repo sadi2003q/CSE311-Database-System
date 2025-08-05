@@ -404,6 +404,12 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
                         </button>
                     </form>
                 <?php else : ?>
+                    <?php if (isset($_SESSION['error'])): ?>
+                    <div style="background-color: #fee2e2; color: #b91c1c; padding: 1rem; border-radius: 0.5rem;">
+                    <?= $_SESSION['error'] ?>
+                    </div>
+                    <?php unset($_SESSION['error']); ?>
+                    <?php endif; ?>
                     <form method="POST" action="../includes/SETTING_PAGE/setting.inc.php" style="display: flex; flex-direction: column; gap: 1rem;">
                         <div>
                             <label for="delete_reason" style="display: block; margin-bottom: 0.4rem; font-weight: 600; color: #374151;">Reason (optional)</label>

@@ -1,5 +1,6 @@
 <?php
 require_once "../includes/config_session.inc.php";
+require_once "../includes/ADMIN_PANEL/admin_view.inc.php";
 ?>
 
 <!DOCTYPE html>
@@ -141,12 +142,7 @@ require_once "../includes/config_session.inc.php";
 
     <div class="message">
         <?php
-        if (isset($_SESSION['admin_login_errors'])) {
-            foreach ($_SESSION['admin_login_errors'] as $error) {
-                echo '<p class="error">' . $error . '</p>';
-            }
-            unset($_SESSION['admin_login_errors']);
-        }
+         check_login_status();
         ?>
     </div>
 </div>
