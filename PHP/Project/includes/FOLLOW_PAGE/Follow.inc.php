@@ -3,7 +3,6 @@
 
 declare(strict_types=1);
 
-// connection with session configuration file 
 require_once '../includes/config_session.inc.php';
 
 
@@ -77,10 +76,9 @@ function fetch_name_from_Database(object $pdo, int $uid) {
 
 
 // view level code: 
+// view level code: 
 // it will show all the following
 function show_all_following(object $pdo) {
-
-    // Calling function to fetch all following from database
     $followings = fetch_all_following_from_Database($pdo);
     
     echo '
@@ -91,7 +89,6 @@ function show_all_following(object $pdo) {
                 margin-bottom: 10px;
                 color: #1f2937;
             }
-
             .follow-empty {
                 font-size: 16px;
                 color: #6b7280;
@@ -107,7 +104,6 @@ function show_all_following(object $pdo) {
         return;
     }
 
-    
     echo '
     <style>
         .follow-card {
@@ -123,7 +119,6 @@ function show_all_following(object $pdo) {
         .follow-card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
         .visit-btn {
             text-decoration: none;
             background-color: #007bff;
@@ -133,7 +128,6 @@ function show_all_following(object $pdo) {
             font-weight: bold;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
         .visit-btn:hover {
             background-color: #0056b3;
             transform: scale(1.05);
@@ -141,17 +135,22 @@ function show_all_following(object $pdo) {
     </style>
     ';
 
-    // Container
     echo '<div style="display: flex; flex-direction: column; gap: 15px;">';
 
     foreach ($followings as $following) {
         $id = $following['FOLLOWING_ID'];
         $name = fetch_name_from_Database($pdo, $id);
 
+        // Correct link construction
+        $link = "visiting_profile.php?profile_id=" . $id;
+        if($id == $_SESSION['user_id']) {
+            $link = "profile.php";
+        }
+
         echo '
             <div class="follow-card">
                 <span style="font-size: 18px; font-weight: bold;">' . htmlspecialchars($name) . '</span>
-                <a href="#" class="visit-btn">Visit Profile</a>
+                <a href="' . $link . '" class="visit-btn">Visit Profile</a>
             </div>
         ';
     }
@@ -159,11 +158,8 @@ function show_all_following(object $pdo) {
     echo '</div>';
 }
 
-
-// this this will show all the follower 
+// this will show all the follower 
 function show_all_follower(object $pdo) {
-
-    // Calling function to fetch all follower from database
     $followers = fetch_all_follower_from_Database($pdo);
     
     echo '
@@ -174,7 +170,6 @@ function show_all_follower(object $pdo) {
                 margin-bottom: 10px;
                 color: #1f2937;
             }
-
             .follow-empty {
                 font-size: 16px;
                 color: #6b7280;
@@ -183,15 +178,13 @@ function show_all_follower(object $pdo) {
         </style>
     ';
 
-    // Count number of follower
-    echo '<div class="follow-header">Total Followings: ' . count($followers ?? []) . '</div>';
+    echo '<div class="follow-header">Total Followers: ' . count($followers ?? []) . '</div>';
 
     if (empty($followers)) {
-        echo '<p class="follow-empty">No following found</p>';
+        echo '<p class="follow-empty">No followers found</p>';
         return;
     }
 
-    
     echo '
     <style>
         .follow-card {
@@ -207,7 +200,6 @@ function show_all_follower(object $pdo) {
         .follow-card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
         .visit-btn {
             text-decoration: none;
             background-color: #007bff;
@@ -217,7 +209,6 @@ function show_all_follower(object $pdo) {
             font-weight: bold;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
         .visit-btn:hover {
             background-color: #0056b3;
             transform: scale(1.05);
@@ -225,24 +216,25 @@ function show_all_follower(object $pdo) {
     </style>
     ';
 
-    // Container
     echo '<div style="display: flex; flex-direction: column; gap: 15px;">';
 
     foreach ($followers as $follower) {
-        $id = $follower['FOLLOWING_ID'];
-        $name = $follower['FOLLOWER_NAME'];
+        // Changed from FOLLOWING_ID to FOLLOWER_ID
+        $id = $follower['FOLLOWER_ID'];
+        $name = fetch_name_from_Database($pdo, $id);
+
+        $link = "visiting_profile.php?profile_id=" . $id;
+        if($id == $_SESSION['user_id']) {
+            $link = "profile.php";
+        }
 
         echo '
             <div class="follow-card">
                 <span style="font-size: 18px; font-weight: bold;">' . htmlspecialchars($name) . '</span>
-                <a href="#" class="visit-btn">Visit Profile</a>
+                <a href="' . $link . '" class="visit-btn">Visit Profile</a>
             </div>
         ';
     }
 
     echo '</div>';
 }
-
-
-
-
