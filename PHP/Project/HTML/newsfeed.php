@@ -613,7 +613,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             <div class="navbar-links">
                 <a href="newsfeed.php" class="active">Home</a>
                 <a href="profile.php">Profile</a>
-                <a href="comment.php">Notifications</a>
+                <a href="notification.php">Notifications</a>
                 <a href="logout.php">Logout</a>
             </div>
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -622,6 +622,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
     </nav>
 
     <div class="container">
+
         <div class="left-sidebar desktop-only">
 
             <!-- Profile Information -->
@@ -631,9 +632,11 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 
 
             <!-- Notification -->
-            <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
-                <?php show_user_information($pdo); ?>
-            </div>
+            <a href="notification.php" style="display: block; text-decoration: none; color: inherit;">
+                <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                    <?php show_first_notification($pdo, (int)$_SESSION['user_id']) ?>
+                </div>
+            </a>
 
 
             <!-- Setting -->
@@ -681,7 +684,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             <div class="nav-links-mobile">
                 <a href="newsfeed.php">Home</a>
                 <a href="profile.php">Profile</a>
-                <a href="#">Notifications</a>
+                <a href="notification.php">Notifications</a>
                 <a href="logout.php">Logout</a>
             </div>
 

@@ -98,6 +98,8 @@ function follow_now(object $pdo, int $current_id, int $visiting_id)  : bool {
             ':follower_name'   => $name,
             ':follower_gender' => $gender
         ]);
+
+        follow_notification($pdo, (int)$current_id, (int)$visiting_id);
             
         return true;
 
@@ -141,4 +143,20 @@ function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID) {
 
     // If a row is found, it means the post is liked.
     return $stmt->rowCount() > 0;
+}
+
+
+
+function follow_notification(object $pdo, int $currentID, int $toFOllowID) {
+
+    // recipient_id	sender_id status
+    $followerID = $currentID;
+    $query = "INSERT INTO notifications (recipient_id, sender_id, status) value 
+            (:recipent_id, :sender_id, 'follow')";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([
+        ':recipent_id' => $toFOllowID,
+        ':sender_id' => $followerID
+    ]);
+    return true;
 }

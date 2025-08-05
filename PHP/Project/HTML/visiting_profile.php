@@ -328,7 +328,7 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
         <div>
             <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
-            <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+            <a href="notification.php"><i class="fas fa-bell"></i> Notifications</a>
             <a href="#" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
     </nav>

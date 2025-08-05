@@ -154,7 +154,7 @@ $counts = get_total_users_count();
     </div>
         <div class="dashboard-card">
         <h3>Total deletion request</h3>
-        <div class="stats"><?php echo $counts['comment_count']; ?></div>
+        <div class="stats"><?php echo $counts['req_count']; ?></div>
         <p>Pending Deletion requests in the system</p>
     </div>
 </div>

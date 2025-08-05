@@ -44,28 +44,24 @@ function set_user(object $pdo, string $username, string $password, string $email
 
 
 
+function Find_UID_of_the_page(object $pdo, string $username) {
+    $query = "SELECT USER_ID FROM USERS WHERE USERNAME = :username";
+    $statement = $pdo->prepare($query);
+    $statement->execute([':username' => $username]);
+    return $statement->fetch(PDO::FETCH_ASSOC);
+}
 
 
+function sent_notification(object $pdo, int $userID) {
 
+    $query = "INSERT INTO NOTIFICATIONS (RECIPENT_ID, STATUS) VALUES (:recipient_id, :status)";
+    $statement = $pdo->prepare($query);
+    $status = 'newID'; 
+    $statement->bindParam(':recipient_id', $userID, PDO::PARAM_INT);
+    $statement->bindParam(':status', $status, PDO::PARAM_STR);
+    $statement->execute();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 

@@ -41,6 +41,12 @@ function get_total_users_count() {
     //Total Interaction
     $result_interaction = $result_commentnumber + $result_likenumber;
 
+    // total comments
+    $query = "SELECT COUNT(*) as count FROM DELETION_REQUESTS";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result_reqnumber = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+
 
 
     // Return both counts as an associative array
@@ -48,7 +54,7 @@ function get_total_users_count() {
         'user_count' => $result_usernumber,
         'post_count' => $result_postnumber,
         'like_count' => $result_interaction,
-        'comment_count' => $result_commentnumber,
+        'req_count' => $result_reqnumber,
 
         
     ];

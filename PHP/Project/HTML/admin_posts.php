@@ -3,15 +3,41 @@ require_once "../includes/config_session.inc.php";
 require_once "../includes/dbh.inc.php";
 // Handle post deletion
 if (isset($_GET['delete_post_id'])) {
-    $delete_id = $_GET['delete_post_id'];
-    $delete_stmt = $pdo->prepare("DELETE FROM posts WHERE post_id = :post_id");
-    $delete_stmt->bindParam(':post_id', $delete_id, PDO::PARAM_INT);
-    $delete_stmt->execute();
+    $delete_id = (int)$_GET['delete_post_id'];
 
-    // Redirect to avoid resubmission on refresh
-    header("Location: admin_posts.php");
-    exit();
+    try {
+        // Start a transaction
+        $pdo->beginTransaction();
+
+        // Delete all comments related to the post
+        $stmt_comments = $pdo->prepare("DELETE FROM comments WHERE post_id = :post_id");
+        $stmt_comments->bindParam(':post_id', $delete_id, PDO::PARAM_INT);
+        $stmt_comments->execute();
+
+        // Delete all likes related to the post
+        $stmt_likes = $pdo->prepare("DELETE FROM likes WHERE post_id = :post_id");
+        $stmt_likes->bindParam(':post_id', $delete_id, PDO::PARAM_INT);
+        $stmt_likes->execute();
+
+        // Delete the post itself
+        $stmt_post = $pdo->prepare("DELETE FROM posts WHERE post_id = :post_id");
+        $stmt_post->bindParam(':post_id', $delete_id, PDO::PARAM_INT);
+        $stmt_post->execute();
+
+        // Commit the transaction
+        $pdo->commit();
+
+        // Redirect with success message
+        header("Location: admin_posts.php?msg=deleted");
+        exit();
+    } catch (Exception $e) {
+        // Rollback transaction on error
+        $pdo->rollBack();
+        header("Location: admin_posts.php?msg=delete_failed");
+        exit();
+    }
 }
+
 
 
 // Redirect if admin not logged in
@@ -147,10 +173,10 @@ if (!isset($_SESSION['admin_id'])) {
                 <thead>
                     <tr>
                         <th>Username</th>
-                        <th>Image URL</th>
-                        <th>Content</th>
+                        <th>Image</th>
+                        <th>Caption</th>
                         <th>Created At</th>
-                         <th>Action</th> <!-- ✅ New column -->
+                         <th>Action</th> 
                     </tr>
                 </thead>
                 <tbody>
