@@ -207,7 +207,10 @@ function react_this_post(int $postID, int $postLikerID, string $destination) {
         } else {
             like_this_post($postID, $postLikerID);
             $postMakerId = fetch_postMakerID($postID);
-            like_notification((int)$postLikerID, (int)$postMakerId, (int)$postID);
+            if($postMakerId != $postLikerID) {
+                like_notification((int)$postLikerID, (int)$postMakerId, (int)$postID);
+            }
+            
             $status = 'liked';
         }
 

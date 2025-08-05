@@ -70,7 +70,12 @@ function post_the_comment(object $pdo, int $postID, string $comment_text): void 
     }
     
     $postMakerID = fetch_Post_Maker_ID($pdo, $postID);
-    comment_notification($pdo, (int)$user_id, (int)$postMakerID, (int)$postID);
+    
+    
+    if((int)$user_id != (int)$postMakerID) {
+        comment_notification($pdo, (int)$user_id, (int)$postMakerID, (int)$postID);
+    }
+    
 
 }
 
