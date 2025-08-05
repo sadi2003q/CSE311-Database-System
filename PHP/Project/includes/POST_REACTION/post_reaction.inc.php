@@ -1,7 +1,7 @@
 <?php 
 
 declare(strict_types=1);
-
+require_once '../config_session.inc.php';
 
 /**
  * This script handles the server-side logic for liking or unliking a post.
@@ -111,6 +111,43 @@ function like_this_post(int $postID, int $postLikerID) {
     }
 }
 
+function like_notification(int $senderID, int $recipientID, int $postID): bool {
+    try {
+        $pdo = require '../dbh.inc.php';
+        
+        // Corrected SQL with proper commas and column names
+        $query = "INSERT INTO notifications (recipient_id, sender_id, post_id, status) 
+                 VALUES (:recipient_id, :sender_id, :post_id, 'liked')";
+        
+        $stmt = $pdo->prepare($query);
+        return $stmt->execute([
+            ':recipient_id' => $recipientID,
+            ':sender_id' => $senderID,
+            ':post_id' => $postID
+        ]);
+        
+    } catch (PDOException $e) {
+        error_log("Like notification failed: " . $e->getMessage());
+        return false;
+    }
+}
+
+function fetch_postMakerID(int $postID): ?int {
+    try {
+        $pdo = require '../dbh.inc.php';
+        $query = "SELECT USER_ID FROM POSTS WHERE POST_ID = :postID LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([':postID' => $postID]);
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? (int)$result['USER_ID'] : null;
+        
+    } catch (PDOException $e) {
+        error_log("Failed to fetch post maker ID: " . $e->getMessage());
+        return null;
+    }
+}
+
 /**
  * Removes a like from a post from a specific user.
  * This involves deleting a record from the LIKES table and decrementing the like count in the POSTS table.
@@ -144,8 +181,6 @@ function unlike_this_post(int $postID, int $postLikerID) {
     }
 }
 
-
-
 /**
  * Handles the core logic of reacting to a post (liking or unliking).
  * It checks if the post is already liked by the user. If yes, it unlikes the post.
@@ -154,35 +189,6 @@ function unlike_this_post(int $postID, int $postLikerID) {
  * @param int $postID The ID of the post being reacted to.
  * @param int $postLikerID The ID of the user reacting to the post.
  */
-// function react_this_post(int $postID, int $postLikerID) {
-//     try {
-//         // Determine where to redirect back to
-//         $referrer = 'newsfeed'; // default
-//         if (isset($_GET['referrer']) && $_GET['referrer'] === 'comment') {
-//             $referrer = 'comment';
-//         }
-
-//         if (check_if_liked_or_not($postID, $postLikerID)==True) {
-//             unlike_this_post($postID, $postLikerID);
-//             $redirect = ($referrer === 'comment') 
-//                 ? "Location: ../../HTML/comment.php?post_id=$postID&unliked#post-$postID"
-//                 : "Location: ../../HTML/newsfeed.php?unliked#post-$postID";
-//             header($redirect);
-//             return;
-//         } else {
-//             like_this_post($postID, $postLikerID);
-//             $redirect = ($referrer === 'comment') 
-//                 ? "Location: ../../HTML/comment.php?post_id=$postID&liked#post-$postID"
-//                 : "Location: ../../HTML/newsfeed.php?liked#post-$postID";
-//             header($redirect);
-//         }
-
-//         die("successful");
-        
-//     } catch (Exception $e) {
-//         echo 'Something went wrong: ' . $e->getMessage();
-//     }
-// }
 
 function react_this_post(int $postID, int $postLikerID, string $destination) {
     try {
@@ -200,6 +206,8 @@ function react_this_post(int $postID, int $postLikerID, string $destination) {
             $status = 'unliked';
         } else {
             like_this_post($postID, $postLikerID);
+            $postMakerId = fetch_postMakerID($postID);
+            like_notification((int)$postLikerID, (int)$postMakerId, (int)$postID);
             $status = 'liked';
         }
 
@@ -228,3 +236,6 @@ function react_this_post(int $postID, int $postLikerID, string $destination) {
         echo 'Something went wrong: ' . $e->getMessage();
     }
 }
+
+
+

@@ -1,8 +1,9 @@
-<?php 
-/*
+ /*
 
-login Notification -> Welcome Message
-
+✅Signup Notification -> Welcome Message
+✅follow Notification
+✅like Notification
+✅comment notification
 
 
 */

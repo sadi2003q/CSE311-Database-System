@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 declare(strict_types=1);
@@ -7,15 +7,16 @@ require_once '../includes/config_session.inc.php';
 
 
 // Fetch all those users who is being followed 
-function fetch_all_following_from_Database($pdo, int $uid = -1) {
+function fetch_all_following_from_Database($pdo, int $uid = -1)
+{
     try {
-        
+
         // By default it will show the following of the current loggin user, 
         // but when variable is passed through the url then it will take that as the user_id
         $user_id = $_SESSION['user_id'];
         if (isset($_GET['profile_id']) && !empty($_GET['profile_id'])) {
             $user_id = (int) $_GET['profile_id'];
-        } 
+        }
 
         $query = "SELECT * FROM FOLLOW WHERE FOLLOWER_ID = :user_id";
         $statement = $pdo->prepare($query);
@@ -24,15 +25,15 @@ function fetch_all_following_from_Database($pdo, int $uid = -1) {
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result ?? [];
-
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         echo '<p>Error Found: ' . $e->getMessage() . '</p>';
         die();
     }
 }
 
 // Fetching all those users who is following 
-function fetch_all_follower_from_Database(object $pdo) {
+function fetch_all_follower_from_Database(object $pdo)
+{
     try {
 
         // By default it will show the follower of the current loggin user, 
@@ -49,16 +50,15 @@ function fetch_all_follower_from_Database(object $pdo) {
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result ?? [];
-
-
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         echo '<p>Error Found: ' . $e->getMessage() . '</p>';
         die();
     }
 }
 
 // Fetch the name from database
-function fetch_name_from_Database(object $pdo, int $uid) {
+function fetch_name_from_Database(object $pdo, int $uid)
+{
     try {
         $query = "SELECT username FROM USERS WHERE user_id = :uuid";
         $statement = $pdo->prepare($query);
@@ -67,7 +67,6 @@ function fetch_name_from_Database(object $pdo, int $uid) {
 
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         return $row ? $row['username'] : null;
-
     } catch (Exception $e) {
         echo '<p>Some problem found while dealing with fetch_name_from_Database function: ' . $e->getMessage() . '</p>';
         die();
@@ -78,9 +77,10 @@ function fetch_name_from_Database(object $pdo, int $uid) {
 // view level code: 
 // view level code: 
 // it will show all the following
-function show_all_following(object $pdo) {
+function show_all_following(object $pdo)
+{
     $followings = fetch_all_following_from_Database($pdo);
-    
+
     echo '
         <style>
             .follow-header {
@@ -143,7 +143,7 @@ function show_all_following(object $pdo) {
 
         // Correct link construction
         $link = "visiting_profile.php?profile_id=" . $id;
-        if($id == $_SESSION['user_id']) {
+        if ($id == $_SESSION['user_id']) {
             $link = "profile.php";
         }
 
@@ -159,9 +159,10 @@ function show_all_following(object $pdo) {
 }
 
 // this will show all the follower 
-function show_all_follower(object $pdo) {
+function show_all_follower(object $pdo)
+{
     $followers = fetch_all_follower_from_Database($pdo);
-    
+
     echo '
         <style>
             .follow-header {
@@ -224,7 +225,7 @@ function show_all_follower(object $pdo) {
         $name = fetch_name_from_Database($pdo, $id);
 
         $link = "visiting_profile.php?profile_id=" . $id;
-        if($id == $_SESSION['user_id']) {
+        if ($id == $_SESSION['user_id']) {
             $link = "profile.php";
         }
 
@@ -238,3 +239,4 @@ function show_all_follower(object $pdo) {
 
     echo '</div>';
 }
+

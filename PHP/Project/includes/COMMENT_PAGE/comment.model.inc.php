@@ -68,6 +68,10 @@ function post_the_comment(object $pdo, int $postID, string $comment_text): void 
     if (!$statement->execute()) {
         throw new Exception("Failed to post comment");
     }
+    
+    $postMakerID = fetch_Post_Maker_ID($pdo, $postID);
+    comment_notification($pdo, (int)$user_id, (int)$postMakerID, (int)$postID);
+
 }
 
 
@@ -145,4 +149,25 @@ function fetch_Post_Maker_ID(object $pdo, int $postID) {
     $result = $statement->fetchColumn();
     return $result ? (int)$result : -1;
 
+}
+
+
+function comment_notification(object $pdo, int $senderID, int $recipientID, int $postID) {
+    try {
+        
+        // Corrected SQL with proper commas and column names
+        $query = "INSERT INTO notifications (recipient_id, sender_id, post_id, status) 
+                 VALUES (:recipient_id, :sender_id, :post_id, 'commented')";
+        
+        $stmt = $pdo->prepare($query);
+        return $stmt->execute([
+            ':recipient_id' => $recipientID,
+            ':sender_id' => $senderID,
+            ':post_id' => $postID
+        ]);
+        
+    } catch (PDOException $e) {
+        error_log("Like notification failed: " . $e->getMessage());
+        return false;
+    }
 }

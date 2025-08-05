@@ -613,7 +613,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             <div class="navbar-links">
                 <a href="newsfeed.php" class="active">Home</a>
                 <a href="profile.php">Profile</a>
-                <a href="comment.php">Notifications</a>
+                <a href="notification.php">Notifications</a>
                 <a href="logout.php">Logout</a>
             </div>
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -681,7 +681,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             <div class="nav-links-mobile">
                 <a href="newsfeed.php">Home</a>
                 <a href="profile.php">Profile</a>
-                <a href="#">Notifications</a>
+                <a href="notification.php">Notifications</a>
                 <a href="logout.php">Logout</a>
             </div>
 
