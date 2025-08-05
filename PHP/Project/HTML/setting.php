@@ -241,6 +241,9 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
             background-color: #1E40AF;
             transform: translateY(-1px);
         }
+        html {
+            scroll-behavior: smooth;
+        }
 
         /* Responsive Grid Layout */
         @media (max-width: 1024px) {
@@ -278,11 +281,9 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
 <body>
 
     <nav class="navbar">
-        <a href="newsfeed.html">Home</a>
-        <a href="profile.html">Profile</a>
-        <a href="notifications.html">Notifications</a>
-        <a href="settings.html">Settings</a>
-        <a href="logout.html">Logout</a>
+        <a href="newsfeed.php">Home</a>
+        <a href="profile.php">Profile</a>
+        <a href="notifications.php">Notifications</a>
     </nav>
 
     <div class="container">
@@ -336,9 +337,9 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
             <!-- Error display -->
             <p class="error-message" id="error-message">Please fill in all required fields correctly.</p>
             <br>
-            <?php 
-                error_found_while_updating_profile(); 
-                apply_success_border()
+            <?php
+            error_found_while_updating_profile();
+            apply_success_border()
             ?>
         </div>
 
@@ -376,22 +377,76 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
 
 
         <!-- Logout Section -->
-        <!-- Account Actions Section -->
         <div style="display: flex; gap: 2rem; flex-wrap: wrap; width: 100%;">
             <!-- Log Out Card -->
             <div class="settings-section" style="flex: 1 1 320px;">
-                <h2>Log Out</h2>
+                <h2 style="margin-bottom: 0.5rem;">Log Out</h2>
                 <p style="color: #6B7280; font-size: 0.95rem;">Sign out of your account securely.</p>
                 <a href="logout.php" class="action-button logout-button" style="margin-top: 1rem;">Log Out</a>
             </div>
 
-            <!-- Delete Account Card -->
-            <div class="settings-section" style="flex: 1 1 320px;">
-                <h2>Delete Account</h2>
-                <p style="color: #6B7280; font-size: 0.95rem;">Permanently delete your account and all data.</p>
-                <a href="delete_account.html" class="action-button logout-button" style="background-color: #991B1B; margin-top: 1rem;">Delete Account</a>
+            <!-- Account Deletion Card -->
+            <div id="delete-section" class="settings-section" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 1.5rem;">
+                <h2 style="margin-bottom: 0;">Account Deletion</h2>
+                <p style="color: #6B7280; font-size: 0.95rem;">Permanently delete your account and all data associated with it. This action cannot be undone.</p>
+
+                <?php if (!isset($_GET['confirm_request'])) : ?>
+                    <form method="GET" action="#delete-section" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <input type="hidden" name="confirm_request" value="1">
+                        <button type="submit" class="action-button logout-button" style="
+                    background-color: #991B1B;
+                    padding: 0.75rem 1rem;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                ">
+                            ⚠️ Request Account Deletion
+                        </button>
+                    </form>
+                <?php else : ?>
+                    <form method="POST" action="../includes/SETTING_PAGE/setting.inc.php" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <label for="delete_reason" style="display: block; margin-bottom: 0.4rem; font-weight: 600; color: #374151;">Reason (optional)</label>
+                            <textarea id="delete_reason" name="delete_reason" rows="4" placeholder="Let us know why you're leaving..." style="
+                        width: 100%;
+                        padding: 0.75rem;
+                        border: 1px solid #D1D5DB;
+                        border-radius: 8px;
+                        font-size: 0.95rem;
+                        background-color: #F9FAFB;
+                    "></textarea>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                            <a href="?" class="action-button" style="
+                        background-color: #F3F4F6;
+                        color: #1F2937;
+                        border: 1px solid #D1D5DB;
+                        padding: 0.6rem 1.2rem;
+                        border-radius: 8px;
+                        font-weight: 500;
+                    ">
+                                Cancel
+                            </a>
+                            <button type="submit" name="request_deletion" class="action-button" style="
+                        background-color: #DC2626;
+                        padding: 0.6rem 1.2rem;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        color: white;
+                        border: none;
+                    ">
+                                ✅ Confirm Deletion
+                            </button>
+                        </div>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
+
+        <!-- Delete Account Card -->
+
+
+
     </div>
 
     <script>

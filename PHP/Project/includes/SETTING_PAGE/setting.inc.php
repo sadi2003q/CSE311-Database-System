@@ -67,6 +67,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
+        // === REQUEST ACCOUNT DELETION ===
+        elseif (isset($_POST['request_deletion'])) {
+            $user_id = $_SESSION['user_id'];
+            $email = $_SESSION['email'];
+            $reason = $_POST['delete_reason'] ?? null;
+
+            // Log deletion request with reason
+            log_deletion_request($pdo, $user_id, $email, $reason);
+
+            // Redirect to the dedicated success page
+            header("Location: /PHP/Project/HTML/deletion_success.php");
+            exit();
+        }
+
         // Show errors if any
         if ($error) {
             $_SESSION['update_profile_error'] = $error;
@@ -75,8 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         header("Location: ../../HTML/setting.php?update=success");
-
-
     } catch (PDOException $e) {
         echo $e->getMessage();
     }

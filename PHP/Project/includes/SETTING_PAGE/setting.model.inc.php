@@ -117,6 +117,15 @@ function update_password(object $pdo, string $new_password) : void {
 // Fetch all Interraction
 // FOLLOW, likes, posts
 
+function log_deletion_request(object $pdo, int $user_id, string $email, ?string $reason): void {
+    $stmt = $pdo->prepare("INSERT INTO deletion_requests (user_id, email, reason) VALUES (:user_id, :email, :reason)");
+    $stmt->execute([
+        'user_id' => $user_id,
+        'email' => $email,
+        'reason' => $reason
+    ]);
+}
+
 
 
 
