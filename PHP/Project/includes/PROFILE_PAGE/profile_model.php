@@ -58,4 +58,30 @@ function delete_the_post(object $pdo, int $postID) {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
     $stmt->execute();
+
+    delete_all_like_from_database($pdo, (int)$postID);
+    delete_all_comments_from_database($pdo, (int)$postID);
+    delete_all_notification_from_database($pdo, (int)$postID);
+}
+
+function delete_all_like_from_database(object $pdo, int $postID) {
+    $query = "DELETE FROM LIKES WHERE POST_ID = :postID";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
+    $stmt->execute();
+}
+
+
+function delete_all_comments_from_database(object $pdo, int $postID) {
+    $query = "DELETE FROM COMMENTS WHERE POST_ID = :postID";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
+    $stmt->execute();
+}
+
+function delete_all_notification_from_database(object $pdo, int $postID) {
+    $query = "DELETE FROM NOTIFICATIONS WHERE POST_ID = :postID";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
+    $stmt->execute();
 }
