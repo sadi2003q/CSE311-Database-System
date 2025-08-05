@@ -33,6 +33,7 @@ function show_all_information(object $pdo): void {
 }
 
 function show_all_post(object $pdo): void {
+    $current_id = (int) $_SESSION['user_id'];
     $user_id = (int)$_GET['profile_id'];
     require_once 'visiting_profile.model.inc.php';
     $posts = fetch_all_post_from_database($pdo, $user_id);
@@ -77,7 +78,8 @@ function show_all_post(object $pdo): void {
         echo '<div class="meta" style="font-size: 0.8rem; color: #6c757d; opacity: 0.6; font-style: italic;">Posted on ' . $created_at . '</div>';
 
         // LIKE and COMMENT BUTTONS
-        $liked = check_if_liked_or_not($pdo, (int)$post_id, (int)$user_id);
+        $liked = check_if_liked_or_not($pdo, (int)$post_id, (int)$current_id);
+        
         // $liked = true;
         $react_class = $liked ? 'action-btn reacted' : 'action-btn';
         $react_text = $liked ? 'Reacted' : 'React';

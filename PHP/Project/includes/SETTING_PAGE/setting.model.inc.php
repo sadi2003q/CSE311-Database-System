@@ -116,7 +116,7 @@ function update_password(object $pdo, string $new_password) : void {
 
 // Fetch all Interraction
 // FOLLOW, likes, posts
-
+/*
 function log_deletion_request(object $pdo, int $user_id, string $email, ?string $reason): void {
     $stmt = $pdo->prepare("INSERT INTO deletion_requests (user_id, email, reason) VALUES (:user_id, :email, :reason)");
     $stmt->execute([
@@ -125,8 +125,20 @@ function log_deletion_request(object $pdo, int $user_id, string $email, ?string 
         'reason' => $reason
     ]);
 }
+*/
+function log_deletion_request(object $pdo, int $user_id, string $email, ?string $reason): void {
+    // First, check if a deletion request already exists for this user
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM deletion_requests WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $user_id]);
+    $count = $stmt->fetchColumn();
 
-
-
-
-
+    if ($count == 0) {
+        // If no previous request exists, insert the new one
+        $stmt = $pdo->prepare("INSERT INTO deletion_requests (user_id, email, reason) VALUES (:user_id, :email, :reason)");
+        $stmt->execute([
+            'user_id' => $user_id,
+            'email' => $email,
+            'reason' => $reason
+        ]);
+    }
+}

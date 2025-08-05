@@ -54,14 +54,17 @@ function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID) {
 
 
 function delete_the_post(object $pdo, int $postID) {
+
+    delete_all_like_from_database($pdo, (int)$postID);
+    delete_all_comments_from_database($pdo, (int)$postID);
+    delete_all_notification_from_database($pdo, (int)$postID);
+    
     $query = "DELETE FROM POSTS WHERE POST_ID = :postID";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':postID', $postID, PDO::PARAM_INT);
     $stmt->execute();
 
-    delete_all_like_from_database($pdo, (int)$postID);
-    delete_all_comments_from_database($pdo, (int)$postID);
-    delete_all_notification_from_database($pdo, (int)$postID);
+    
 }
 
 function delete_all_like_from_database(object $pdo, int $postID) {

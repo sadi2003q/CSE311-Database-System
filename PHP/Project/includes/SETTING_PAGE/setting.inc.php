@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // === REQUEST ACCOUNT DELETION ===
-        elseif (isset($_POST['request_deletion'])) {
+       /* elseif (isset($_POST['request_deletion'])) {
             $user_id = $_SESSION['user_id'];
             $email = $_SESSION['email'];
             $reason = $_POST['delete_reason'] ?? null;
@@ -79,7 +79,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Redirect to the dedicated success page
             header("Location: /PHP/Project/HTML/deletion_success.php");
             exit();
+        }*/
+
+        elseif (isset($_POST['request_deletion'])) {
+            $user_id = $_SESSION['user_id'];
+            $email = $_SESSION['email'];
+            $reason = $_POST['delete_reason'] ?? null;
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM deletion_requests WHERE user_id = :user_id");
+            $stmt->execute(['user_id' => $user_id]);
+            $alreadyRequested = $stmt->fetchColumn();
+
+            if ($alreadyRequested > 0) {
+                // Already requested - redirect to a message page or back with error
+                $_SESSION['error'] = "You have already submitted a deletion request.";
+                header("Location: /PHP/Project/HTML/setting.php?confirm_request=1");
+                exit();
+            } else {
+                log_deletion_request($pdo, $user_id, $email, $reason);
+                header("Location: /PHP/Project/HTML/deletion_success.php");
+                exit();
+            }
+
         }
+        
 
         // Show errors if any
         if ($error) {

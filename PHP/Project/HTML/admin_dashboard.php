@@ -51,22 +51,37 @@ if (!isset($_SESSION['admin_id'])) {
         .admin-main {
             padding: 2rem;
         }
-        .dashboard-grid {
+        /*.dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
+        }*/
+            .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
         }
+        /*
         .dashboard-card {
             background-color: white;
             border-radius: 8px;
             padding: 1.5rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+            */
+        .dashboard-card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        min-height: 290px; 
+        }
+
         .dashboard-card h3 {
             margin-bottom: 1rem;
             color: #2d2d2d;
             border-bottom: 2px solid #4ECDC4;
-            padding-bottom: 0.5rem;
+            padding-bottom: 1rem;
         }
         .stats {
             font-size: 2rem;
@@ -107,6 +122,7 @@ if (!isset($_SESSION['admin_id'])) {
 $counts = get_total_users_count();
 ?>
 
+<!--
 <div class="dashboard-grid">
     <div class="dashboard-card">
         <h3>Total Users</h3>
@@ -119,7 +135,29 @@ $counts = get_total_users_count();
         <p>Posts created in the system</p>
     </div>
 </div>
-
+    -->
+<div class="dashboard-grid">
+    <div class="dashboard-card">
+        <h3>Total Users</h3>
+        <div class="stats"><?php echo $counts['user_count']; ?></div>
+        <p>Registered users in the system</p>
+    </div>
+    <div class="dashboard-card">
+        <h3>Total Posts</h3>
+        <div class="stats"><?php echo $counts['post_count']; ?></div>
+        <p>Posts created in the system</p>
+    </div>
+        <div class="dashboard-card">
+        <h3>Total Interaction</h3>
+        <div class="stats"><?php echo $counts['like_count']; ?></div>
+        <p>Total likes and comments in this system</p>
+    </div>
+        <div class="dashboard-card">
+        <h3>Total deletion request</h3>
+        <div class="stats"><?php echo $counts['req_count']; ?></div>
+        <p>Pending Deletion requests in the system</p>
+    </div>
+</div>
     </main>
 </body>
 </html>
