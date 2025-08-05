@@ -22,6 +22,7 @@
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
+
         body {
             background-color: #f0f2f5;
             color: #1c1e21;
@@ -73,6 +74,7 @@
             color: #606770;
             max-width: 500px;
         }
+
         .login-container {
             background-color: #fff;
             padding: 20px;
@@ -90,12 +92,7 @@
             margin-bottom: 20px;
             color: #1c1e21;
         }
-        .logo h2 {
-            color: #FF6B6B;
-            font-size: 2.5rem;
-            font-weight: 700;
-            animation: logoAnimation 4s infinite ease-in-out;
-        }
+
         form {
             display: flex;
             flex-direction: column;
@@ -161,44 +158,6 @@
             color: #f02849;
             font-size: 14px;
             text-align: center;
-        }
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #3E4042;
-        }
-        
-        .divider span {
-            margin: 0 1rem;
-            color: #B0B3B8;
-            font-size: 0.9rem;
-        }
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1.5rem;
-            }
-            .login-section {
-                max-width: 100%;
-            }
-            .login-container {
-                padding: 1.5rem;
-            }
-            .logo h2 {
-                font-size: 2rem;
-            }
-            button, a {
-                font-size: 1rem;
-            }
-            .udia-logo {
-                font-size: 3.5rem;
-            }
-            .image-section h3 {
-                font-size: 1.3rem; /* Slightly reduced for mobile */
-                max-width: 200px; /* Fine-tuned for mobile */
-            }
         }
     </style>
 </head>
