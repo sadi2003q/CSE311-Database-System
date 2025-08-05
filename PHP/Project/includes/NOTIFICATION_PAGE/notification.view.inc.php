@@ -16,7 +16,7 @@ function show_all_notification(object $pdo, int $userID): void
             <div class="notification-panel">
                 <div class="panel-header">
                     <h2 class="panel-title">Notifications</h2>
-                    <form method="POST" action="mark_all_notifications_read.php">
+                    <form method="POST" action="../includes/NOTIFICATION_PAGE/notification.inc.php">
                         <button type="submit" class="mark-all-read">Mark All as Read</button>
                     </form>
                 </div>
@@ -68,27 +68,32 @@ function show_all_notification(object $pdo, int $userID): void
             }
 
             echo '<div class="notification-item ' . ($notification['status'] == 0 ? 'unread' : '') . '">
-                    <div class="profile-avatar">
-                        <img src="' . htmlspecialchars($sender_avatar) . '" alt="' . $sender_name . '" />
+        <div class="profile-avatar">
+            <img src="' . htmlspecialchars($sender_avatar) . '" alt="' . $sender_name . '" />
+        </div>
+        <div class="notification-content">
+            <div class="notification-header">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <span class="user-name">' . $sender_name . '</span>
+                        <i class="reaction-icon ' . $icon_class . '"></i>
+                        <span class="notification-message">' . $message . '</span>
                     </div>
-                    <div class="notification-content">
-                        <div class="notification-header">
-                            <span class="user-name">' . $sender_name . '</span>
-                            <i class="reaction-icon ' . $icon_class . '"></i>
-                            <span class="notification-message">' . $message . '</span>
-                            <span class="timestamp">' . $formatted_time . '</span>
-                        </div>';
+                    ' . ($notification['state'] == 0 ? '<span style="color: #4361ee; font-size: 20px;">●</span>' : '') . '
+                </div>
+                <span class="timestamp">' . $formatted_time . '</span>
+            </div>';
 
             if ($notification['post_id'] || $is_follow_notification) {
                 echo '<div class="post-preview">
                         <span class="post-message">' . $message . '</span>';
-                
+
                 if ($is_follow_notification) {
                     echo '<a href="visiting_profile.php?profile_id=' . $notification['sender_id'] . '" class="post-link">View profile →</a>';
                 } else {
                     echo '<a href="comment.php?post_id=' . $notification['post_id'] . '" class="post-link">View post →</a>';
                 }
-                
+
                 echo '</div>';
             }
 

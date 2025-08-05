@@ -20,3 +20,13 @@ function fetch_notification_sender_information(object $pdo, int $userID) {
 
 }
 
+
+function mark_all_notification_as_read(object $pdo, int $userID) {
+    $query = "UPDATE NOTIFICATIONS SET STATE=1 WHERE RECIPIENT_ID=:recipient_id and STATE = 0";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':recipient_id', $userID, PDO::PARAM_INT);
+    $stmt->execute();
+}
+
+
+
