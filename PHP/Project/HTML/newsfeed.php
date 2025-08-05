@@ -17,6 +17,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Modern UI Reset & Variables */
         :root {
@@ -523,6 +524,11 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             background-color: #F2F2F2;
         }
 
+
+        .navbar-links.middle {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .navbar-links {
                 display: none;
@@ -584,11 +590,25 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
                 font-weight: 500;
                 font-size: 1.1rem;
             }
+
         }
 
         @media (min-width: 992px) {
             .nav-links-mobile {
                 display: none !important;
+            }
+        }
+
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .navbar-links.middle {
+                display: flex !important;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .navbar-links {
+                display: none;
             }
         }
     </style>
@@ -605,16 +625,24 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
         <div style="display: flex; align-items: center;">
 
 
-            <form class="navbar-search" style="padding-right: 10px;" onsubmit="return goToSearchPage(event)">
+            <form class="navbar-search" style="padding-right: 30px;" onsubmit="return goToSearchPage(event)">
                 <input type="text" name="query" placeholder="Search..." class="search-input" onclick="handleSearchInputClick(event)" />
                 <button type="submit" class="search-icon">🔍</button>
             </form>
 
             <div class="navbar-links">
-                <a href="newsfeed.php" class="active">Home</a>
-                <a href="profile.php">Profile</a>
-                <a href="notification.php">Notifications</a>
-                <a href="logout.php">Logout</a>
+                <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"></i> Home </a>
+                <a href="profile.php" title="Profile"><i class="fas fa-user"></i> Profile </a>
+                <a href="notification.php" title="Notifications"><i class="fas fa-bell"></i> Notification </a>
+                <a href="setting.php" title="Settings"><i class="fas fa-cog"></i> Setting </a>
+            </div>
+
+
+            <div class="navbar-links middle">
+                <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"></i></a>
+                <a href="profile.php" title="Profile"><i class="fas fa-user"></i> </a>
+                <a href="notification.php" title="Notifications"><i class="fas fa-bell"></i> </a>
+                <a href="setting.php" title="Settings"><i class="fas fa-cog"></i></a>
             </div>
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
         </div>
@@ -682,13 +710,14 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
         <aside class="sidebar" id="sidebar">
             <!-- Mobile nav links -->
             <div class="nav-links-mobile">
-                <a href="newsfeed.php">Home</a>
-                <a href="profile.php">Profile</a>
-                <a href="notification.php">Notifications</a>
-                <a href="logout.php">Logout</a>
+                <a href="newsfeed.php" title="Home"><i class="fas fa-house"> HOME </i></a>
+                <a href="profile.php" title="Profile"><i class="fas fa-user"> PROFILE </i></a>
+                <a href="notification.php" title="Notifications"><i class="fas fa-bell"> NOTIFICATION</i></a>
+                <a href="setting.php" title="Settings"><i class="fas fa-cog"> SETTINGS</i></a>
+                <a href="logout.php" title="Logout"><i class="fas fa-sign-out-alt"> LOGOUT </i></a>
             </div>
 
-
+            
 
             <div class="card sidebar-section">
                 <h3>Suggested for you</h3>

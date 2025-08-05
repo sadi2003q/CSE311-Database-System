@@ -58,6 +58,8 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             z-index: 100;
             border-bottom: 1px solid var(--light-gray);
         }
+        
+        
 
         .navbar a {
             color: var(--dark);
@@ -71,6 +73,20 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             align-items: center;
             gap: 0.5rem;
         }
+
+        .navbar-brand {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration:underline;
+    letter-spacing: 2px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: var(--primary-hover);
+    transform: scale(1.05);
+}
 
         .navbar a:hover {
             background-color: var(--light-gray);
@@ -326,14 +342,28 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
 
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div></div>
         <div>
+            <a href="newsfeed.php" class="navbar-brand">Social</a>
             <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
             <a href="notification.php"><i class="fas fa-bell"></i> Notifications</a>
         </div>
+
+        <!-- Mobile Hamburger Icon -->
+    <button onclick="toggleSidebar()" style="display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer;" id="hamburgerMenu">
+        ☰
+    </button>
         
     </nav>
+
+    <!-- Mobile Sidebar Navigation -->
+<div id="mobileSidebar" style="display: none; flex-direction: column; position: fixed; top: 0; left: 0; width: 70%; height: 100%; background-color: #fff; box-shadow: 2px 0 6px rgba(0,0,0,0.1); padding: 2rem 1rem; z-index: 999;">
+    <a href="newsfeed.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">🏠 Home</a>
+    <a href="profile.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">👤 Profile</a>
+    <a href="notification.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">🔔 Notifications</a>
+    <a href="settings.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">⚙️ Settings</a>
+    <a href="logout.php" style="text-decoration: none; color: #333;">🚪 Logout</a>
+</div>
 
     <div class="container">
         <!-- Left Column - Profile Info -->
@@ -393,6 +423,30 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
             });
         });
     });
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById("mobileSidebar");
+        sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
+    }
+
+    // Responsive toggle (basic, inline)
+    function handleResize() {
+        const width = window.innerWidth;
+        const desktopLinks = document.getElementById("navLinksDesktop");
+        const hamburger = document.getElementById("hamburgerMenu");
+
+        if (width <= 768) {
+            desktopLinks.style.display = "none";
+            hamburger.style.display = "block";
+        } else {
+            desktopLinks.style.display = "flex";
+            hamburger.style.display = "none";
+            document.getElementById("mobileSidebar").style.display = "none";
+        }
+    }
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("load", handleResize);
     </script>
 </body>
 </html>
