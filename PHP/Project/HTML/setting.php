@@ -443,7 +443,6 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
             </div>
         </div>
 
-        <!-- Delete Account Card -->
 
 
 

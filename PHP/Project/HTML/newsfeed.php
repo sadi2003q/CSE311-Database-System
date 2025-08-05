@@ -622,6 +622,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
     </nav>
 
     <div class="container">
+
         <div class="left-sidebar desktop-only">
 
             <!-- Profile Information -->
@@ -631,9 +632,11 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
 
 
             <!-- Notification -->
-            <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
-                <?php show_user_information($pdo); ?>
-            </div>
+            <a href="notification.php" style="display: block; text-decoration: none; color: inherit;">
+                <div class="card sidebar-section" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                    <?php show_first_notification($pdo, (int)$_SESSION['user_id']) ?>
+                </div>
+            </a>
 
 
             <!-- Setting -->

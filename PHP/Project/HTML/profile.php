@@ -330,7 +330,7 @@ require_once "../includes/PROFILE_PAGE/profile_view.php";
         <div>
             <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
-            <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+            <a href="notification.php"><i class="fas fa-bell"></i> Notifications</a>
         </div>
         
     </nav>

@@ -204,7 +204,7 @@ require_once "../includes/config_session.inc.php";
     <div class="navbar-links">
       <a href="newsfeed.php">Home</a>
       <a href="profile.php">Profile</a>
-      <a href="#">Notifications</a>
+      <a href="notification.php">Notifications</a>
       <a href="logout.php">Logout</a>
     </div>
     
