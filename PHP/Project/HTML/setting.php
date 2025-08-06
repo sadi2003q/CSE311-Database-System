@@ -2,6 +2,7 @@
 require_once "../includes/config_session.inc.php";
 $pdo = require_once "../includes/dbh.inc.php";
 require_once "../includes/SETTING_PAGE/setting.view.inc.php";
+require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
 
 
 // $pdo = require_once "../includes/dbh.inc.php";
@@ -17,6 +18,7 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - Social Media</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -281,9 +283,11 @@ require_once "../includes/SETTING_PAGE/setting.view.inc.php";
 <body>
 
     <nav class="navbar">
-        <a href="newsfeed.php">Home</a>
-        <a href="profile.php">Profile</a>
-        <a href="notifications.php">Notifications</a>
+        <a href="newsfeed.php" class="navbar-brand">Social</a>
+        <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
+        <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
+            <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
+        <a href="#" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</a>
     </nav>
 
     <div class="container">

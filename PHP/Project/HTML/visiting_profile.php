@@ -2,6 +2,7 @@
 require_once '../includes/config_session.inc.php';
 $pdo = require_once '../includes/dbh.inc.php';
 require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
+require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
 ?>
 
 <!DOCTYPE html>
@@ -326,9 +327,10 @@ require_once "../includes/VISITING_PROFILE/visiting_profile.view.inc.php";
     <nav class="navbar">
         <div></div>
         <div>
-            <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
-            <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
-            <a href="notification.php"><i class="fas fa-bell"></i> Notifications</a>
+            <a href="newsfeed.php" class="navbar-brand">Social</a>
+            <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
+                <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
+            <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
             <a href="#" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
     </nav>
