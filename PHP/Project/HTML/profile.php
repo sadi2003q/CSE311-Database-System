@@ -18,6 +18,27 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
     <title>Profile - Social Media</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        #mobileSidebar {
+            display: none;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 70%;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem 1rem;
+            z-index: 999;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        #mobileSidebar.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
         :root {
             --primary: #4361ee;
             --primary-dark: #3a0ca3;
@@ -60,8 +81,13 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
             z-index: 100;
             border-bottom: 1px solid var(--light-gray);
         }
-        
-        
+
+        #navLinksDesktop {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+
 
         .navbar a {
             color: var(--dark);
@@ -77,18 +103,18 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
         }
 
         .navbar-brand {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-decoration:underline;
-    letter-spacing: 2px;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: underline;
+            letter-spacing: 2px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
 
-.navbar-brand:hover {
-    color: var(--primary-hover);
-    transform: scale(1.05);
-}
+        .navbar-brand:hover {
+            color: var(--primary-hover);
+            transform: scale(1.05);
+        }
 
         .navbar a:hover {
             background-color: var(--light-gray);
@@ -102,6 +128,15 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
         .navbar div {
             display: flex;
             gap: 0.5rem;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
         }
 
         .container {
@@ -269,27 +304,31 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
+
         .action-btn {
-    background: none;
-    border: none;
-    color: #6c757d;          /* gray */
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
-    width: 100%;
-    text-align: center;
-}
+            background: none;
+            border: none;
+            color: #6c757d;
+            /* gray */
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            text-align: center;
+        }
 
-.action-btn:hover {
-    background-color: #f0f0f0;  /* light gray */
-}
+        .action-btn:hover {
+            background-color: #f0f0f0;
+            /* light gray */
+        }
 
-.action-btn.reacted {
-    color: #0d6efd;           /* primary blue */
-    font-weight: 700;
-}
+        .action-btn.reacted {
+            color: #0d6efd;
+            /* primary blue */
+            font-weight: 700;
+        }
 
         @media (max-width: 768px) {
             .container {
@@ -303,36 +342,49 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
                 height: auto;
                 overflow: visible;
             }
-            
+
             .navbar {
-                flex-direction: column;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
                 padding: 1rem;
                 gap: 0.5rem;
+                position: relative;
             }
-            
+
+            .hamburger {
+                display: block;
+                position: absolute;
+                right: 1rem;
+            }
+
+            #navLinksDesktop {
+                display: none !important;
+            }
+
             .navbar div {
                 width: 100%;
                 justify-content: space-between;
             }
-            
+
             .navbar a {
                 flex-grow: 1;
                 text-align: center;
                 padding: 0.5rem;
                 font-size: 0.85rem;
             }
-            
+
             .navbar a:last-child {
                 width: 100%;
                 margin-top: 0.5rem;
             }
         }
-        
+
         @media (max-width: 480px) {
             .navbar a {
                 font-size: 0.8rem;
             }
-            
+
             .navbar a i {
                 font-size: 1rem;
             }
@@ -344,35 +396,36 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
 
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div>
+        <div id="navLinksDesktop">
             <a href="newsfeed.php" class="navbar-brand">Social</a>
             <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
-                <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
+            <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
             <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
+            <a href="setting.php" title="Settings"><i class="fas fa-cog"> Setting </i></a>
         </div>
 
         <!-- Mobile Hamburger Icon -->
-        <button onclick="toggleSidebar()" style="display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer;" id="hamburgerMenu">
+        <button class="hamburger" onclick="toggleSidebar()" id="hamburgerMenu">
             ☰
         </button>
-            
+
     </nav>
 
     <!-- Mobile Sidebar Navigation -->
-<div id="mobileSidebar" style="display: none; flex-direction: column; position: fixed; top: 0; left: 0; width: 70%; height: 100%; background-color: #fff; box-shadow: 2px 0 6px rgba(0,0,0,0.1); padding: 2rem 1rem; z-index: 999;">
-    <a href="newsfeed.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">🏠 Home</a>
-    <a href="profile.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">👤 Profile</a>
-    <a href="notification.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">🔔 Notifications</a>
-    <a href="settings.php" style="margin-bottom: 1rem; text-decoration: none; color: #333;">⚙️ Settings</a>
-    <a href="logout.php" style="text-decoration: none; color: #333;">🚪 Logout</a>
-</div>
+    <div id="mobileSidebar">
+        <a href="newsfeed.php" class="navbar-brand">Social</a>
+        <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
+        <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
+        <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
+        <a href="setting.php" title="Settings"><i class="fas fa-cog"> Setting </i></a>
+    </div>
 
     <div class="container">
         <!-- Left Column - Profile Info -->
         <div class="profile-section">
             <div class="profile-card">
                 <?php show_user_information_profile_view(); ?>
-                
+
                 <div class="profile-actions">
                     <a href="follower.php" class="btn">
                         <i class="fas fa-users"></i> Followers & Following
@@ -393,62 +446,65 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
 
 
 
-    
+
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Handle all react buttons
-        document.querySelectorAll('form[action*="post_reaction.inc.php"]').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const form = this;
-                const button = form.querySelector('button[name="react"]');
-                const formData = new FormData(form);
-                
-                // Store current scroll position
-                const scrollPosition = window.scrollY;
-                
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(() => {
-                    // Toggle the reacted class and text
-                    button.classList.toggle('reacted');
-                    button.textContent = button.classList.contains('reacted') ? 'Reacted' : 'React';
-                    
-                    // Restore scroll position
-                    window.scrollTo(0, scrollPosition);
-                })
-                .catch(error => console.error('Error:', error));
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle all react buttons
+            document.querySelectorAll('form[action*="post_reaction.inc.php"]').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const form = this;
+                    const button = form.querySelector('button[name="react"]');
+                    const formData = new FormData(form);
+
+                    // Store current scroll position
+                    const scrollPosition = window.scrollY;
+
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(() => {
+                            // Toggle the reacted class and text
+                            button.classList.toggle('reacted');
+                            button.textContent = button.classList.contains('reacted') ? 'Reacted' : 'React';
+
+                            // Restore scroll position
+                            window.scrollTo(0, scrollPosition);
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
             });
         });
-    });
 
-    function toggleSidebar() {
-        const sidebar = document.getElementById("mobileSidebar");
-        sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
-    }
-
-    // Responsive toggle (basic, inline)
-    function handleResize() {
-        const width = window.innerWidth;
-        const desktopLinks = document.getElementById("navLinksDesktop");
-        const hamburger = document.getElementById("hamburgerMenu");
-
-        if (width <= 768) {
-            desktopLinks.style.display = "none";
-            hamburger.style.display = "block";
-        } else {
-            desktopLinks.style.display = "flex";
-            hamburger.style.display = "none";
-            document.getElementById("mobileSidebar").style.display = "none";
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mobileSidebar");
+            sidebar.classList.toggle("active");
         }
-    }
 
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("load", handleResize);
+        // Responsive toggle (basic, inline)
+        function handleResize() {
+            const width = window.innerWidth;
+            const desktopLinks = document.getElementById("navLinksDesktop");
+            const hamburger = document.getElementById("hamburgerMenu");
+
+            if (!desktopLinks || !hamburger) return;
+
+            if (width <= 768) {
+                desktopLinks.style.display = "none";
+                hamburger.style.display = "block";
+            } else {
+                desktopLinks.style.display = "flex";
+                hamburger.style.display = "none";
+                document.getElementById("mobileSidebar").classList.remove("active");
+            }
+        }
+
+        window.addEventListener("resize", handleResize);
+        window.addEventListener("load", handleResize);
     </script>
 </body>
+
 </html>
