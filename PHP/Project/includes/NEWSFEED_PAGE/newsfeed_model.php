@@ -68,3 +68,18 @@ function find_leatest_notification(object $pdo, int $userID) {
 }
 
 
+function find_count_of_unread_notification(object $pdo, int $userID) {
+    $query = "SELECT COUNT(*) FROM NOTIFICATIONS WHERE RECIPIENT_ID = :userID AND state = 0";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+    $stmt->execute();
+    $count = $stmt->fetchColumn();
+    return (int)$count;
+}
+
+
+
+
+
+
+

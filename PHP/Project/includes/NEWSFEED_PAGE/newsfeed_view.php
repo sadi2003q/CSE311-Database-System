@@ -115,3 +115,56 @@ function format_time_ago(DateTime $date): string {
 
 
 
+function Notification_Count_View(object $pdo, int $userID) {
+    $count = find_count_of_unread_notification($pdo, (int)$userID);
+
+    if ($count == 0) {
+        echo '<a href="notification.php" title="Notifications" style="position: relative;">
+                <i class="fas fa-bell"> Notification </i> 
+              </a>';
+        
+    } else {
+        echo '<a href="notification.php" title="Notifications" style="position: relative; display: inline-block;">
+                <i class="fas fa-bell"> Notification </i>
+                <span style="
+                    position: absolute;
+                    top: -6px;
+                    right: -20px;
+                    background: red;
+                    color: white;
+                    font-size: 12px;
+                    padding: 2px 6px;
+                    border-radius: 50%;
+                    font-weight: bold;
+                ">' . $count . '</span>
+              </a>';
+    }
+}
+
+
+function Notification_Count_View2(object $pdo, int $userID) {
+    $count = find_count_of_unread_notification($pdo, (int)$userID);
+
+    if ($count == 0) {
+        echo '<a href="notification.php" title="Notifications" style="position: relative;">
+                <i class="fas fa-bell"></i> 
+              </a>';
+        
+    } else {
+        echo '<a href="notification.php" title="Notifications" style="position: relative; display: inline-block;">
+                <i class="fas fa-bell"></i>
+                <span style="
+                    position: absolute;
+                    top: -6px;
+                    right: -20px;
+                    background: red;
+                    color: white;
+                    font-size: 12px;
+                    padding: 2px 6px;
+                    border-radius: 50%;
+                    font-weight: bold;
+                ">' . $count . '</span>
+              </a>';
+    }
+}
+

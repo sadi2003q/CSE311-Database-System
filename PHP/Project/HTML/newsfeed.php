@@ -655,17 +655,17 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             </form>
 
             <div class="navbar-links">
-                <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"></i> Home </a>
-                <a href="profile.php" title="Profile"><i class="fas fa-user"></i> Profile </a>
-                <a href="notification.php" title="Notifications"><i class="fas fa-bell"></i> Notification </a>
-                <a href="setting.php" title="Settings"><i class="fas fa-cog"></i> Setting </a>
+                <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
+                <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
+                <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
+                <a href="setting.php" title="Settings"><i class="fas fa-cog"> Setting </i></a>
             </div>
 
 
             <div class="navbar-links middle">
                 <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"></i></a>
                 <a href="profile.php" title="Profile"><i class="fas fa-user"></i> </a>
-                <a href="notification.php" title="Notifications"><i class="fas fa-bell"></i> </a>
+                <?php Notification_Count_View2($pdo, (int)$_SESSION['user_id']) ?>
                 <a href="setting.php" title="Settings"><i class="fas fa-cog"></i></a>
             </div>
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -745,7 +745,9 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             <div class="nav-links-mobile">
                 <a href="newsfeed.php" title="Home"><i class="fas fa-house"> HOME </i></a>
                 <a href="profile.php" title="Profile"><i class="fas fa-user"> PROFILE </i></a>
-                <a href="notification.php" title="Notifications"><i class="fas fa-bell"> NOTIFICATION</i></a>
+                <!-- <a href="notification.php" title="Notifications"><i class="fas fa-bell"> NOTIFICATION</i></a> -->
+
+                <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
                 <a href="setting.php" title="Settings"><i class="fas fa-cog"> SETTINGS</i></a>
                 <a href="logout.php" title="Logout"><i class="fas fa-sign-out-alt"> LOGOUT </i></a>
             </div>
