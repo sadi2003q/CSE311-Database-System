@@ -67,7 +67,7 @@ function show_all_notification(object $pdo, int $userID): void
                     $message = $notification['message'] ?? 'sent you a notification';
             }
 
-            echo '<div class="notification-item ' . ($notification['status'] == 0 ? 'unread' : '') . '">
+            echo '<div class="notification-item ' . ($notification['state'] == 0 ? 'unread' : '') . '">
         <div class="profile-avatar">
             <img src="' . htmlspecialchars($sender_avatar) . '" alt="' . $sender_name . '" />
         </div>

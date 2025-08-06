@@ -200,6 +200,8 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             border-top: 1px solid var(--border-color);
         }
 
+
+
         .post-form-actions label {
             cursor: pointer;
             color: var(--secondary-text-color);
@@ -485,6 +487,28 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
             color: var(--primary-color);
         }
 
+        #cancel-image {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        #cancel-image:hover {
+            background: rgba(255, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
         /* Responsive: Hide input on smaller screens */
         @media (max-width: 768px) {
             .search-input {
@@ -696,6 +720,15 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
                             <!-- Icon for image upload -->
                             📷 Photo/Video
                             <input type="file" accept="image/*" name="post_image" id="post_image_input">
+                            <!-- Add this inside .post-form, right after input type="file" -->
+                            <!-- Image preview container with cancel button -->
+                            <div id="image-preview-container" style="position: relative; display: none; margin-top: 10px; max-width: 100%;">
+                                <img id="post-image-preview" style="max-height: 200px; width: 100%; border-radius: 8px; object-fit: contain;" alt="Image preview" />
+                                <button type="button" id="cancel-image">&times;</button>
+                            </div>
+
+
+
                         </label>
                         <button type="submit" class="btn btn-primary">Post</button>
                     </div>
@@ -717,7 +750,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
                 <a href="logout.php" title="Logout"><i class="fas fa-sign-out-alt"> LOGOUT </i></a>
             </div>
 
-            
+
 
             <div class="card sidebar-section">
                 <h3>Suggested for you</h3>
@@ -795,6 +828,52 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
                         .catch(error => console.error('Error:', error));
                 });
             });
+        });
+
+
+        document.getElementById('post_image_input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('post-image-preview');
+
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        });
+        document.getElementById('post_image_input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('image-preview-container');
+            const preview = document.getElementById('post-image-preview');
+
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                previewContainer.style.display = 'none';
+            }
+        });
+
+        document.getElementById('cancel-image').addEventListener('click', function() {
+            const input = document.getElementById('post_image_input');
+            const preview = document.getElementById('post-image-preview');
+            const previewContainer = document.getElementById('image-preview-container');
+
+            // Reset file input
+            input.value = '';
+            preview.src = '';
+            previewContainer.style.display = 'none';
         });
     </script>
 </body>
