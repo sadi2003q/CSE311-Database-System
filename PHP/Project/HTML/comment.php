@@ -389,56 +389,57 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
 
         /* Comment Edit Icon button */
         /* Edit button styles */
-.edit-icon-button {
-    background-color: transparent;
-    border: none;
-    color: #3498db;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
+        .edit-icon-button {
+            background-color: transparent;
+            border: none;
+            color: #3498db;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
 
-.edit-icon-button:hover {
-    color: #2980b9;
-}
+        .edit-icon-button:hover {
+            color: #2980b9;
+        }
 
-/* Edit form styles */
-.edit-comment-input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--light-gray);
-    border-radius: var(--border-radius);
-    resize: none;
-    font-family: inherit;
-    font-size: 0.95rem;
-}
+        /* Edit form styles */
+        .edit-comment-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            resize: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
 
-.save-edit-btn, .cancel-edit-btn {
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.9rem;
-}
+        .save-edit-btn,
+        .cancel-edit-btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
 
-.save-edit-btn {
-    background-color: var(--primary);
-    color: white;
-}
+        .save-edit-btn {
+            background-color: var(--primary);
+            color: white;
+        }
 
-.save-edit-btn:hover {
-    background-color: var(--primary-dark);
-}
+        .save-edit-btn:hover {
+            background-color: var(--primary-dark);
+        }
 
-.cancel-edit-btn {
-    background-color: var(--light-gray);
-    color: var(--dark);
-}
+        .cancel-edit-btn {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
 
-.cancel-edit-btn:hover {
-    background-color: #d1d5db;
-}
+        .cancel-edit-btn:hover {
+            background-color: #d1d5db;
+        }
 
 
         @media (max-width: 768px) {
@@ -551,16 +552,17 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
                 commentSubmit.disabled = commentInput.value.trim() === "";
             });
         });
-        function enableEdit(commentId) {
-        document.getElementById('comment-text-' + commentId).style.display = 'none';
-        document.getElementById('edit-form-' + commentId).style.display = 'block';
-        document.querySelector('#edit-form-' + commentId + ' textarea').focus();
-    }
 
-    function cancelEdit(commentId) {
-        document.getElementById('comment-text-' + commentId).style.display = 'block';
-        document.getElementById('edit-form-' + commentId).style.display = 'none';
-    }
+        function enableEdit(commentId) {
+            document.getElementById('comment-text-' + commentId).style.display = 'none';
+            document.getElementById('edit-form-' + commentId).style.display = 'block';
+            document.querySelector('#edit-form-' + commentId + ' textarea').focus();
+        }
+
+        function cancelEdit(commentId) {
+            document.getElementById('comment-text-' + commentId).style.display = 'block';
+            document.getElementById('edit-form-' + commentId).style.display = 'none';
+        }
     </script>
 
 </body>

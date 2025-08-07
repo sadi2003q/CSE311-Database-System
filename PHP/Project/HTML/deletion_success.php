@@ -6,6 +6,7 @@ session_start();
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Account Deletion Requested</title>
     <style>
@@ -15,6 +16,7 @@ session_start();
             padding: 20px;
             text-align: center;
         }
+
         .success-message {
             background-color: #f0fdf4;
             color: #166534;
@@ -23,6 +25,7 @@ session_start();
             margin-bottom: 2rem;
             font-size: 1.1rem;
         }
+
         .action-button {
             background-color: #3B82F6;
             color: white;
@@ -33,11 +36,13 @@ session_start();
             font-size: 1rem;
             transition: background-color 0.3s;
         }
+
         .action-button:hover {
             background-color: #2563eb;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="success-message">
@@ -49,4 +54,5 @@ session_start();
         </a>
     </div>
 </body>
+
 </html>

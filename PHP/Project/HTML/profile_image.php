@@ -176,8 +176,8 @@ $pdo = require_once '../includes/dbh.inc.php';
                 -> Fetched from session if available, otherwise default image
             -->
             <?php
-                $image_url = '../uploads/' . ($_SESSION['image_url'] ?? 'male_profile_icon_image.png');
-                echo '<img src="' . htmlspecialchars($image_url) . '" alt="Profile Picture" class="profile-picture" id="profileImage">';
+            $image_url = '../uploads/' . ($_SESSION['image_url'] ?? 'male_profile_icon_image.png');
+            echo '<img src="' . htmlspecialchars($image_url) . '" alt="Profile Picture" class="profile-picture" id="profileImage">';
             ?>
 
             <!-- 
@@ -190,10 +190,10 @@ $pdo = require_once '../includes/dbh.inc.php';
                 <div class="button-group">
                     <!-- Button to select image -->
                     <label for="imageUpload">Select Image</label>
-                    
+
                     <!-- Hidden file input -->
                     <input type="file" id="imageUpload" name="profile_picture" accept="image/*" onchange="previewImage(event)">
-                    
+
                     <!-- Submit button -->
                     <button type="submit" id="uploadButton" disabled>Upload Image</button>
                 </div>
@@ -211,7 +211,7 @@ $pdo = require_once '../includes/dbh.inc.php';
     <script>
         function previewImage(event) {
             const reader = new FileReader();
-            reader.onload = function () {
+            reader.onload = function() {
                 const output = document.getElementById('profileImage');
                 output.src = reader.result;
             };
@@ -224,12 +224,12 @@ $pdo = require_once '../includes/dbh.inc.php';
         const form = uploadButton.closest('form');
 
         // Enable the upload button when an image is selected
-        fileInput.addEventListener('change', function () {
+        fileInput.addEventListener('change', function() {
             uploadButton.disabled = fileInput.files.length === 0;
         });
 
         // Prevent form submission if no file is selected
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             if (fileInput.files.length === 0) {
                 e.preventDefault();
                 alert('Please select an image before uploading.');
@@ -239,4 +239,5 @@ $pdo = require_once '../includes/dbh.inc.php';
     </script>
 
 </body>
+
 </html>

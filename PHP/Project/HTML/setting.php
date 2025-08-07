@@ -243,6 +243,7 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
             background-color: #1E40AF;
             transform: translateY(-1px);
         }
+
         html {
             scroll-behavior: smooth;
         }
@@ -286,7 +287,7 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
         <a href="newsfeed.php" class="navbar-brand">Social</a>
         <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
         <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
-            <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
+        <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
         <a href="#" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</a>
     </nav>
 
@@ -409,10 +410,10 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
                     </form>
                 <?php else : ?>
                     <?php if (isset($_SESSION['error'])): ?>
-                    <div style="background-color: #fee2e2; color: #b91c1c; padding: 1rem; border-radius: 0.5rem;">
-                    <?= $_SESSION['error'] ?>
-                    </div>
-                    <?php unset($_SESSION['error']); ?>
+                        <div style="background-color: #fee2e2; color: #b91c1c; padding: 1rem; border-radius: 0.5rem;">
+                            <?= $_SESSION['error'] ?>
+                        </div>
+                        <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
                     <form method="POST" action="../includes/SETTING_PAGE/setting.inc.php" style="display: flex; flex-direction: column; gap: 1rem;">
                         <div>

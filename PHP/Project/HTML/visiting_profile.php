@@ -329,7 +329,7 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
         <div>
             <a href="newsfeed.php" class="navbar-brand">Social</a>
             <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
-                <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
+            <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
             <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
             <a href="#" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</a>
         </div>

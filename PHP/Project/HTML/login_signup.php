@@ -27,6 +27,7 @@ require_once "../includes/config_session.inc.php";
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -145,63 +146,63 @@ require_once "../includes/config_session.inc.php";
             margin-top: 20px;
             text-align: center;
         }
-        
+
         .form-input::placeholder {
             color: #8d949e;
             font-size: 14px;
         }
-
     </style>
 </head>
 
 
 
 <body>
-<div class="signup-container">
+    <div class="signup-container">
 
 
-    <!-- 
+        <!-- 
         Some Simple Message
     -->
-    <div class="signup-header">
-        <h2 class="signup-title">Create a new account</h2>
-        <p class="signup-subtitle">It’s quick and easy.</p>
-    </div>
+        <div class="signup-header">
+            <h2 class="signup-title">Create a new account</h2>
+            <p class="signup-subtitle">It’s quick and easy.</p>
+        </div>
 
 
 
 
-    <!-- 
+        <!-- 
         connect with signup.inc.php file and show user the field for siging up    
         button for sign up
         and go to login page if they already have one
     -->
-    <form action="../includes/SIGNUP_PAGE/signup.inc.php" method="POST">
-        <?php signup_input(); ?>
-        <button type="submit" class="form-button">Sign Up</button>
-        <a href="login.php" class="link_signup">Already have an account?</a>
-    </form>
+        <form action="../includes/SIGNUP_PAGE/signup.inc.php" method="POST">
+            <?php signup_input(); ?>
+            <button type="submit" class="form-button">Sign Up</button>
+            <a href="login.php" class="link_signup">Already have an account?</a>
+        </form>
 
 
 
 
 
-    <!-- 
+        <!-- 
         This Part will only activate if there is showing some sort of error with given input
     -->
-    <div id="message-area">
-        <?php check_signup_errors(); ?>
+        <div id="message-area">
+            <?php check_signup_errors(); ?>
+        </div>
+
+
+
+
+
     </div>
-
-
-
-
-
-</div>
 
 
 
 
 
 </body>
+
 </html>

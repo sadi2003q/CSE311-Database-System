@@ -19,9 +19,10 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Followers & Following</title>
   <style>
     /* Basic reset and font */
@@ -94,7 +95,8 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
       padding: 1rem;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      height: 400px; /* Adjust height as needed */
+      height: 400px;
+      /* Adjust height as needed */
       overflow-y: auto;
       position: relative;
     }
@@ -115,6 +117,7 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
         opacity: 0;
         transform: translateY(10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -159,6 +162,7 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
@@ -174,33 +178,33 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
     </div>
 
     <!-- Content Section with Scroll -->
-     <!-- this section is the body which show the scorlling profile -->
+    <!-- this section is the body which show the scorlling profile -->
     <div class="content" style="height: 80vh;">
-      
-    
-    
-    
-    <!-- Following List (Default Visible) -->
-    <div class="list active" id="following-list">
-      <?php show_all_following($pdo); ?>
-    </div>
 
-    
-    
-    
-    
-    <!-- Followers List (Hidden by default) -->
-    <div class="list" id="followers-list">
-      <?php show_all_follower($pdo) ?>
-    </div>
+
+
+
+      <!-- Following List (Default Visible) -->
+      <div class="list active" id="following-list">
+        <?php show_all_following($pdo); ?>
+      </div>
+
+
+
+
+
+      <!-- Followers List (Hidden by default) -->
+      <div class="list" id="followers-list">
+        <?php show_all_follower($pdo) ?>
+      </div>
 
 
 
     </div>
   </div>
 
-  
-  
+
+
   <!-- This section the button for showing follower and following -->
   <script>
     /**
@@ -227,4 +231,5 @@ require_once '../includes/FOLLOW_PAGE/Follow.inc.php';
   </script>
 
 </body>
+
 </html>

@@ -4,9 +4,10 @@ require_once "../includes/config_session.inc.php";
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Search</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,7 +28,11 @@ require_once "../includes/config_session.inc.php";
       --font-family: 'Poppins', sans-serif;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       background-color: var(--background-color);
@@ -200,14 +205,14 @@ require_once "../includes/config_session.inc.php";
 
   <nav class="navbar">
     <a href="newsfeed.php" class="navbar-brand">Social</a>
-    
+
     <div class="navbar-links">
       <a href="newsfeed.php">Home</a>
       <a href="profile.php">Profile</a>
       <a href="notification.php">Notifications</a>
       <a href="logout.php">Logout</a>
     </div>
-    
+
     <button class="hamburger">
       <i class="fas fa-bars"></i>
     </button>
@@ -267,4 +272,5 @@ require_once "../includes/config_session.inc.php";
     });
   </script>
 </body>
+
 </html>

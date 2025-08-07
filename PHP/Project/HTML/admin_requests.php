@@ -66,6 +66,7 @@ $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Account Deletion Requests</title>
@@ -122,7 +123,7 @@ $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .table-container {
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             overflow-x: auto;
         }
 
@@ -131,7 +132,8 @@ $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -180,75 +182,79 @@ $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     </style>
 </head>
+
 <body>
 
-<header class="admin-header">
-    <h2>Account Delete REQUEST</h2>
-    <nav class="admin-nav">
-        <a href="admin_dashboard.php">Dashboard</a>
-        <a href="admin_users.php">Manage Users</a>
-        <a href="admin_posts.php">Manage Posts</a>
-        <a href="admin_requests.php">Deletion Requests</a>
-        <form action="../includes/ADMIN_PANEL/admin_logout.inc.php" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
-        </form>
-    </nav>
-</header>
+    <header class="admin-header">
+        <h2>Account Delete REQUEST</h2>
+        <nav class="admin-nav">
+            <a href="admin_dashboard.php">Dashboard</a>
+            <a href="admin_users.php">Manage Users</a>
+            <a href="admin_posts.php">Manage Posts</a>
+            <a href="admin_requests.php">Deletion Requests</a>
+            <form action="../includes/ADMIN_PANEL/admin_logout.inc.php" method="post">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </nav>
+    </header>
 
-<main class="admin-main">
-    <div class="table-container">
-        <?php if (isset($error)): ?>
-            <div class="status-msg" style="color:red; margin-bottom: 1rem;"><?= $error ?></div>
-        <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'deleted'): ?>
-            <div class="status-msg" style="color:green; margin-bottom: 1rem;">   User and all related data deleted successfully.</div>
-        <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'canceled'): ?>
-            <div class="status-msg" style="color:blue; margin-bottom: 1rem;"> Deletion request canceled.</div>
-        <?php endif; ?>
-
-        <table>
-            <thead>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Requested At</th>
-                <th>Reason</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php if (empty($requests)): ?>
-                <tr><td colspan="5">No deletion requests found.</td></tr>
-            <?php else: ?>
-                <?php foreach ($requests as $r): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($r['username']) ?></td>
-                        <td><?= htmlspecialchars($r['email']) ?></td>
-                        <td><?= date('M j, Y H:i', strtotime($r['requested_at'])) ?></td>
-                        <td><?= nl2br(htmlspecialchars($r['reason'])) ?></td>
-            <td>
-                <details>
-                    <summary style="color: red; cursor: pointer;">DELETE 🗑️</summary>
-                    <div style="margin-top: 0.5rem;">
-                        <form method="post">
-                            <input type="hidden" name="delete_user_id" value="<?= htmlspecialchars($r['user_id']) ?>">
-                            <button type="submit" style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Yes, Delete</button>
-                            <button type="button" style="background-color: gray; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;" onclick='this.closest("details").removeAttribute("open")'>Cancel</button>
-                        </form>
-                    </div>
-                </details>
-                <form method="post" style="margin-top: 0.5rem;">
-                    <input type="hidden" name="cancel_request_user_id" value="<?= htmlspecialchars($r['user_id']) ?>">
-                    <button type="submit" class="cancel-btn">Cancel Request</button>
-                </form>
-            </td>
-
-                    </tr>
-                <?php endforeach; ?>
+    <main class="admin-main">
+        <div class="table-container">
+            <?php if (isset($error)): ?>
+                <div class="status-msg" style="color:red; margin-bottom: 1rem;"><?= $error ?></div>
+            <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'deleted'): ?>
+                <div class="status-msg" style="color:green; margin-bottom: 1rem;"> User and all related data deleted successfully.</div>
+            <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'canceled'): ?>
+                <div class="status-msg" style="color:blue; margin-bottom: 1rem;"> Deletion request canceled.</div>
             <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-</main>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Requested At</th>
+                        <th>Reason</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($requests)): ?>
+                        <tr>
+                            <td colspan="5">No deletion requests found.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($requests as $r): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($r['username']) ?></td>
+                                <td><?= htmlspecialchars($r['email']) ?></td>
+                                <td><?= date('M j, Y H:i', strtotime($r['requested_at'])) ?></td>
+                                <td><?= nl2br(htmlspecialchars($r['reason'])) ?></td>
+                                <td>
+                                    <details>
+                                        <summary style="color: red; cursor: pointer;">DELETE 🗑️</summary>
+                                        <div style="margin-top: 0.5rem;">
+                                            <form method="post">
+                                                <input type="hidden" name="delete_user_id" value="<?= htmlspecialchars($r['user_id']) ?>">
+                                                <button type="submit" style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Yes, Delete</button>
+                                                <button type="button" style="background-color: gray; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;" onclick='this.closest("details").removeAttribute("open")'>Cancel</button>
+                                            </form>
+                                        </div>
+                                    </details>
+                                    <form method="post" style="margin-top: 0.5rem;">
+                                        <input type="hidden" name="cancel_request_user_id" value="<?= htmlspecialchars($r['user_id']) ?>">
+                                        <button type="submit" class="cancel-btn">Cancel Request</button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
 </body>
+
 </html>

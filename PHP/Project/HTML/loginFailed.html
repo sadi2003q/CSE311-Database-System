@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +39,7 @@
                 opacity: 0;
                 transform: translateY(-30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -60,9 +62,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
             }
+
             70% {
                 box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
             }
@@ -192,38 +196,42 @@
         }
     </style>
 </head>
+
 <body>
-<div class="error-container">
-    <div class="error-icon">
-        <svg viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-        </svg>
-    </div>
+    <div class="error-container">
+        <div class="error-icon">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+        </div>
 
-    <h1 class="error-title">Login Failed</h1>
-    <p class="error-message">
-        We couldn't verify your credentials. Please check your username and password and try again.
-    </p>
+        <h1 class="error-title">Login Failed</h1>
+        <p class="error-message">
+            We couldn't verify your credentials. Please check your username and password and try again.
+        </p>
 
-    <div class="error-details">
-        <h3>Possible reasons:</h3>
-        <ul>
-            <li>Incorrect username or password</li>
-            <li>Account may be temporarily locked</li>
-            <li>Username may not exist in our system</li>
-            <li>Password may have expired</li>
-        </ul>
-    </div>
+        <div class="error-details">
+            <h3>Possible reasons:</h3>
+            <ul>
+                <li>Incorrect username or password</li>
+                <li>Account may be temporarily locked</li>
+                <li>Username may not exist in our system</li>
+                <li>Password may have expired</li>
+            </ul>
+        </div>
 
-    <div class="action-buttons">
-        <a href="login_signup.php" class="btn btn-primary">Try Again</a>
-    </div>
+        <div class="action-buttons">
+            <a href="login_signup.php" class="btn btn-primary">Try Again</a>
+        </div>
 
-    <div class="footer-info">
-        <p>If you continue to experience issues, please contact our support team.</p>
-        <p>Error Code: AUTH_FAILED_001</p>
+        <div class="footer-info">
+            <p>If you continue to experience issues, please contact our support team.</p>
+            <p>Error Code: AUTH_FAILED_001</p>
+        </div>
     </div>
-</div>
 </body>
+
 </html>
