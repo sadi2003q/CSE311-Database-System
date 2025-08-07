@@ -1,6 +1,6 @@
 <?php
-    require_once "../includes/config_session.inc.php";
-    require_once "../includes/LOGIN_PAGE/login_view.inc.php";
+require_once "../includes/config_session.inc.php";
+require_once "../includes/LOGIN_PAGE/login_view.inc.php";
 ?>
 
 <!-- 
@@ -11,9 +11,10 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UDIA Login</title>
     <style>
         * {
@@ -63,9 +64,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .inspiring-text {
@@ -79,7 +88,7 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
             min-width: 300px;
@@ -165,20 +174,20 @@
 
 
 <body>
-<div class="container">
+    <div class="container">
 
-    <!-- 
+        <!-- 
 
         Simple Message with Logo
 
     -->
-    <div class="left-section">
-        <div class="logo">UDIA</div>
-        <h2 class="inspiring-text">Connect with friends and the world around you ...</h2>
-    </div>
+        <div class="left-section">
+            <div class="logo">SOCIAL</div>
+            <h2 class="inspiring-text">Connect with friends and the world around you ...</h2>
+        </div>
 
 
-    <!-- 
+        <!-- 
         main login part which connecte with login.inc.php and then
         -> check for if all fields are empty or not
         -> if username or password not exist on the database
@@ -186,26 +195,27 @@
         -> Button for login
         -> takes to create account page
     -->
-    <div class="login-container">
-        <h2 class="login-title"> Sign In </h2>
-        <form action="../includes/LOGIN_PAGE/login.inc.php" method="POST">
-            <input type="text" id="username" name="username" placeholder="Username" value="sadi"/>
-            <input type="password" id="password" name="password" placeholder="Password" value="1234" />
-            <button type="submit" class="login-btn">Log In</button>
-            <div class="divider"></div>
-            <a href="login_signup.php" class="signup-link">Create new account</a>
-        </form>
+        <div class="login-container">
+            <h2 class="login-title"> Sign In </h2>
+            <form action="../includes/LOGIN_PAGE/login.inc.php" method="POST">
+                <input type="text" id="username" name="username" placeholder="Username" value="sadi" />
+                <input type="password" id="password" name="password" placeholder="Password" value="1234" />
+                <button type="submit" class="login-btn">Log In</button>
+                <div class="divider"></div>
+                <a href="login_signup.php" class="signup-link">Create new account</a>
+            </form>
 
 
 
 
-        <!-- This portion will active if something is wrong found or error found -->
-        <div class="error-message">
-            <?php
+            <!-- This portion will active if something is wrong found or error found -->
+            <div class="error-message">
+                <?php
                 check_login_status();
-            ?>
+                ?>
+            </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>

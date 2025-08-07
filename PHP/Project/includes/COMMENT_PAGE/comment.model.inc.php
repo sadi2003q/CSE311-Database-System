@@ -68,6 +68,7 @@ function post_the_comment(object $pdo, int $postID, string $comment_text): void 
     if (!$statement->execute()) {
         throw new Exception("Failed to post comment");
     }
+    Increment_commnt_count($pdo, (int)$postID);
     
     $postMakerID = fetch_Post_Maker_ID($pdo, $postID);
     
@@ -79,7 +80,14 @@ function post_the_comment(object $pdo, int $postID, string $comment_text): void 
 
 }
 
-
+function Increment_commnt_count(object $pdo, int $postID) {
+    $query = 'UPDATE POSTS SET COMMENT_COUNT = COMMENT_COUNT + 1 WHERE POST_ID = :postID';
+    $statement = $pdo->prepare($query);
+    $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+    if (!$statement->execute()) {
+        throw new Exception("Failed to increment comment count");
+    }
+}
 
 
 function fetch_all_comment(object $pdo, $postID): array {

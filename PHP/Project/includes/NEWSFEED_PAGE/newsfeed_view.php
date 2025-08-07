@@ -44,12 +44,12 @@ function show_first_notification(object $pdo, int $userID): void {
 
     // Determine notification type and icon
     switch($notification['status']) {
-        case 'like':
+        case 'liked':
             $icon = '👍';
             $message = 'liked your post';
             $link = 'comment.php?post_id='.$notification['post_id'];
             break;
-        case 'comment':
+        case 'commented':
             $icon = '💬';
             $message = 'commented on your post';
             $link = 'comment.php?post_id='.$notification['post_id'];

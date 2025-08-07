@@ -57,6 +57,7 @@ if (!isset($_SESSION['admin_id'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,6 +69,7 @@ if (!isset($_SESSION['admin_id'])) {
             margin: 0;
             padding: 0;
         }
+
         .admin-header {
             background-color: #2d2d2d;
             color: white;
@@ -76,19 +78,23 @@ if (!isset($_SESSION['admin_id'])) {
             justify-content: space-between;
             align-items: center;
         }
+
         .admin-nav {
             display: flex;
             gap: 1rem;
         }
+
         .admin-nav a {
             color: white;
             text-decoration: none;
             padding: 0.5rem 1rem;
             border-radius: 4px;
         }
+
         .admin-nav a:hover {
             background-color: #4ECDC4;
         }
+
         .logout-btn {
             background-color: #ff6b6b;
             color: white;
@@ -97,23 +103,28 @@ if (!isset($_SESSION['admin_id'])) {
             border-radius: 4px;
             cursor: pointer;
         }
+
         .logout-btn:hover {
             background-color: #ff5252;
         }
+
         .admin-main {
             padding: 2rem;
         }
+
         .search-container {
             margin-bottom: 1.5rem;
             display: flex;
             gap: 1rem;
         }
+
         .search-input {
             padding: 0.75rem;
             border: 1px solid #ddd;
             border-radius: 4px;
             flex-grow: 1;
         }
+
         .search-btn {
             padding: 0.75rem 1.5rem;
             background-color: #4ECDC4;
@@ -122,38 +133,43 @@ if (!isset($_SESSION['admin_id'])) {
             border-radius: 4px;
             cursor: pointer;
         }
+
         .table-container {
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             overflow-x: auto;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-      th, td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    white-space: normal;       
-    word-wrap: break-word;     
-    max-width: 300px;          
-}
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: 300px;
+        }
 
         th {
             background-color: #2d2d2d;
             color: white;
         }
+
         tr:hover {
             background-color: #f5f5f5;
         }
-        
     </style>
 </head>
+
 <body>
     <header class="admin-header">
-        <h2>Admin Dashboard</h2>
+        <h2>ALL USERS POSTS</h2>
         <nav class="admin-nav">
             <a href="admin_dashboard.php">Dashboard</a>
             <a href="admin_users.php">Manage Users</a>
@@ -182,14 +198,14 @@ if (!isset($_SESSION['admin_id'])) {
                         <th>Image</th>
                         <th>Caption</th>
                         <th>Created At</th>
-                         <th>Action</th> 
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $search = isset($_GET['search']) ? '%' . $_GET['search'] . '%' : '%';
 
-                   $query = "SELECT p.post_id, p.image_url, p.text_content, p.created_at, u.username 
+                    $query = "SELECT p.post_id, p.image_url, p.text_content, p.created_at, u.username 
           FROM posts p 
           JOIN users u ON p.user_id = u.user_id 
           WHERE u.username LIKE :search OR p.text_content LIKE :search 
@@ -207,10 +223,10 @@ if (!isset($_SESSION['admin_id'])) {
                         echo "<tr><td colspan='4'>No posts found.</td></tr>";
                     } else {
                         foreach ($posts as $post) {
-echo "<tr>";
-echo "<td>" . htmlspecialchars($post['username']) . "</td>";
-if (!empty($post['image_url'])) {
-    echo "<td>
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($post['username']) . "</td>";
+                            if (!empty($post['image_url'])) {
+                                echo "<td>
         <details>
             <summary>
                 <img src='../uploads/" . htmlspecialchars($post['image_url']) . "' alt='Post Image' style='max-width: 100px; max-height: 100px; cursor: pointer;'>
@@ -221,15 +237,15 @@ if (!empty($post['image_url'])) {
             </div>
         </details>
     </td>";
-} else {
-    echo "<td><em>No photo attached in this post</em></td>";
-}
+                            } else {
+                                echo "<td><em>No photo attached in this post</em></td>";
+                            }
 
 
 
-echo "<td>" . htmlspecialchars($post['text_content']) . "</td>";
-echo "<td>" . date('M j, Y H:i', strtotime($post['created_at'])) . "</td>";
-echo "<td>
+                            echo "<td>" . htmlspecialchars($post['text_content']) . "</td>";
+                            echo "<td>" . date('M j, Y H:i', strtotime($post['created_at'])) . "</td>";
+                            echo "<td>
     <details>
         <summary style='color: red; cursor: pointer;'>DELETE 🗑️</summary>
         <div style='margin-top: 0.5rem;'>
@@ -242,10 +258,7 @@ echo "<td>
     </details>
 </td>";
 
-echo "</tr>";
-
-          
-          
+                            echo "</tr>";
                         }
                     }
                     ?>
@@ -254,4 +267,5 @@ echo "</tr>";
         </div>
     </main>
 </body>
+
 </html>

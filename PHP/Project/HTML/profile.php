@@ -424,7 +424,7 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
         <!-- Left Column - Profile Info -->
         <div class="profile-section">
             <div class="profile-card">
-                <?php show_user_information_profile_view(); ?>
+                <?php show_user_information_profile_view($pdo); ?>
 
                 <div class="profile-actions">
                     <a href="follower.php" class="btn">

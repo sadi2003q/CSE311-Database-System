@@ -54,11 +54,12 @@ function fetch_all_new_feed(object $pdo) {
         $query = "SELECT *
             FROM follow f
             JOIN posts p ON f.FOLLOWING_ID = p.user_id
-            WHERE f.FOLLOWER_ID = :user_id ";
+            WHERE f.FOLLOWER_ID = :user_id
+            ORDER BY CREATED_AT DESC";
         
         $statement = $pdo->prepare($query);
         $statement->execute([
-            ':user_id' => $user_id
+            ':user_id' => $user_id,
         ]);
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         

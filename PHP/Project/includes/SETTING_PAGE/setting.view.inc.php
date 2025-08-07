@@ -113,7 +113,8 @@ function show_all_activities_log(object $pdo): void {
         echo '📝 <strong>Text:</strong> ' . nl2br(htmlspecialchars($post['text_content'])) . '<br>';
 
         if (!empty($post['image_url'])) {
-            echo '<img src="' . htmlspecialchars($post['image_url']) . '" alt="Post Image" style="max-width: 100%; margin-top: 10px; border-radius: 4px;"><br>';
+            $url = '../uploads/'.$post['image_url'];
+            echo '<img src="' . htmlspecialchars($url) . '" alt="Post Image" style="max-width: 100%; margin-top: 10px; border-radius: 4px;"><br>';
         }
 
         echo '❤️ <strong>Likes:</strong> ' . (int)$post['like_count'] . ' &nbsp; 💬 <strong>Comments:</strong> ' . (int)$post['comment_count'] . '<br>';

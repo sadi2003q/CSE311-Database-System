@@ -486,9 +486,9 @@ require_once "../includes/COMMENT_PAGE/comment.view.inc.php";
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div>
-            <a href="newsfeed.php"><i class="fas fa-home"></i> Home</a>
-            <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
-            <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+            <a href="newsfeed.php"><i class="fas fa-home"> Home </i> </a>
+            <a href="profile.php"><i class="fas fa-user"> Profile </i> </a>
+            <a href="notification.php"><i class="fas fa-bell"> Notifications </i> </a>
         </div>
     </nav>
 

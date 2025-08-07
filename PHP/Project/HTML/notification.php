@@ -308,6 +308,7 @@
             <a href="newsfeed.php" class="navbar-brand">Social</a>
             <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
                 <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
+                 <a href="setting.php" title="Settings"><i class="fas fa-cog"> Setting </i></a>
         </div>
     </nav>
 
