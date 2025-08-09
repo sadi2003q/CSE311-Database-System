@@ -200,7 +200,34 @@ require_once "../includes/config_session.inc.php";
     </div>
 
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const passwordField = document.querySelector('input[type="password"]');
+    const signupButton = document.querySelector('.form-button');
 
+    if (passwordField && signupButton) {
+        signupButton.disabled = true; // disable by default
+        signupButton.style.opacity = "0.6"; // make it look disabled
+
+        passwordField.addEventListener("input", function () {
+            if (passwordField.value.length < 4) {
+                passwordField.style.borderColor = "red";
+                signupButton.disabled = true;
+                signupButton.style.opacity = "0.6";
+                signupButton.style.cursor = "not-allowed";
+            } else {
+                passwordField.style.borderColor = "#ccd0d5"; // reset border color
+                signupButton.disabled = false;
+                signupButton.style.opacity = "1";
+                    signupButton.style.cursor = "pointer";
+                }
+            });
+
+            // Run check on load (in case of autofill)
+            passwordField.dispatchEvent(new Event('input'));
+        }
+    });
+    </script>
 
 
 </body>
