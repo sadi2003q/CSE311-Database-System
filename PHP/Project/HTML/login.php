@@ -182,7 +182,7 @@ require_once "../includes/LOGIN_PAGE/login_view.inc.php";
 
     -->
         <div class="left-section">
-            <div class="logo">SOCIAL</div>
+            <div class="logo">BondhuBuzz</div>
             <h2 class="inspiring-text">Connect with friends and the world around you ...</h2>
         </div>
 

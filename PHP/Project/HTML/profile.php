@@ -397,7 +397,7 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div id="navLinksDesktop">
-            <a href="newsfeed.php" class="navbar-brand">Social</a>
+            <a href="newsfeed.php" class="navbar-brand">BondhuBuzz</a>
             <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
             <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
             <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>
@@ -413,7 +413,7 @@ require_once "../includes/NEWSFEED_PAGE/newsfeed_view.php";
 
     <!-- Mobile Sidebar Navigation -->
     <div id="mobileSidebar">
-        <a href="newsfeed.php" class="navbar-brand">Social</a>
+        <a href="newsfeed.php" class="navbar-brand">BondhuBuzz</a>
         <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
         <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
         <?php Notification_Count_View($pdo, (int)$_SESSION['user_id']) ?>

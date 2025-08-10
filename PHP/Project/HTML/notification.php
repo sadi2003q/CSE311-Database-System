@@ -18,7 +18,7 @@
  <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Blank Page - Social Media</title>
+     <title>Blank Page - BondhuBuzz</title>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
      <style>
          :root {
@@ -306,7 +306,7 @@
      <nav class="navbar">
          <div></div>
          <div>
-             <a href="newsfeed.php" class="navbar-brand">Social</a>
+             <a href="newsfeed.php" class="navbar-brand">BondhuBuzz</a>
              <a href="newsfeed.php" class="active" title="Home" style="font-size: 1.2rem;"><i class="fas fa-house"> Home </i></a>
              <a href="profile.php" title="Profile"><i class="fas fa-user"> Profile </i></a>
              <a href="setting.php" title="Settings"><i class="fas fa-cog"> Setting </i></a>

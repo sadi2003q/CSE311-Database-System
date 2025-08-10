@@ -643,7 +643,7 @@ require_once "../includes/NEWSFEED_PAGE/post_view.inc.php";
     <nav class="navbar">
 
 
-        <a href="newsfeed.php" class="navbar-brand">Social</a>
+        <a href="newsfeed.php" class="navbar-brand">BondhuBuzz</a>
 
 
         <div style="display: flex; align-items: center;">

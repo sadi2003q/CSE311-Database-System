@@ -19,7 +19,7 @@ require_once '../includes/LOGOUT_PAGE/logout_view.inc.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logout - Social Media</title>
+    <title>Logout - BondhuBuzz</title>
 
     <!-- 
         General Styles for entire layout:

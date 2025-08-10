@@ -31,7 +31,7 @@ require_once "../includes/config_session.inc.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook Style Signup</title>
+    <title>Signup</title>
     <style>
         * {
             margin: 0;
