@@ -174,3 +174,64 @@ Each major feature of the application is a self-contained "module" that combines
 - **Default Credentials**:
   - Username: `admin`
   - Password: `password`
+
+```mermaid
+flowchart TD
+
+%% ==== USER AUTHENTICATION MODULE ====
+subgraph Auth[Authentication Module]
+    A1[User] -->|Signup/Login Form| A2["login_signup.php / login.php"]
+    A2 -->|POST Data| A3["signup.inc.php / login.inc.php"]
+    A3 -->|Validate Input| A4["login_contr.inc.php / signup_contr.inc.php"]
+    A4 -->|DB Query| A5["login_model.inc.php / signup_model.inc.php"]
+    A5 -->|Result| A6["config_session.inc.php"]
+    A6 -->|Success| NF["News Feed Page"]
+    A6 -->|Fail| A2
+end
+
+%% ==== SEARCH MODULE ====
+subgraph Search[Search Module]
+    S1[User] -->|Type in Search Box| S2["search.php"]
+    S3 -->|DB Fetch All Users| S4[(users table)]
+    S4 --> S5[PHP Filter by Query]
+    S5 -->|Return HTML List| S6[Update Search Results DOM]
+end
+
+%% ==== PROFILE & FOLLOW MODULE ====
+subgraph Profile[Profile & Follow Module]
+    P1[User Views Profile] --> P2["profile.php / visiting_profile.php"]
+    P2 -->|Fetch User Data| P3["profile_view.php / visiting_profile.view.inc.php"]
+    P3 -->|DB Query| P4["profile_model.php / visiting_profile.model.inc.php"]
+    P2 -->|Click Follow/Unfollow| P5["visiting_profile.inc.php"]
+    P5 -->|Update follow table| P6[(follow table)]
+    P5 -->|Create Notification| N1[(notifications table)]
+end
+
+%% ==== INTERACTION MODULE ====
+subgraph Interact[Interaction Module]
+    L1[User Clicks Like] --> L2["post_reaction.inc.php"]
+    L2 -->|Check Like Exists?| L3[(likes table)]
+    L2 -->|Insert/Delete Like| L3
+    L2 -->|Create Notification| N1
+    C1[User Adds Comment] --> C2["comment.inc.php"]
+    C2 -->|Insert Comment| C3[(comments table)]
+    C2 -->|Create Notification| N1
+end
+
+%% ==== ADMIN PANEL MODULE ====
+subgraph Admin[Admin Panel Module]
+    AD1[Admin Login] --> AD2["admin_login.php"]
+    AD2 -->|POST Data| AD3["admin_login.inc.php"]
+    AD3 -->|Validate| AD4["admin_model.inc.php"]
+    AD4 -->|Create Admin Session| AD5["admin_dashboard.php"]
+    AD5 -->|Manage Users| AD6[(users table)]
+    AD5 -->|Manage Posts| AD7[(posts table)]
+    AD5 -->|Manage Comments| AD8[(comments table)]
+end
+
+%% ==== CONNECTIONS ====
+NF --> Search
+NF --> Profile
+NF --> Interact
+Admin --> Admin
+```
