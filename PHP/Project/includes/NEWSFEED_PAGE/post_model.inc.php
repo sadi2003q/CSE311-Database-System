@@ -3,6 +3,7 @@
 
 declare(strict_types=1);
 
+// Inserts a new post into the database.
 function upload_post_to_database(object $pdo, string $post_text, string $post_image, int $user_id): void {
     $query = "INSERT INTO POSTS (user_id, text_content, image_url) 
               VALUES (:user_id, :post_text, :post_image)";
@@ -15,6 +16,7 @@ function upload_post_to_database(object $pdo, string $post_text, string $post_im
     ]);
 }
 
+// Fetches all user profiles from the database for suggestion purposes.
 function fetch_new_profile_for_suggession(object $pdo): array {
     if (!isset($_SESSION['user_id'])) {
         return []; 
@@ -40,7 +42,7 @@ function fetch_new_profile_for_suggession(object $pdo): array {
 }
 
 
-
+// Fetches the news feed for the logged-in user, consisting of posts from users they follow.
 function fetch_all_new_feed(object $pdo) {
 
     try {
@@ -72,7 +74,7 @@ function fetch_all_new_feed(object $pdo) {
 }
 
 
-// New version support for both mac and windows
+// Fetches the information of the user who created a specific post.
 function fetch_post_maker_info(object $pdo, $id) {
     try {
         $uid = (int)$id;

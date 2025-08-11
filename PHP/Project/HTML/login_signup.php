@@ -227,6 +227,45 @@ require_once "../includes/config_session.inc.php";
             passwordField.dispatchEvent(new Event('input'));
         }
     });
+    document.addEventListener("DOMContentLoaded", function () {
+    const usernameField = document.querySelector('input[name="username"]');
+    const passwordField = document.querySelector('input[type="password"]');
+    const signupButton = document.querySelector('.form-button');
+
+    function validateForm() {
+        const username = usernameField ? usernameField.value.trim() : "";
+        const password = passwordField ? passwordField.value : "";
+
+        const isUsernameValid = username.length >= 3 && !username.includes(" ");
+        const isPasswordValid = password.length >= 4;
+
+        if (isUsernameValid && isPasswordValid) {
+            signupButton.disabled = false;
+            signupButton.style.opacity = "1";
+            signupButton.style.cursor = "pointer";
+            usernameField.style.borderColor = "#ccd0d5";
+            passwordField.style.borderColor = "#ccd0d5";
+        } else {
+            signupButton.disabled = true;
+            signupButton.style.opacity = "0.6";
+            signupButton.style.cursor = "not-allowed";
+
+            if (!isUsernameValid) usernameField.style.borderColor = "red";
+            else usernameField.style.borderColor = "#ccd0d5";
+
+            if (!isPasswordValid) passwordField.style.borderColor = "red";
+            else passwordField.style.borderColor = "#ccd0d5";
+        }
+    }
+
+        if (usernameField && passwordField && signupButton) {
+            usernameField.addEventListener("input", validateForm);
+            passwordField.addEventListener("input", validateForm);
+
+            // Run on page load (in case of autofill)
+            validateForm();
+        }
+    });
     </script>
 
 

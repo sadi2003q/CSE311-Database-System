@@ -1,20 +1,20 @@
 <?php 
 
 
-// This function will check if allinput box is empty or not
+// Checks if all the provided fields in the settings page are empty.
 function check_if_all_fields_are_empty(string $username, string $email, string $old_password, string $new_password): bool
 {
     return empty($username) && empty($email) && empty($old_password) && empty($new_password);
 }
 
-
+// Validates if the provided string is a valid email format.
 function check_if_it_is_a_valid_email(string $email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
 
-
+// Checks if the new email provided by the user already exists in the database, excluding the user's current email.
 function check_if_email_already_exist(object $pdo, string $email): bool
 {   
     $current_email = $_SESSION['email'];
@@ -38,7 +38,7 @@ function check_if_email_already_exist(object $pdo, string $email): bool
 }
 
 
-
+// Checks if the new username provided by the user already exists in the database, excluding the user's current username.
 function check_if_username_already_exist(object $pdo, string $username): bool
 {
     $current_username = $_SESSION['username'];
@@ -60,7 +60,7 @@ function check_if_username_already_exist(object $pdo, string $username): bool
     return false;
 }
 
-
+// Verifies if the provided password matches the user's current password in the database.
 function check_current_password_matched(object $pdo, string $password): bool
 {
     $user_id = $_SESSION['user_id'];
@@ -80,7 +80,7 @@ function check_current_password_matched(object $pdo, string $password): bool
 }
 
 
-
+// Updates the username for the logged-in user.
 function update_username(object $pdo, string $username) : void {
     $user_id = $_SESSION['user_id'];
     $query = "UPDATE USERS SET USERNAME = :username WHERE USER_ID = :user_id";
@@ -90,7 +90,7 @@ function update_username(object $pdo, string $username) : void {
     $stmt->execute();
 }
 
-
+// Updates the email for the logged-in user.
 function update_email(object $pdo, string $email) : void {
     $user_id = $_SESSION['user_id'];
     $query = "UPDATE USERS SET EMAIL = :email WHERE USER_ID = :user_id";
@@ -100,7 +100,7 @@ function update_email(object $pdo, string $email) : void {
     $stmt->execute();
 }
 
-
+// Updates the password for the logged-in user.
 function update_password(object $pdo, string $new_password) : void {
     $user_id = $_SESSION['user_id'];
     $hashed = password_hash($new_password, PASSWORD_BCRYPT);
@@ -126,6 +126,7 @@ function log_deletion_request(object $pdo, int $user_id, string $email, ?string 
     ]);
 }
 */
+// Logs a user account deletion request if one doesn't already exist.
 function log_deletion_request(object $pdo, int $user_id, string $email, ?string $reason): void {
     // First, check if a deletion request already exists for this user
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM deletion_requests WHERE user_id = :user_id");

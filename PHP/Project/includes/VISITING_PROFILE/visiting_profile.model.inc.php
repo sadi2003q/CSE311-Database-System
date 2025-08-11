@@ -4,7 +4,7 @@
 declare(strict_types=1);
 
 
-
+// Fetches all information for a specific user from the database.
 function fetch_all_information_from_database(object $pdo, int $user_id) {
 
     try {
@@ -23,7 +23,7 @@ function fetch_all_information_from_database(object $pdo, int $user_id) {
     
 }
 
-
+// Fetches all posts made by a specific user.
 function fetch_all_post_from_database(object $pdo, int $user_id) {
 
     try {
@@ -53,6 +53,7 @@ function fetch_all_post_from_database(object $pdo, int $user_id) {
     
 }
 
+// Checks if the current user is following the user whose profile is being visited.
 function check_follower(object $pdo, int $current_id, int $visiting_id): bool {
     try {
         $query = "SELECT 1 FROM FOLLOW 
@@ -75,6 +76,7 @@ function check_follower(object $pdo, int $current_id, int $visiting_id): bool {
     }
 }
 
+// Makes the current user follow the visited user and sends a notification.
 function follow_now(object $pdo, int $current_id, int $visiting_id)  : bool {
     try {
         $name = $_SESSION['username'];
@@ -111,7 +113,7 @@ function follow_now(object $pdo, int $current_id, int $visiting_id)  : bool {
     }
 }
 
-
+// Makes the current user unfollow the visited user.
 function unfollow_now(object $pdo, int $current_id, int $visiting_id): bool {
     try {
         $pdo->beginTransaction();
@@ -132,7 +134,7 @@ function unfollow_now(object $pdo, int $current_id, int $visiting_id): bool {
     }
 }
 
-
+// Checks if a user has already liked a specific post.
 function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID) {
     // SQL query to find a like from the user on the specific post.
     $query = "SELECT * FROM LIKES WHERE user_id = :postLikerID AND post_ID = :postID";
@@ -146,7 +148,7 @@ function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID) {
 }
 
 
-
+// Creates a 'follow' notification.
 function follow_notification(object $pdo, int $currentID, int $toFOllowID) {
 
     // recipient_id	sender_id status

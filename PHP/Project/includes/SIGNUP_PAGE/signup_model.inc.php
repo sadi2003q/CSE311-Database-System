@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// This function will check if the given username for signing up already exist or not
+// Checks if a given username already exists in the database.
 function get_username(object $pdo, string $username) {
     $query = "SELECT USERNAME FROM USERS WHERE username = :username";
     $statement = $pdo->prepare($query);
@@ -10,7 +10,7 @@ function get_username(object $pdo, string $username) {
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
-// This function will check if the given email for signing up already exist or not
+// Checks if a given email already exists in the database.
 function get_email(object $pdo, string $email) {
     $query = "SELECT EMAIL FROM USERS WHERE email = :email";
     $statement = $pdo->prepare($query);
@@ -20,7 +20,7 @@ function get_email(object $pdo, string $email) {
 
 
 
-// This will set the user into the database
+// Inserts a new user into the database with a hashed password.
 function set_user(object $pdo, string $username, string $password, string $email, string $gender, string $dob): void {
 
     $query = "INSERT INTO USERS (USERNAME, EMAIL, PASSWORD, DOB, GENDER) 
@@ -43,7 +43,7 @@ function set_user(object $pdo, string $username, string $password, string $email
 }
 
 
-
+// Finds the user ID associated with a given username.
 function Find_UID_of_the_page(object $pdo, string $username) {
     $query = "SELECT USER_ID FROM USERS WHERE USERNAME = :username";
     $statement = $pdo->prepare($query);
@@ -51,7 +51,7 @@ function Find_UID_of_the_page(object $pdo, string $username) {
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
-
+// Sends a 'newID' notification to a user.
 function sent_notification(object $pdo, int $userID) {
 
     $query = "INSERT INTO NOTIFICATIONS (RECIPENT_ID, STATUS) VALUES (:recipient_id, :status)";

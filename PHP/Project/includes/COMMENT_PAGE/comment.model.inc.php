@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-
+// Fetches a post from the database using the post ID.
 function fetch_the_post(object $pdo, int $postID) {
     
     $query = "SELECT * FROM posts where post_id = :post_id";
@@ -16,7 +16,7 @@ function fetch_the_post(object $pdo, int $postID) {
 }
 
 
-
+// Fetches information about the user who made a post.
 function fetch_post_maker_information(object $pdo, int $user_id) {
     $query = "SELECT * FROM users where user_id = :user_id";
     $statement = $pdo->prepare($query);
@@ -27,7 +27,7 @@ function fetch_post_maker_information(object $pdo, int $user_id) {
     return $result ?: [];
 }
 
-
+// Checks if a user has already liked a specific post.
 function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID): bool {
     try {
 
@@ -45,7 +45,7 @@ function check_if_liked_or_not(object $pdo, int $postID, int $postLikerID): bool
     }
 }
 
-
+// Adds a new comment to a post.
 function post_the_comment(object $pdo, int $postID, string $comment_text): void {
     require_once '../config_session.inc.php';
 
@@ -79,7 +79,7 @@ function post_the_comment(object $pdo, int $postID, string $comment_text): void 
     
 
 }
-
+// Increments the comment count for a post.
 function Increment_commnt_count(object $pdo, int $postID) {
     $query = 'UPDATE POSTS SET COMMENT_COUNT = COMMENT_COUNT + 1 WHERE POST_ID = :postID';
     $statement = $pdo->prepare($query);
@@ -89,7 +89,7 @@ function Increment_commnt_count(object $pdo, int $postID) {
     }
 }
 
-
+// Fetches all comments for a given post.
 function fetch_all_comment(object $pdo, $postID): array {
     $query = "SELECT * FROM comments WHERE post_id = :postID ORDER BY created_at DESC";
     $statement = $pdo->prepare($query);
@@ -104,7 +104,7 @@ function fetch_all_comment(object $pdo, $postID): array {
 }
 
 
-
+// Finds the total number of likes for a post (retrieved from the session).
 function find_the_number_of_like(object $pdo) {
 
     $postID = $_SESSION['working_on_post'];
@@ -119,7 +119,7 @@ function find_the_number_of_like(object $pdo) {
 }
 
 
-
+// Fetches the total number of comments for a post (retrieved from the session).
 function fetch_the_number_of_comment(object $pdo) {
     $postID = $_SESSION['working_on_post'];
     $query = "SELECT COUNT(post_id) from COMMENTS where post_id=:postID";
@@ -130,7 +130,7 @@ function fetch_the_number_of_comment(object $pdo) {
     return $result ? (int)$result : 0;
 }
 
-
+// Deletes a specific comment from the database.
 function delete_comment(object $pdo, int $comment_number) {
     $query = "DELETE FROM comments WHERE comment_id = :comment_id";
     $statement = $pdo->prepare($query);
@@ -139,7 +139,7 @@ function delete_comment(object $pdo, int $comment_number) {
 
 }
 
-
+// Updates the text of an existing comment.
 function update_comment(object $pdo, int $commentID, string $newText): void {
     $query = "UPDATE comments SET comment_text = :newText WHERE comment_id = :commentID";
     $statement = $pdo->prepare($query);
@@ -153,7 +153,7 @@ function update_comment(object $pdo, int $commentID, string $newText): void {
 }
 
 
-
+// Fetches the ID of the user who created a specific post.
 function fetch_Post_Maker_ID(object $pdo, int $postID) {
     $query = "SELECT USER_ID FROM POSTS WHERE POST_ID=:postID";
     $statement = $pdo->prepare($query);
@@ -164,7 +164,7 @@ function fetch_Post_Maker_ID(object $pdo, int $postID) {
 
 }
 
-
+// Creates a notification when a user comments on a post.
 function comment_notification(object $pdo, int $senderID, int $recipientID, int $postID) {
     try {
         

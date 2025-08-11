@@ -4,7 +4,7 @@
 
 declare(strict_types=1);
 
-
+// Fetches the logged-in user's information from the database and stores it in the session.
 function find_user_information(object $pdo) {
     // Check if a user is logged in
     if (!isset($_SESSION['user_id'])) {
@@ -47,6 +47,7 @@ function find_user_information(object $pdo) {
 
 }
 
+// Fetches the information of the user who sent a notification.
 function fetch_notification_sender_information(object $pdo, int $userID) {
     $query = "SELECT * FROM USERS WHERE USER_ID = :userID";
     $stmt = $pdo->prepare($query);
@@ -56,7 +57,7 @@ function fetch_notification_sender_information(object $pdo, int $userID) {
 
 }
 
-
+// Fetches the most recent notification for a user.
 function find_leatest_notification(object $pdo, int $userID) {
     $query = "SELECT * FROM NOTIFICATIONS WHERE RECIPIENT_ID = :userID ORDER BY CREATED_AT DESC LIMIT 1";
     $stmt = $pdo->prepare($query);
@@ -67,7 +68,7 @@ function find_leatest_notification(object $pdo, int $userID) {
     return $notification;
 }
 
-
+// Counts the number of unread notifications for a user.
 function find_count_of_unread_notification(object $pdo, int $userID) {
     $query = "SELECT COUNT(*) FROM NOTIFICATIONS WHERE RECIPIENT_ID = :userID AND state = 0";
     $stmt = $pdo->prepare($query);
